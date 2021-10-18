@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Normalised Difference Vegetation Index",
+    "subtitle": "Red + NIR",
+    "description": ""
+  },
+  {
+    "title": "Ratio Vegetation Index",
+    "subtitle": "Red + NIR",
+    "description": ""
+  },
+  {
+    "title": "Normalised Difference Red Edge",
+    "subtitle": "Red + NIR",
+    "description": ""
+  },
+  {
+    "title": "Perpendicular Vegetation Index",
+    "subtitle": "Red + NIR",
+    "description": ""
+  },
+  {
+    "title": "Atmospherically Resistant Vegetation Index",
+    "subtitle": "Red + Blue + NIR",
+    "description": ""
+  },
+  {
+    "title": "Blue Normalised Difference Vegetation Index",
+    "subtitle": "Blue + NIR",
+    "description": ""
+  },
+  {
+    "title": "Visible Atmospherically Resistant Index",
+    "subtitle": "RGB",
+    "description": ""
+  },
+  {
+    "title": "Kauth-Thomas Tasseled Cap Transformation",
+    "subtitle": "RGB",
+    "description": ""
+  }
+]

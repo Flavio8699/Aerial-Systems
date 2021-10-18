@@ -1,0 +1,22 @@
+[
+  {
+    "title": "Permaculture zone",
+    "subtitle": "Show the different zones in the permaculture design."
+  },
+  {
+    "title": "Weeds Identification",
+    "subtitle": "Identify and control the weeds in the terrain."
+  },
+  {
+    "title": "Plant disease",
+    "subtitle": "Identify some of the more common plant diseases."
+  },
+  {
+    "title": "Soil quality",
+    "subtitle": "Measure the condition of the soil."
+  },
+  {
+    "title": "Plans counting",
+    "subtitle": "Count the number of plants in a zone."
+  }
+]

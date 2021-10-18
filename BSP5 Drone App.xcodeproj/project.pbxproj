@@ -3,19 +3,63 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D7BD90674D19A642C765AC8 /* libPods-BSP5 Drone App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 629DB26B9691F8BE96820B4C /* libPods-BSP5 Drone App.a */; };
+		720FECD22718932100EC49FC /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720FECD12718932100EC49FC /* Activity.swift */; };
+		720FECD42718944100EC49FC /* activities.json in Resources */ = {isa = PBXBuildFile; fileRef = 720FECD32718944100EC49FC /* activities.json */; };
+		72127D1A271D676700B28961 /* scrollOnOverflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72127D19271D676700B28961 /* scrollOnOverflow.swift */; };
+		72127D1C271D67B900B28961 /* addBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72127D1B271D67B900B28961 /* addBorder.swift */; };
+		723157682707477100316E62 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723157672707477100316E62 /* MapView.swift */; };
+		7250ADA6271D7DBF000EA138 /* DronesCamerasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7250ADA5271D7DBF000EA138 /* DronesCamerasView.swift */; };
 		727444AA26FA327800E5A114 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727444A926FA327800E5A114 /* AppDelegate.swift */; };
 		727444AC26FA327800E5A114 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727444AB26FA327800E5A114 /* SceneDelegate.swift */; };
 		727444AE26FA327800E5A114 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727444AD26FA327800E5A114 /* ContentView.swift */; };
 		727444B026FA327A00E5A114 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 727444AF26FA327A00E5A114 /* Assets.xcassets */; };
 		727444B326FA327A00E5A114 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 727444B226FA327A00E5A114 /* Preview Assets.xcassets */; };
 		727444B626FA327A00E5A114 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 727444B426FA327A00E5A114 /* LaunchScreen.storyboard */; };
+		729715CF2718885100326808 /* indices.json in Resources */ = {isa = PBXBuildFile; fileRef = 729715CE2718885100326808 /* indices.json */; };
+		729715D12718886A00326808 /* loadJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729715D02718886A00326808 /* loadJson.swift */; };
+		729715D42718888C00326808 /* Index.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729715D32718888C00326808 /* Index.swift */; };
+		7299F35D2715A7E200124189 /* ProductCommunicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7299F35C2715A7E200124189 /* ProductCommunicationManager.swift */; };
+		7299F35F2715BBFE00124189 /* BluetoothConnectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7299F35E2715BBFE00124189 /* BluetoothConnectorViewController.swift */; };
+		729CC207270EE9530095014E /* SF-Pro-Display-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 729CC1F5270EE94F0095014E /* SF-Pro-Display-SemiboldItalic.otf */; };
+		729CC208270EE9530095014E /* SF-Pro-Display-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 729CC1F6270EE94F0095014E /* SF-Pro-Display-BoldItalic.otf */; };
+		729CC209270EE9530095014E /* SF-Pro-Display-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 729CC1F7270EE94F0095014E /* SF-Pro-Display-Thin.otf */; };
+		729CC20A270EE9530095014E /* SF-Pro-Display-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 729CC1F8270EE9500095014E /* SF-Pro-Display-RegularItalic.otf */; };
+		729CC20B270EE9530095014E /* SF-Pro-Display-Heavy.otf in Resources */ = {isa = PBXBuildFile; fileRef = 729CC1F9270EE9500095014E /* SF-Pro-Display-Heavy.otf */; };
+		729CC20C270EE9530095014E /* SF-Pro-Display-UltralightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 729CC1FA270EE9500095014E /* SF-Pro-Display-UltralightItalic.otf */; };
+		729CC20D270EE9530095014E /* SF-Pro-Display-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 729CC1FB270EE9500095014E /* SF-Pro-Display-Medium.otf */; };
+		729CC20E270EE9530095014E /* SF-Pro-Display-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 729CC1FC270EE9500095014E /* SF-Pro-Display-LightItalic.otf */; };
+		729CC20F270EE9530095014E /* SF-Pro-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 729CC1FD270EE9510095014E /* SF-Pro-Display-Regular.otf */; };
+		729CC210270EE9530095014E /* SF-Pro-Display-HeavyItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 729CC1FE270EE9510095014E /* SF-Pro-Display-HeavyItalic.otf */; };
+		729CC211270EE9530095014E /* SF-Pro-Display-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 729CC1FF270EE9510095014E /* SF-Pro-Display-Black.otf */; };
+		729CC212270EE9530095014E /* SF-Pro-Display-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 729CC200270EE9510095014E /* SF-Pro-Display-Semibold.otf */; };
+		729CC213270EE9530095014E /* SF-Pro-Display-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 729CC201270EE9520095014E /* SF-Pro-Display-ThinItalic.otf */; };
+		729CC214270EE9530095014E /* SF-Pro-Display-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 729CC202270EE9520095014E /* SF-Pro-Display-MediumItalic.otf */; };
+		729CC215270EE9530095014E /* SF-Pro-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 729CC203270EE9520095014E /* SF-Pro-Display-Bold.otf */; };
+		729CC216270EE9530095014E /* SF-Pro-Display-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 729CC204270EE9530095014E /* SF-Pro-Display-BlackItalic.otf */; };
+		729CC217270EE9530095014E /* SF-Pro-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 729CC205270EE9530095014E /* SF-Pro-Display-Light.otf */; };
+		729CC218270EE9530095014E /* SF-Pro-Display-Ultralight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 729CC206270EE9530095014E /* SF-Pro-Display-Ultralight.otf */; };
+		729CC21A270EF27A0095014E /* PlanningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729CC219270EF27A0095014E /* PlanningView.swift */; };
+		729CC21C270EF7870095014E /* ZoneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729CC21B270EF7870095014E /* ZoneView.swift */; };
+		729CC21E270EF9420095014E /* PlanningHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729CC21D270EF9420095014E /* PlanningHeaderView.swift */; };
+		729CC220270EFED00095014E /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729CC21F270EFED00095014E /* CustomButton.swift */; };
+		729CC222270F01030095014E /* MonitoringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729CC221270F01030095014E /* MonitoringView.swift */; };
+		72B8E77327108AF800755D99 /* PlanningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B8E77227108AF800755D99 /* PlanningViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3069CC307CD593BF05863D18 /* Pods-BSP5 Drone App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BSP5 Drone App.release.xcconfig"; path = "Target Support Files/Pods-BSP5 Drone App/Pods-BSP5 Drone App.release.xcconfig"; sourceTree = "<group>"; };
+		629DB26B9691F8BE96820B4C /* libPods-BSP5 Drone App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BSP5 Drone App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		720FECD12718932100EC49FC /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
+		720FECD32718944100EC49FC /* activities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = activities.json; sourceTree = "<group>"; };
+		72127D19271D676700B28961 /* scrollOnOverflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scrollOnOverflow.swift; sourceTree = "<group>"; };
+		72127D1B271D67B900B28961 /* addBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addBorder.swift; sourceTree = "<group>"; };
+		723157672707477100316E62 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		7250ADA5271D7DBF000EA138 /* DronesCamerasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DronesCamerasView.swift; sourceTree = "<group>"; };
 		727444A626FA327800E5A114 /* BSP5 Drone App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BSP5 Drone App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		727444A926FA327800E5A114 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		727444AB26FA327800E5A114 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -24,6 +68,36 @@
 		727444B226FA327A00E5A114 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		727444B526FA327A00E5A114 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		727444B726FA327A00E5A114 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		729715CE2718885100326808 /* indices.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = indices.json; sourceTree = "<group>"; };
+		729715D02718886A00326808 /* loadJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loadJson.swift; sourceTree = "<group>"; };
+		729715D32718888C00326808 /* Index.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Index.swift; sourceTree = "<group>"; };
+		7299F35C2715A7E200124189 /* ProductCommunicationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCommunicationManager.swift; sourceTree = "<group>"; };
+		7299F35E2715BBFE00124189 /* BluetoothConnectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothConnectorViewController.swift; sourceTree = "<group>"; };
+		729CC1F5270EE94F0095014E /* SF-Pro-Display-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-SemiboldItalic.otf"; sourceTree = "<group>"; };
+		729CC1F6270EE94F0095014E /* SF-Pro-Display-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-BoldItalic.otf"; sourceTree = "<group>"; };
+		729CC1F7270EE94F0095014E /* SF-Pro-Display-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Thin.otf"; sourceTree = "<group>"; };
+		729CC1F8270EE9500095014E /* SF-Pro-Display-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-RegularItalic.otf"; sourceTree = "<group>"; };
+		729CC1F9270EE9500095014E /* SF-Pro-Display-Heavy.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Heavy.otf"; sourceTree = "<group>"; };
+		729CC1FA270EE9500095014E /* SF-Pro-Display-UltralightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-UltralightItalic.otf"; sourceTree = "<group>"; };
+		729CC1FB270EE9500095014E /* SF-Pro-Display-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Medium.otf"; sourceTree = "<group>"; };
+		729CC1FC270EE9500095014E /* SF-Pro-Display-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-LightItalic.otf"; sourceTree = "<group>"; };
+		729CC1FD270EE9510095014E /* SF-Pro-Display-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Regular.otf"; sourceTree = "<group>"; };
+		729CC1FE270EE9510095014E /* SF-Pro-Display-HeavyItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-HeavyItalic.otf"; sourceTree = "<group>"; };
+		729CC1FF270EE9510095014E /* SF-Pro-Display-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Black.otf"; sourceTree = "<group>"; };
+		729CC200270EE9510095014E /* SF-Pro-Display-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Semibold.otf"; sourceTree = "<group>"; };
+		729CC201270EE9520095014E /* SF-Pro-Display-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-ThinItalic.otf"; sourceTree = "<group>"; };
+		729CC202270EE9520095014E /* SF-Pro-Display-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-MediumItalic.otf"; sourceTree = "<group>"; };
+		729CC203270EE9520095014E /* SF-Pro-Display-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Bold.otf"; sourceTree = "<group>"; };
+		729CC204270EE9530095014E /* SF-Pro-Display-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-BlackItalic.otf"; sourceTree = "<group>"; };
+		729CC205270EE9530095014E /* SF-Pro-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Light.otf"; sourceTree = "<group>"; };
+		729CC206270EE9530095014E /* SF-Pro-Display-Ultralight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Ultralight.otf"; sourceTree = "<group>"; };
+		729CC219270EF27A0095014E /* PlanningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanningView.swift; sourceTree = "<group>"; };
+		729CC21B270EF7870095014E /* ZoneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoneView.swift; sourceTree = "<group>"; };
+		729CC21D270EF9420095014E /* PlanningHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanningHeaderView.swift; sourceTree = "<group>"; };
+		729CC21F270EFED00095014E /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		729CC221270F01030095014E /* MonitoringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitoringView.swift; sourceTree = "<group>"; };
+		72B8E77227108AF800755D99 /* PlanningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanningViewModel.swift; sourceTree = "<group>"; };
+		C5B301628EB73646A68336F2 /* Pods-BSP5 Drone App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BSP5 Drone App.debug.xcconfig"; path = "Target Support Files/Pods-BSP5 Drone App/Pods-BSP5 Drone App.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,17 +105,46 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D7BD90674D19A642C765AC8 /* libPods-BSP5 Drone App.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		082CC1008E38436CE3AC4DE4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				629DB26B9691F8BE96820B4C /* libPods-BSP5 Drone App.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4EC6EB6C4812BB3DCE5EA06A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C5B301628EB73646A68336F2 /* Pods-BSP5 Drone App.debug.xcconfig */,
+				3069CC307CD593BF05863D18 /* Pods-BSP5 Drone App.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		72127D18271D675500B28961 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				72127D19271D676700B28961 /* scrollOnOverflow.swift */,
+				72127D1B271D67B900B28961 /* addBorder.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		7274449D26FA327800E5A114 = {
 			isa = PBXGroup;
 			children = (
 				727444A826FA327800E5A114 /* BSP5 Drone App */,
 				727444A726FA327800E5A114 /* Products */,
+				4EC6EB6C4812BB3DCE5EA06A /* Pods */,
+				082CC1008E38436CE3AC4DE4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -56,13 +159,21 @@
 		727444A826FA327800E5A114 /* BSP5 Drone App */ = {
 			isa = PBXGroup;
 			children = (
+				729715D22718887300326808 /* Models */,
+				729715CD2718883100326808 /* Json */,
+				729CC1F3270EE9350095014E /* Fonts */,
+				72B8E76E27108A2000755D99 /* Views */,
+				72B8E77127108AE800755D99 /* ViewModels */,
+				727444AD26FA327800E5A114 /* ContentView.swift */,
 				727444A926FA327800E5A114 /* AppDelegate.swift */,
 				727444AB26FA327800E5A114 /* SceneDelegate.swift */,
-				727444AD26FA327800E5A114 /* ContentView.swift */,
 				727444AF26FA327A00E5A114 /* Assets.xcassets */,
 				727444B426FA327A00E5A114 /* LaunchScreen.storyboard */,
 				727444B726FA327A00E5A114 /* Info.plist */,
 				727444B126FA327A00E5A114 /* Preview Content */,
+				7299F35C2715A7E200124189 /* ProductCommunicationManager.swift */,
+				7299F35E2715BBFE00124189 /* BluetoothConnectorViewController.swift */,
+				729715D02718886A00326808 /* loadJson.swift */,
 			);
 			path = "BSP5 Drone App";
 			sourceTree = "<group>";
@@ -75,6 +186,96 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		729715CD2718883100326808 /* Json */ = {
+			isa = PBXGroup;
+			children = (
+				729715CE2718885100326808 /* indices.json */,
+				720FECD32718944100EC49FC /* activities.json */,
+			);
+			path = Json;
+			sourceTree = "<group>";
+		};
+		729715D22718887300326808 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				729715D32718888C00326808 /* Index.swift */,
+				720FECD12718932100EC49FC /* Activity.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		729CC1F3270EE9350095014E /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				729CC1F4270EE93C0095014E /* SF-Pro */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		729CC1F4270EE93C0095014E /* SF-Pro */ = {
+			isa = PBXGroup;
+			children = (
+				729CC1FF270EE9510095014E /* SF-Pro-Display-Black.otf */,
+				729CC204270EE9530095014E /* SF-Pro-Display-BlackItalic.otf */,
+				729CC203270EE9520095014E /* SF-Pro-Display-Bold.otf */,
+				729CC1F6270EE94F0095014E /* SF-Pro-Display-BoldItalic.otf */,
+				729CC1F9270EE9500095014E /* SF-Pro-Display-Heavy.otf */,
+				729CC1FE270EE9510095014E /* SF-Pro-Display-HeavyItalic.otf */,
+				729CC205270EE9530095014E /* SF-Pro-Display-Light.otf */,
+				729CC1FC270EE9500095014E /* SF-Pro-Display-LightItalic.otf */,
+				729CC1FB270EE9500095014E /* SF-Pro-Display-Medium.otf */,
+				729CC202270EE9520095014E /* SF-Pro-Display-MediumItalic.otf */,
+				729CC1FD270EE9510095014E /* SF-Pro-Display-Regular.otf */,
+				729CC1F8270EE9500095014E /* SF-Pro-Display-RegularItalic.otf */,
+				729CC200270EE9510095014E /* SF-Pro-Display-Semibold.otf */,
+				729CC1F5270EE94F0095014E /* SF-Pro-Display-SemiboldItalic.otf */,
+				729CC1F7270EE94F0095014E /* SF-Pro-Display-Thin.otf */,
+				729CC201270EE9520095014E /* SF-Pro-Display-ThinItalic.otf */,
+				729CC206270EE9530095014E /* SF-Pro-Display-Ultralight.otf */,
+				729CC1FA270EE9500095014E /* SF-Pro-Display-UltralightItalic.otf */,
+			);
+			path = "SF-Pro";
+			sourceTree = "<group>";
+		};
+		72B8E76E27108A2000755D99 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				72127D18271D675500B28961 /* Extensions */,
+				72B8E76F27108A2600755D99 /* Planning */,
+				72B8E77027108A8700755D99 /* Extras */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		72B8E76F27108A2600755D99 /* Planning */ = {
+			isa = PBXGroup;
+			children = (
+				729CC219270EF27A0095014E /* PlanningView.swift */,
+				729CC21D270EF9420095014E /* PlanningHeaderView.swift */,
+				729CC21B270EF7870095014E /* ZoneView.swift */,
+				729CC221270F01030095014E /* MonitoringView.swift */,
+				7250ADA5271D7DBF000EA138 /* DronesCamerasView.swift */,
+			);
+			path = Planning;
+			sourceTree = "<group>";
+		};
+		72B8E77027108A8700755D99 /* Extras */ = {
+			isa = PBXGroup;
+			children = (
+				723157672707477100316E62 /* MapView.swift */,
+				729CC21F270EFED00095014E /* CustomButton.swift */,
+			);
+			path = Extras;
+			sourceTree = "<group>";
+		};
+		72B8E77127108AE800755D99 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				72B8E77227108AF800755D99 /* PlanningViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -82,15 +283,20 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 727444BA26FA327A00E5A114 /* Build configuration list for PBXNativeTarget "BSP5 Drone App" */;
 			buildPhases = (
+				1A17AACB3F353E735FCBB31B /* [CP] Check Pods Manifest.lock */,
 				727444A226FA327800E5A114 /* Sources */,
 				727444A326FA327800E5A114 /* Frameworks */,
 				727444A426FA327800E5A114 /* Resources */,
+				F42F5E94CEF9E19398BD79DA /* [CP] Embed Pods Frameworks */,
+				7299F3602715C05F00124189 /* ShellScript */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = "BSP5 Drone App";
+			packageProductDependencies = (
+			);
 			productName = "BSP5 Drone App";
 			productReference = 727444A626FA327800E5A114 /* BSP5 Drone App.app */;
 			productType = "com.apple.product-type.application";
@@ -118,6 +324,8 @@
 				Base,
 			);
 			mainGroup = 7274449D26FA327800E5A114;
+			packageReferences = (
+			);
 			productRefGroup = 727444A726FA327800E5A114 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -132,22 +340,116 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				729CC208270EE9530095014E /* SF-Pro-Display-BoldItalic.otf in Resources */,
+				729CC207270EE9530095014E /* SF-Pro-Display-SemiboldItalic.otf in Resources */,
+				720FECD42718944100EC49FC /* activities.json in Resources */,
+				729CC215270EE9530095014E /* SF-Pro-Display-Bold.otf in Resources */,
+				729CC210270EE9530095014E /* SF-Pro-Display-HeavyItalic.otf in Resources */,
+				729CC20A270EE9530095014E /* SF-Pro-Display-RegularItalic.otf in Resources */,
+				729CC213270EE9530095014E /* SF-Pro-Display-ThinItalic.otf in Resources */,
+				729CC217270EE9530095014E /* SF-Pro-Display-Light.otf in Resources */,
+				729CC20C270EE9530095014E /* SF-Pro-Display-UltralightItalic.otf in Resources */,
+				729CC20D270EE9530095014E /* SF-Pro-Display-Medium.otf in Resources */,
+				729715CF2718885100326808 /* indices.json in Resources */,
+				729CC218270EE9530095014E /* SF-Pro-Display-Ultralight.otf in Resources */,
+				729CC20B270EE9530095014E /* SF-Pro-Display-Heavy.otf in Resources */,
+				729CC211270EE9530095014E /* SF-Pro-Display-Black.otf in Resources */,
+				729CC209270EE9530095014E /* SF-Pro-Display-Thin.otf in Resources */,
 				727444B626FA327A00E5A114 /* LaunchScreen.storyboard in Resources */,
+				729CC20E270EE9530095014E /* SF-Pro-Display-LightItalic.otf in Resources */,
+				729CC214270EE9530095014E /* SF-Pro-Display-MediumItalic.otf in Resources */,
 				727444B326FA327A00E5A114 /* Preview Assets.xcassets in Resources */,
+				729CC216270EE9530095014E /* SF-Pro-Display-BlackItalic.otf in Resources */,
+				729CC212270EE9530095014E /* SF-Pro-Display-Semibold.otf in Resources */,
+				729CC20F270EE9530095014E /* SF-Pro-Display-Regular.otf in Resources */,
 				727444B026FA327A00E5A114 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		1A17AACB3F353E735FCBB31B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-BSP5 Drone App-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		7299F3602715C05F00124189 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/DJISDK.framework/strip-frameworks.sh\"\n";
+		};
+		F42F5E94CEF9E19398BD79DA /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BSP5 Drone App/Pods-BSP5 Drone App-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BSP5 Drone App/Pods-BSP5 Drone App-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BSP5 Drone App/Pods-BSP5 Drone App-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		727444A226FA327800E5A114 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				720FECD22718932100EC49FC /* Activity.swift in Sources */,
+				72127D1A271D676700B28961 /* scrollOnOverflow.swift in Sources */,
+				7250ADA6271D7DBF000EA138 /* DronesCamerasView.swift in Sources */,
 				727444AA26FA327800E5A114 /* AppDelegate.swift in Sources */,
+				7299F35F2715BBFE00124189 /* BluetoothConnectorViewController.swift in Sources */,
+				72B8E77327108AF800755D99 /* PlanningViewModel.swift in Sources */,
+				729CC222270F01030095014E /* MonitoringView.swift in Sources */,
+				729CC21E270EF9420095014E /* PlanningHeaderView.swift in Sources */,
+				729CC21A270EF27A0095014E /* PlanningView.swift in Sources */,
+				723157682707477100316E62 /* MapView.swift in Sources */,
+				7299F35D2715A7E200124189 /* ProductCommunicationManager.swift in Sources */,
+				729715D42718888C00326808 /* Index.swift in Sources */,
+				729CC220270EFED00095014E /* CustomButton.swift in Sources */,
+				729715D12718886A00326808 /* loadJson.swift in Sources */,
+				729CC21C270EF7870095014E /* ZoneView.swift in Sources */,
 				727444AC26FA327800E5A114 /* SceneDelegate.swift in Sources */,
 				727444AE26FA327800E5A114 /* ContentView.swift in Sources */,
+				72127D1C271D67B900B28961 /* addBorder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -283,6 +585,7 @@
 		};
 		727444BB26FA327A00E5A114 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C5B301628EB73646A68336F2 /* Pods-BSP5 Drone App.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -290,7 +593,9 @@
 				DEVELOPMENT_ASSET_PATHS = "\"BSP5 Drone App/Preview Content\"";
 				DEVELOPMENT_TEAM = ZRNUGARP83;
 				ENABLE_PREVIEWS = YES;
+				HEADER_SEARCH_PATHS = "\"$(PODS_ROOT)/Headers/Public\"";
 				INFOPLIST_FILE = "BSP5 Drone App/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -304,6 +609,7 @@
 		};
 		727444BC26FA327A00E5A114 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3069CC307CD593BF05863D18 /* Pods-BSP5 Drone App.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -311,7 +617,9 @@
 				DEVELOPMENT_ASSET_PATHS = "\"BSP5 Drone App/Preview Content\"";
 				DEVELOPMENT_TEAM = ZRNUGARP83;
 				ENABLE_PREVIEWS = YES;
+				HEADER_SEARCH_PATHS = "\"$(PODS_ROOT)/Headers/Public\"";
 				INFOPLIST_FILE = "BSP5 Drone App/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
