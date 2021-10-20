@@ -11,7 +11,7 @@ import MapKit
 
 class PlanningViewModel: ObservableObject {
     
-    @Published var currentTab: PlanningTab = .drones_and_cameras
+    @Published var currentTab: PlanningTab = .zone
     
     @Published var locations: [CLLocationCoordinate2D] = [.init(latitude: 49.50631564241318, longitude: 5.941884408650027), .init(latitude: 49.50525665878009, longitude: 5.95445860403537), .init(latitude: 49.50039759347766, longitude: 5.954718385451161)]
     

@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3D7BD90674D19A642C765AC8 /* libPods-BSP5 Drone App.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 629DB26B9691F8BE96820B4C /* libPods-BSP5 Drone App.a */; };
 		720FECD22718932100EC49FC /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720FECD12718932100EC49FC /* Activity.swift */; };
 		720FECD42718944100EC49FC /* activities.json in Resources */ = {isa = PBXBuildFile; fileRef = 720FECD32718944100EC49FC /* activities.json */; };
 		72127D1A271D676700B28961 /* scrollOnOverflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72127D19271D676700B28961 /* scrollOnOverflow.swift */; };
 		72127D1C271D67B900B28961 /* addBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72127D1B271D67B900B28961 /* addBorder.swift */; };
 		723157682707477100316E62 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723157672707477100316E62 /* MapView.swift */; };
+		7237E4CA271F063D00C5B0E0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7237E4C9271F063D00C5B0E0 /* LoginView.swift */; };
+		7237E4CC271F19C200C5B0E0 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7237E4CB271F19C200C5B0E0 /* LoginViewModel.swift */; };
 		7250ADA6271D7DBF000EA138 /* DronesCamerasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7250ADA5271D7DBF000EA138 /* DronesCamerasView.swift */; };
 		727444AA26FA327800E5A114 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727444A926FA327800E5A114 /* AppDelegate.swift */; };
 		727444AC26FA327800E5A114 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727444AB26FA327800E5A114 /* SceneDelegate.swift */; };
@@ -20,6 +21,7 @@
 		727444B026FA327A00E5A114 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 727444AF26FA327A00E5A114 /* Assets.xcassets */; };
 		727444B326FA327A00E5A114 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 727444B226FA327A00E5A114 /* Preview Assets.xcassets */; };
 		727444B626FA327A00E5A114 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 727444B426FA327A00E5A114 /* LaunchScreen.storyboard */; };
+		72896876271DABE5005B86C1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 72896875271DABE5005B86C1 /* GoogleService-Info.plist */; };
 		729715CF2718885100326808 /* indices.json in Resources */ = {isa = PBXBuildFile; fileRef = 729715CE2718885100326808 /* indices.json */; };
 		729715D12718886A00326808 /* loadJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729715D02718886A00326808 /* loadJson.swift */; };
 		729715D42718888C00326808 /* Index.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729715D32718888C00326808 /* Index.swift */; };
@@ -49,16 +51,18 @@
 		729CC220270EFED00095014E /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729CC21F270EFED00095014E /* CustomButton.swift */; };
 		729CC222270F01030095014E /* MonitoringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729CC221270F01030095014E /* MonitoringView.swift */; };
 		72B8E77327108AF800755D99 /* PlanningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B8E77227108AF800755D99 /* PlanningViewModel.swift */; };
+		CBF2ECDACFCAC912CCB68A74 /* Pods_BSP5_Drone_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D96024FC18A2506B8BC83714 /* Pods_BSP5_Drone_App.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3069CC307CD593BF05863D18 /* Pods-BSP5 Drone App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BSP5 Drone App.release.xcconfig"; path = "Target Support Files/Pods-BSP5 Drone App/Pods-BSP5 Drone App.release.xcconfig"; sourceTree = "<group>"; };
-		629DB26B9691F8BE96820B4C /* libPods-BSP5 Drone App.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-BSP5 Drone App.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		720FECD12718932100EC49FC /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		720FECD32718944100EC49FC /* activities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = activities.json; sourceTree = "<group>"; };
 		72127D19271D676700B28961 /* scrollOnOverflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scrollOnOverflow.swift; sourceTree = "<group>"; };
 		72127D1B271D67B900B28961 /* addBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addBorder.swift; sourceTree = "<group>"; };
 		723157672707477100316E62 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		7237E4C9271F063D00C5B0E0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		7237E4CB271F19C200C5B0E0 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		7250ADA5271D7DBF000EA138 /* DronesCamerasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DronesCamerasView.swift; sourceTree = "<group>"; };
 		727444A626FA327800E5A114 /* BSP5 Drone App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BSP5 Drone App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		727444A926FA327800E5A114 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -68,6 +72,7 @@
 		727444B226FA327A00E5A114 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		727444B526FA327A00E5A114 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		727444B726FA327A00E5A114 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		72896875271DABE5005B86C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		729715CE2718885100326808 /* indices.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = indices.json; sourceTree = "<group>"; };
 		729715D02718886A00326808 /* loadJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loadJson.swift; sourceTree = "<group>"; };
 		729715D32718888C00326808 /* Index.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Index.swift; sourceTree = "<group>"; };
@@ -98,6 +103,7 @@
 		729CC221270F01030095014E /* MonitoringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitoringView.swift; sourceTree = "<group>"; };
 		72B8E77227108AF800755D99 /* PlanningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanningViewModel.swift; sourceTree = "<group>"; };
 		C5B301628EB73646A68336F2 /* Pods-BSP5 Drone App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BSP5 Drone App.debug.xcconfig"; path = "Target Support Files/Pods-BSP5 Drone App/Pods-BSP5 Drone App.debug.xcconfig"; sourceTree = "<group>"; };
+		D96024FC18A2506B8BC83714 /* Pods_BSP5_Drone_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BSP5_Drone_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,7 +111,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3D7BD90674D19A642C765AC8 /* libPods-BSP5 Drone App.a in Frameworks */,
+				CBF2ECDACFCAC912CCB68A74 /* Pods_BSP5_Drone_App.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,7 +121,7 @@
 		082CC1008E38436CE3AC4DE4 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				629DB26B9691F8BE96820B4C /* libPods-BSP5 Drone App.a */,
+				D96024FC18A2506B8BC83714 /* Pods_BSP5_Drone_App.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -170,6 +176,7 @@
 				727444AF26FA327A00E5A114 /* Assets.xcassets */,
 				727444B426FA327A00E5A114 /* LaunchScreen.storyboard */,
 				727444B726FA327A00E5A114 /* Info.plist */,
+				72896875271DABE5005B86C1 /* GoogleService-Info.plist */,
 				727444B126FA327A00E5A114 /* Preview Content */,
 				7299F35C2715A7E200124189 /* ProductCommunicationManager.swift */,
 				7299F35E2715BBFE00124189 /* BluetoothConnectorViewController.swift */,
@@ -243,6 +250,7 @@
 				72127D18271D675500B28961 /* Extensions */,
 				72B8E76F27108A2600755D99 /* Planning */,
 				72B8E77027108A8700755D99 /* Extras */,
+				7237E4C9271F063D00C5B0E0 /* LoginView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -272,6 +280,7 @@
 			isa = PBXGroup;
 			children = (
 				72B8E77227108AF800755D99 /* PlanningViewModel.swift */,
+				7237E4CB271F19C200C5B0E0 /* LoginViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -295,8 +304,6 @@
 			dependencies = (
 			);
 			name = "BSP5 Drone App";
-			packageProductDependencies = (
-			);
 			productName = "BSP5 Drone App";
 			productReference = 727444A626FA327800E5A114 /* BSP5 Drone App.app */;
 			productType = "com.apple.product-type.application";
@@ -324,8 +331,6 @@
 				Base,
 			);
 			mainGroup = 7274449D26FA327800E5A114;
-			packageReferences = (
-			);
 			productRefGroup = 727444A726FA327800E5A114 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -357,6 +362,7 @@
 				729CC209270EE9530095014E /* SF-Pro-Display-Thin.otf in Resources */,
 				727444B626FA327A00E5A114 /* LaunchScreen.storyboard in Resources */,
 				729CC20E270EE9530095014E /* SF-Pro-Display-LightItalic.otf in Resources */,
+				72896876271DABE5005B86C1 /* GoogleService-Info.plist in Resources */,
 				729CC214270EE9530095014E /* SF-Pro-Display-MediumItalic.otf in Resources */,
 				727444B326FA327A00E5A114 /* Preview Assets.xcassets in Resources */,
 				729CC216270EE9530095014E /* SF-Pro-Display-BlackItalic.otf in Resources */,
@@ -440,6 +446,7 @@
 				72B8E77327108AF800755D99 /* PlanningViewModel.swift in Sources */,
 				729CC222270F01030095014E /* MonitoringView.swift in Sources */,
 				729CC21E270EF9420095014E /* PlanningHeaderView.swift in Sources */,
+				7237E4CC271F19C200C5B0E0 /* LoginViewModel.swift in Sources */,
 				729CC21A270EF27A0095014E /* PlanningView.swift in Sources */,
 				723157682707477100316E62 /* MapView.swift in Sources */,
 				7299F35D2715A7E200124189 /* ProductCommunicationManager.swift in Sources */,
@@ -448,6 +455,7 @@
 				729715D12718886A00326808 /* loadJson.swift in Sources */,
 				729CC21C270EF7870095014E /* ZoneView.swift in Sources */,
 				727444AC26FA327800E5A114 /* SceneDelegate.swift in Sources */,
+				7237E4CA271F063D00C5B0E0 /* LoginView.swift in Sources */,
 				727444AE26FA327800E5A114 /* ContentView.swift in Sources */,
 				72127D1C271D67B900B28961 /* addBorder.swift in Sources */,
 			);

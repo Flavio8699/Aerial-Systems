@@ -20,6 +20,8 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>DJISDKAppKey</key>
+	<string>34223c773c6100bd876921d8</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -27,6 +29,10 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSBluetoothAlwaysUsageDescription</key>
+	<string>Bluetooth 1</string>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Bluetooth 2</string>
 	<key>NSLocationUsageDescription</key>
 	<string>Location </string>
 	<key>NSLocationWhenInUseUsageDescription</key>
@@ -64,6 +70,8 @@
 	</array>
 	<key>UIRequiresFullScreen</key>
 	<true/>
+	<key>UIStatusBarHidden</key>
+	<true/>
 	<key>UISupportedExternalAccessoryProtocols</key>
 	<array>
 		<string>com.dji.video</string>
@@ -76,16 +84,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>DJISDKAppKey</key>
-	<string>34223c773c6100bd876921d8</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
-	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Bluetooth 2</string>
-	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Bluetooth 1</string>
 </dict>
 </plist>
