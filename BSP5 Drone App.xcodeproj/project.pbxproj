@@ -11,22 +11,27 @@
 		720FECD42718944100EC49FC /* activities.json in Resources */ = {isa = PBXBuildFile; fileRef = 720FECD32718944100EC49FC /* activities.json */; };
 		72127D1A271D676700B28961 /* scrollOnOverflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72127D19271D676700B28961 /* scrollOnOverflow.swift */; };
 		72127D1C271D67B900B28961 /* addBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72127D1B271D67B900B28961 /* addBorder.swift */; };
+		7214AC272722D5BD004A55B3 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7214AC262722D5BD004A55B3 /* SummaryView.swift */; };
 		723157682707477100316E62 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723157672707477100316E62 /* MapView.swift */; };
 		7237E4CA271F063D00C5B0E0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7237E4C9271F063D00C5B0E0 /* LoginView.swift */; };
 		7237E4CC271F19C200C5B0E0 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7237E4CB271F19C200C5B0E0 /* LoginViewModel.swift */; };
 		7250ADA6271D7DBF000EA138 /* DronesCamerasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7250ADA5271D7DBF000EA138 /* DronesCamerasView.swift */; };
+		725E5D7D2733F56C00F60D45 /* Mission.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725E5D7C2733F56C00F60D45 /* Mission.swift */; };
+		725E5D7F2733F5FB00F60D45 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725E5D7E2733F5FB00F60D45 /* User.swift */; };
+		725E5D822733F82000F60D45 /* GeoPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725E5D812733F82000F60D45 /* GeoPoint.swift */; };
+		725E5D84273425E900F60D45 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 725E5D83273425E900F60D45 /* String.swift */; };
+		726E3CC027229EE70074D4A6 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 726E3CBF27229EE70074D4A6 /* GoogleService-Info.plist */; };
+		726E3CC227229FE20074D4A6 /* SessionStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 726E3CC127229FE20074D4A6 /* SessionStore.swift */; };
 		727444AA26FA327800E5A114 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727444A926FA327800E5A114 /* AppDelegate.swift */; };
 		727444AC26FA327800E5A114 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727444AB26FA327800E5A114 /* SceneDelegate.swift */; };
 		727444AE26FA327800E5A114 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727444AD26FA327800E5A114 /* ContentView.swift */; };
 		727444B026FA327A00E5A114 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 727444AF26FA327A00E5A114 /* Assets.xcassets */; };
 		727444B326FA327A00E5A114 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 727444B226FA327A00E5A114 /* Preview Assets.xcassets */; };
 		727444B626FA327A00E5A114 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 727444B426FA327A00E5A114 /* LaunchScreen.storyboard */; };
-		72896876271DABE5005B86C1 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 72896875271DABE5005B86C1 /* GoogleService-Info.plist */; };
 		729715CF2718885100326808 /* indices.json in Resources */ = {isa = PBXBuildFile; fileRef = 729715CE2718885100326808 /* indices.json */; };
 		729715D12718886A00326808 /* loadJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729715D02718886A00326808 /* loadJson.swift */; };
 		729715D42718888C00326808 /* Index.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729715D32718888C00326808 /* Index.swift */; };
 		7299F35D2715A7E200124189 /* ProductCommunicationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7299F35C2715A7E200124189 /* ProductCommunicationManager.swift */; };
-		7299F35F2715BBFE00124189 /* BluetoothConnectorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7299F35E2715BBFE00124189 /* BluetoothConnectorViewController.swift */; };
 		729CC207270EE9530095014E /* SF-Pro-Display-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 729CC1F5270EE94F0095014E /* SF-Pro-Display-SemiboldItalic.otf */; };
 		729CC208270EE9530095014E /* SF-Pro-Display-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 729CC1F6270EE94F0095014E /* SF-Pro-Display-BoldItalic.otf */; };
 		729CC209270EE9530095014E /* SF-Pro-Display-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 729CC1F7270EE94F0095014E /* SF-Pro-Display-Thin.otf */; };
@@ -51,8 +56,29 @@
 		729CC220270EFED00095014E /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729CC21F270EFED00095014E /* CustomButton.swift */; };
 		729CC222270F01030095014E /* MonitoringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729CC221270F01030095014E /* MonitoringView.swift */; };
 		72B8E77327108AF800755D99 /* PlanningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B8E77227108AF800755D99 /* PlanningViewModel.swift */; };
+		72CECB3C272A8AE4004ECB03 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CECB3B272A8AE4004ECB03 /* RegisterView.swift */; };
+		72CECB3E272A8B46004ECB03 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CECB3D272A8B46004ECB03 /* RegisterViewModel.swift */; };
+		72CECB40272A9174004ECB03 /* VisualEffectBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CECB3F272A9174004ECB03 /* VisualEffectBlur.swift */; };
+		72CECB42272A957C004ECB03 /* PopupHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CECB41272A957C004ECB03 /* PopupHandler.swift */; };
+		72FE95FA273D3A4300AFC5DD /* drones.json in Resources */ = {isa = PBXBuildFile; fileRef = 72FE95F9273D3A4300AFC5DD /* drones.json */; };
+		72FE95FC273D3A8000AFC5DD /* Drone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FE95FB273D3A8000AFC5DD /* Drone.swift */; };
+		72FE95FE273D4E4C00AFC5DD /* cameras.json in Resources */ = {isa = PBXBuildFile; fileRef = 72FE95FD273D4E4C00AFC5DD /* cameras.json */; };
+		72FE9600273D4E5A00AFC5DD /* Camera.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FE95FF273D4E5A00AFC5DD /* Camera.swift */; };
 		CBF2ECDACFCAC912CCB68A74 /* Pods_BSP5_Drone_App.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D96024FC18A2506B8BC83714 /* Pods_BSP5_Drone_App.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		722063FE2720A32E00989FF3 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		3069CC307CD593BF05863D18 /* Pods-BSP5 Drone App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BSP5 Drone App.release.xcconfig"; path = "Target Support Files/Pods-BSP5 Drone App/Pods-BSP5 Drone App.release.xcconfig"; sourceTree = "<group>"; };
@@ -60,10 +86,20 @@
 		720FECD32718944100EC49FC /* activities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = activities.json; sourceTree = "<group>"; };
 		72127D19271D676700B28961 /* scrollOnOverflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scrollOnOverflow.swift; sourceTree = "<group>"; };
 		72127D1B271D67B900B28961 /* addBorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = addBorder.swift; sourceTree = "<group>"; };
+		7214AC262722D5BD004A55B3 /* SummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummaryView.swift; sourceTree = "<group>"; };
+		722063DE2720A32E00989FF3 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
+		722063E92720A32E00989FF3 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
+		722064052720AAF600989FF3 /* BSP5 Drone App.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "BSP5 Drone App.entitlements"; sourceTree = "<group>"; };
 		723157672707477100316E62 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		7237E4C9271F063D00C5B0E0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		7237E4CB271F19C200C5B0E0 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
 		7250ADA5271D7DBF000EA138 /* DronesCamerasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DronesCamerasView.swift; sourceTree = "<group>"; };
+		725E5D7C2733F56C00F60D45 /* Mission.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Mission.swift; sourceTree = "<group>"; };
+		725E5D7E2733F5FB00F60D45 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		725E5D812733F82000F60D45 /* GeoPoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeoPoint.swift; sourceTree = "<group>"; };
+		725E5D83273425E900F60D45 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		726E3CBF27229EE70074D4A6 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		726E3CC127229FE20074D4A6 /* SessionStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStore.swift; sourceTree = "<group>"; };
 		727444A626FA327800E5A114 /* BSP5 Drone App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BSP5 Drone App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		727444A926FA327800E5A114 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		727444AB26FA327800E5A114 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -72,12 +108,10 @@
 		727444B226FA327A00E5A114 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		727444B526FA327A00E5A114 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		727444B726FA327A00E5A114 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		72896875271DABE5005B86C1 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		729715CE2718885100326808 /* indices.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = indices.json; sourceTree = "<group>"; };
 		729715D02718886A00326808 /* loadJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loadJson.swift; sourceTree = "<group>"; };
 		729715D32718888C00326808 /* Index.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Index.swift; sourceTree = "<group>"; };
 		7299F35C2715A7E200124189 /* ProductCommunicationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductCommunicationManager.swift; sourceTree = "<group>"; };
-		7299F35E2715BBFE00124189 /* BluetoothConnectorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothConnectorViewController.swift; sourceTree = "<group>"; };
 		729CC1F5270EE94F0095014E /* SF-Pro-Display-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-SemiboldItalic.otf"; sourceTree = "<group>"; };
 		729CC1F6270EE94F0095014E /* SF-Pro-Display-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-BoldItalic.otf"; sourceTree = "<group>"; };
 		729CC1F7270EE94F0095014E /* SF-Pro-Display-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro-Display-Thin.otf"; sourceTree = "<group>"; };
@@ -102,6 +136,14 @@
 		729CC21F270EFED00095014E /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		729CC221270F01030095014E /* MonitoringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonitoringView.swift; sourceTree = "<group>"; };
 		72B8E77227108AF800755D99 /* PlanningViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanningViewModel.swift; sourceTree = "<group>"; };
+		72CECB3B272A8AE4004ECB03 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		72CECB3D272A8B46004ECB03 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
+		72CECB3F272A9174004ECB03 /* VisualEffectBlur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectBlur.swift; sourceTree = "<group>"; };
+		72CECB41272A957C004ECB03 /* PopupHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupHandler.swift; sourceTree = "<group>"; };
+		72FE95F9273D3A4300AFC5DD /* drones.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = drones.json; sourceTree = "<group>"; };
+		72FE95FB273D3A8000AFC5DD /* Drone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drone.swift; sourceTree = "<group>"; };
+		72FE95FD273D4E4C00AFC5DD /* cameras.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cameras.json; sourceTree = "<group>"; };
+		72FE95FF273D4E5A00AFC5DD /* Camera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Camera.swift; sourceTree = "<group>"; };
 		C5B301628EB73646A68336F2 /* Pods-BSP5 Drone App.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BSP5 Drone App.debug.xcconfig"; path = "Target Support Files/Pods-BSP5 Drone App/Pods-BSP5 Drone App.debug.xcconfig"; sourceTree = "<group>"; };
 		D96024FC18A2506B8BC83714 /* Pods_BSP5_Drone_App.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BSP5_Drone_App.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -122,6 +164,8 @@
 			isa = PBXGroup;
 			children = (
 				D96024FC18A2506B8BC83714 /* Pods_BSP5_Drone_App.framework */,
+				722063DE2720A32E00989FF3 /* Intents.framework */,
+				722063E92720A32E00989FF3 /* IntentsUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -140,6 +184,15 @@
 			children = (
 				72127D19271D676700B28961 /* scrollOnOverflow.swift */,
 				72127D1B271D67B900B28961 /* addBorder.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		725E5D802733F81500F60D45 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				725E5D812733F82000F60D45 /* GeoPoint.swift */,
+				725E5D83273425E900F60D45 /* String.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -165,6 +218,7 @@
 		727444A826FA327800E5A114 /* BSP5 Drone App */ = {
 			isa = PBXGroup;
 			children = (
+				725E5D802733F81500F60D45 /* Extensions */,
 				729715D22718887300326808 /* Models */,
 				729715CD2718883100326808 /* Json */,
 				729CC1F3270EE9350095014E /* Fonts */,
@@ -176,11 +230,13 @@
 				727444AF26FA327A00E5A114 /* Assets.xcassets */,
 				727444B426FA327A00E5A114 /* LaunchScreen.storyboard */,
 				727444B726FA327A00E5A114 /* Info.plist */,
-				72896875271DABE5005B86C1 /* GoogleService-Info.plist */,
+				726E3CBF27229EE70074D4A6 /* GoogleService-Info.plist */,
 				727444B126FA327A00E5A114 /* Preview Content */,
 				7299F35C2715A7E200124189 /* ProductCommunicationManager.swift */,
-				7299F35E2715BBFE00124189 /* BluetoothConnectorViewController.swift */,
 				729715D02718886A00326808 /* loadJson.swift */,
+				722064052720AAF600989FF3 /* BSP5 Drone App.entitlements */,
+				726E3CC127229FE20074D4A6 /* SessionStore.swift */,
+				72CECB41272A957C004ECB03 /* PopupHandler.swift */,
 			);
 			path = "BSP5 Drone App";
 			sourceTree = "<group>";
@@ -196,8 +252,10 @@
 		729715CD2718883100326808 /* Json */ = {
 			isa = PBXGroup;
 			children = (
-				729715CE2718885100326808 /* indices.json */,
 				720FECD32718944100EC49FC /* activities.json */,
+				72FE95FD273D4E4C00AFC5DD /* cameras.json */,
+				72FE95F9273D3A4300AFC5DD /* drones.json */,
+				729715CE2718885100326808 /* indices.json */,
 			);
 			path = Json;
 			sourceTree = "<group>";
@@ -207,6 +265,10 @@
 			children = (
 				729715D32718888C00326808 /* Index.swift */,
 				720FECD12718932100EC49FC /* Activity.swift */,
+				725E5D7C2733F56C00F60D45 /* Mission.swift */,
+				725E5D7E2733F5FB00F60D45 /* User.swift */,
+				72FE95FB273D3A8000AFC5DD /* Drone.swift */,
+				72FE95FF273D4E5A00AFC5DD /* Camera.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -251,6 +313,7 @@
 				72B8E76F27108A2600755D99 /* Planning */,
 				72B8E77027108A8700755D99 /* Extras */,
 				7237E4C9271F063D00C5B0E0 /* LoginView.swift */,
+				72CECB3B272A8AE4004ECB03 /* RegisterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -263,6 +326,7 @@
 				729CC21B270EF7870095014E /* ZoneView.swift */,
 				729CC221270F01030095014E /* MonitoringView.swift */,
 				7250ADA5271D7DBF000EA138 /* DronesCamerasView.swift */,
+				7214AC262722D5BD004A55B3 /* SummaryView.swift */,
 			);
 			path = Planning;
 			sourceTree = "<group>";
@@ -272,6 +336,7 @@
 			children = (
 				723157672707477100316E62 /* MapView.swift */,
 				729CC21F270EFED00095014E /* CustomButton.swift */,
+				72CECB3F272A9174004ECB03 /* VisualEffectBlur.swift */,
 			);
 			path = Extras;
 			sourceTree = "<group>";
@@ -281,6 +346,7 @@
 			children = (
 				72B8E77227108AF800755D99 /* PlanningViewModel.swift */,
 				7237E4CB271F19C200C5B0E0 /* LoginViewModel.swift */,
+				72CECB3D272A8B46004ECB03 /* RegisterViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -298,12 +364,15 @@
 				727444A426FA327800E5A114 /* Resources */,
 				F42F5E94CEF9E19398BD79DA /* [CP] Embed Pods Frameworks */,
 				7299F3602715C05F00124189 /* ShellScript */,
+				722063FE2720A32E00989FF3 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = "BSP5 Drone App";
+			packageProductDependencies = (
+			);
 			productName = "BSP5 Drone App";
 			productReference = 727444A626FA327800E5A114 /* BSP5 Drone App.app */;
 			productType = "com.apple.product-type.application";
@@ -314,7 +383,7 @@
 		7274449E26FA327800E5A114 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1250;
+				LastSwiftUpdateCheck = 1300;
 				LastUpgradeCheck = 1250;
 				TargetAttributes = {
 					727444A526FA327800E5A114 = {
@@ -331,6 +400,8 @@
 				Base,
 			);
 			mainGroup = 7274449D26FA327800E5A114;
+			packageReferences = (
+			);
 			productRefGroup = 727444A726FA327800E5A114 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -349,20 +420,22 @@
 				729CC207270EE9530095014E /* SF-Pro-Display-SemiboldItalic.otf in Resources */,
 				720FECD42718944100EC49FC /* activities.json in Resources */,
 				729CC215270EE9530095014E /* SF-Pro-Display-Bold.otf in Resources */,
+				72FE95FE273D4E4C00AFC5DD /* cameras.json in Resources */,
 				729CC210270EE9530095014E /* SF-Pro-Display-HeavyItalic.otf in Resources */,
 				729CC20A270EE9530095014E /* SF-Pro-Display-RegularItalic.otf in Resources */,
 				729CC213270EE9530095014E /* SF-Pro-Display-ThinItalic.otf in Resources */,
+				726E3CC027229EE70074D4A6 /* GoogleService-Info.plist in Resources */,
 				729CC217270EE9530095014E /* SF-Pro-Display-Light.otf in Resources */,
 				729CC20C270EE9530095014E /* SF-Pro-Display-UltralightItalic.otf in Resources */,
 				729CC20D270EE9530095014E /* SF-Pro-Display-Medium.otf in Resources */,
 				729715CF2718885100326808 /* indices.json in Resources */,
 				729CC218270EE9530095014E /* SF-Pro-Display-Ultralight.otf in Resources */,
+				72FE95FA273D3A4300AFC5DD /* drones.json in Resources */,
 				729CC20B270EE9530095014E /* SF-Pro-Display-Heavy.otf in Resources */,
 				729CC211270EE9530095014E /* SF-Pro-Display-Black.otf in Resources */,
 				729CC209270EE9530095014E /* SF-Pro-Display-Thin.otf in Resources */,
 				727444B626FA327A00E5A114 /* LaunchScreen.storyboard in Resources */,
 				729CC20E270EE9530095014E /* SF-Pro-Display-LightItalic.otf in Resources */,
-				72896876271DABE5005B86C1 /* GoogleService-Info.plist in Resources */,
 				729CC214270EE9530095014E /* SF-Pro-Display-MediumItalic.otf in Resources */,
 				727444B326FA327A00E5A114 /* Preview Assets.xcassets in Resources */,
 				729CC216270EE9530095014E /* SF-Pro-Display-BlackItalic.otf in Resources */,
@@ -438,26 +511,37 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				725E5D84273425E900F60D45 /* String.swift in Sources */,
 				720FECD22718932100EC49FC /* Activity.swift in Sources */,
 				72127D1A271D676700B28961 /* scrollOnOverflow.swift in Sources */,
 				7250ADA6271D7DBF000EA138 /* DronesCamerasView.swift in Sources */,
 				727444AA26FA327800E5A114 /* AppDelegate.swift in Sources */,
-				7299F35F2715BBFE00124189 /* BluetoothConnectorViewController.swift in Sources */,
 				72B8E77327108AF800755D99 /* PlanningViewModel.swift in Sources */,
+				72FE95FC273D3A8000AFC5DD /* Drone.swift in Sources */,
+				725E5D7F2733F5FB00F60D45 /* User.swift in Sources */,
 				729CC222270F01030095014E /* MonitoringView.swift in Sources */,
 				729CC21E270EF9420095014E /* PlanningHeaderView.swift in Sources */,
+				726E3CC227229FE20074D4A6 /* SessionStore.swift in Sources */,
+				725E5D7D2733F56C00F60D45 /* Mission.swift in Sources */,
+				7214AC272722D5BD004A55B3 /* SummaryView.swift in Sources */,
 				7237E4CC271F19C200C5B0E0 /* LoginViewModel.swift in Sources */,
+				72CECB42272A957C004ECB03 /* PopupHandler.swift in Sources */,
 				729CC21A270EF27A0095014E /* PlanningView.swift in Sources */,
+				72CECB3C272A8AE4004ECB03 /* RegisterView.swift in Sources */,
 				723157682707477100316E62 /* MapView.swift in Sources */,
 				7299F35D2715A7E200124189 /* ProductCommunicationManager.swift in Sources */,
 				729715D42718888C00326808 /* Index.swift in Sources */,
+				725E5D822733F82000F60D45 /* GeoPoint.swift in Sources */,
+				72CECB40272A9174004ECB03 /* VisualEffectBlur.swift in Sources */,
 				729CC220270EFED00095014E /* CustomButton.swift in Sources */,
+				72FE9600273D4E5A00AFC5DD /* Camera.swift in Sources */,
 				729715D12718886A00326808 /* loadJson.swift in Sources */,
 				729CC21C270EF7870095014E /* ZoneView.swift in Sources */,
 				727444AC26FA327800E5A114 /* SceneDelegate.swift in Sources */,
 				7237E4CA271F063D00C5B0E0 /* LoginView.swift in Sources */,
 				727444AE26FA327800E5A114 /* ContentView.swift in Sources */,
 				72127D1C271D67B900B28961 /* addBorder.swift in Sources */,
+				72CECB3E272A8B46004ECB03 /* RegisterViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -595,8 +679,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C5B301628EB73646A68336F2 /* Pods-BSP5 Drone App.debug.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "BSP5 Drone App/BSP5 Drone App.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"BSP5 Drone App/Preview Content\"";
 				DEVELOPMENT_TEAM = ZRNUGARP83;
@@ -610,8 +697,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.flavio.BSP5-Drone-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -619,8 +707,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3069CC307CD593BF05863D18 /* Pods-BSP5 Drone App.release.xcconfig */;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "BSP5 Drone App/BSP5 Drone App.entitlements";
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_ASSET_PATHS = "\"BSP5 Drone App/Preview Content\"";
 				DEVELOPMENT_TEAM = ZRNUGARP83;
@@ -634,8 +725,9 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.flavio.BSP5-Drone-App";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};

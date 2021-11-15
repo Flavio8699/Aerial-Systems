@@ -20,8 +20,8 @@ struct PlanningHeaderView: View {
                             viewModel.currentTab = tab
                         }, label: {
                             HStack {
-                                Image(systemName: "\(index+1).circle.fill")
-                                Text(tab.description)
+                                Image(systemName: "\(index+1).circle.fill").font(SFPro.title_light_25)
+                                Text(tab.description).font(SFPro.title_light)
                             }
                             .frame(width: geometry.size.width/4, height: geometry.size.height)
                             .background(viewModel.currentTab == tab ? Color(.systemBlue) : Color("TabColor").opacity(0.9))
@@ -29,7 +29,7 @@ struct PlanningHeaderView: View {
                         })
                         Divider()
                     }
-                }.font(SFPro.title_regular)
+                }
             }.frame(maxWidth: .infinity).frame(height: 70)
             Divider()
         }

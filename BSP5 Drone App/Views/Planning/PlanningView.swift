@@ -6,24 +6,79 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct PlanningView: View {
     
+    @State var manageMissions: Bool = false
     @StateObject var viewModel = PlanningViewModel()
+    @EnvironmentObject var session: SessionStore
+    @EnvironmentObject var popupHandler: PopupHandler
     
     var body: some View {
-        switch viewModel.currentTab {
-        case .zone:
-            ZoneView(viewModel: viewModel)
-        case .monitoring:
-            MonitoringView(viewModel: viewModel)
-        case .drones_and_cameras:
-            DronesCamerasView(viewModel: viewModel)
-        case .summary:
-            VStack (spacing: 0) {
-                PlanningHeaderView(viewModel: viewModel)
-                Text("Summary")
-                Spacer()
+        VStack (spacing: 0) {
+            PlanningHeaderView(viewModel: viewModel)
+            switch viewModel.currentTab {
+                case .zone:
+                    ZoneView(viewModel: viewModel)
+                case .monitoring:
+                    MonitoringView(viewModel: viewModel)
+                case .drones_and_cameras:
+                    DronesCamerasView(viewModel: viewModel)
+                case .summary:
+                    SummaryView(viewModel: viewModel)
+            }
+        }
+        .sheet(isPresented: $manageMissions) {
+            if let user = session.user {
+                NavigationView {
+                    List {
+                        ForEach (user.getMissions(), id: \.id) { mission in
+                            HStack {
+                                VStack (alignment: .leading) {
+                                    Text(mission.name)
+                                    Text("Last save: \(mission.dateString)").font(SFPro.subtitle).foregroundColor(Color(.systemGray))
+                                }
+                                Spacer()
+                                Button(action: {
+                                    viewModel.loadMission(mission: mission)
+                                    manageMissions = false
+                                }, label: {
+                                    Text("Load mission")
+                                })
+                            }
+                        }.onDelete { indexSet in
+                            if let missions = user.missions, indexSet.count > 0 {
+                                manageMissions = false
+                                let index = indexSet.first!
+                                let mission = missions[index]
+                                popupHandler.currentPopup = .deleteMission(action: {
+                                    mission.delete()
+                                    viewModel.loadMission(mission: Mission())
+                                    popupHandler.currentPopup = .success(message: "The mission was deleted successfully!", button: "Ok", action: popupHandler.close)
+                                })
+                            }
+                        }
+                    }
+                    .navigationBarTitle("Manage missions", displayMode: .inline)
+                    .navigationBarItems(trailing:
+                        Button(action: {
+                            manageMissions = false
+                        }, label: {
+                            Text("Close")
+                        })
+                    )
+                }
+            }
+        }
+        .navigationTitle("Planning: \(viewModel.currentMission.name)")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    manageMissions = true
+                }, label: {
+                    Text("Manage missions")
+                })
             }
         }
     }

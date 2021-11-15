@@ -6,20 +6,23 @@
 //
 
 import SwiftUI
+import MapKit
 
 struct ZoneView: View {
     
+    let map = MKMapView()
     @StateObject var viewModel: PlanningViewModel
+    @EnvironmentObject var session: SessionStore
     
     var body: some View {
-        MapView(locations: $viewModel.locations)
-        VStack (spacing: 0) {
-            PlanningHeaderView(viewModel: viewModel)
-            Spacer()
+        ZStack (alignment: .bottom) {
+            MapView(map: map, locations: $viewModel.currentMission.locations, mapType: $session.map, zoomIn: $viewModel.zoomIn).onAppear {
+                map.fitAll()
+            }
             HStack (alignment: .bottom) {
                 HStack {
-                    Text("Toral area :").font(SFPro.body_bold)
-                    Text("\(viewModel.selectedArea)m²").font(SFPro.body)
+                    Text("Toral area :").bold()
+                    Text("\(viewModel.selectedArea)m²")
                 }
                 .padding()
                 .background(.white)
@@ -27,10 +30,7 @@ struct ZoneView: View {
                 .padding()
                 Spacer()
                 CustomButton(label: "Next step", action: {
-                    /*withAnimation(.linear) {
-                        viewModel.currentTab = .monitoring
-                    }*/
-                    self.viewModel.locations.append(.init(latitude: 49.50107619428897, longitude: 5.9400545040158725))
+                    viewModel.currentTab = .monitoring
                 }).padding()
             }
         }

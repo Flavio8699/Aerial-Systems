@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Zenmuse XT",
+    "image": "zenmuse-xt",
+    "lens": "6.8mm, 9mm, 13mm, 19mm",
+    "fov": "57.12° x 42.44°",
+    "spectral_bands": "red, green, near-infrared"
+  },
+  {
+    "name": "Zenmuse Z30",
+    "image": "zenmuse-z30",
+    "lens": "",
+    "fov": "",
+    "spectral_bands": ""
+  },
+  {
+    "name": "Sentera AGX 710",
+    "image": "sentera-agx710",
+    "lens": "",
+    "fov": "",
+    "spectral_bands": ""
+  }
+]

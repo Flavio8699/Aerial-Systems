@@ -10,80 +10,82 @@ import SwiftUI
 struct DronesCamerasView: View {
     
     @StateObject var viewModel: PlanningViewModel
-    @StateObject var bluetoothConnector: BluetoothConnectorViewController = BluetoothConnectorViewController()
-    @State var openSheet = false
+    @State var selected = false
     
     var body: some View {
-        VStack (spacing: 0) {
-            PlanningHeaderView(viewModel: viewModel)
-            HStack (alignment: .top, spacing: 15) {
-                VStack (spacing: 0) {
-                    VStack (spacing: 30) {
-                        Text("Drones").font(SFPro.title_regular)
-                        Text("Please choose the drones that you would like to use during the mission.").font(SFPro.body_regular).foregroundColor(Color(.systemGray)).padding(.horizontal, 30)
-                    }.padding()
-                    VStack (spacing: 10) {
-                        Text("no drones")
-                        Divider()
+        HStack (alignment: .top, spacing: 15) {
+            VStack (spacing: 0) {
+                VStack (spacing: 30) {
+                    Text("Drones").font(SFPro.title_light_25)
+                    Text("Please choose the drones that you would like to use during the mission.").multilineTextAlignment(.center).foregroundColor(Color(.systemGray)).padding(.horizontal, 30)
+                }.padding()
+                VStack (spacing: 10) {
+                    ForEach(viewModel.drones, id: \.self) { drone in
                         Button(action: {
-                            openSheet = true
+                            viewModel.currentMission.drone = drone.name
                         }, label: {
-                            HStack {
-                                Text("Add a new drone")
-                                Spacer()
-                                Image(systemName: "chevron.right").foregroundColor(Color(.systemGray))
+                            HStack (spacing: 15) {
+                                Image(drone.image).resizable().scaledToFit().frame(width: 150, height: 150)
+                                VStack (alignment: .leading) {
+                                    Text(drone.name).foregroundColor(.black)
+                                    Text("Flight time: \(drone.flight_time) minutes").font(SFPro.subtitle).foregroundColor(Color(.systemGray))
+                                    Text("Hovering Accuracy: \(drone.hovering_accuracy)").font(SFPro.subtitle).foregroundColor(Color(.systemGray))
+                                }.multilineTextAlignment(.leading).fixedSize(horizontal: false, vertical: true)
+                                Spacer(minLength: 0)
+                                Image(systemName: viewModel.currentMission.drone == drone.name ? "checkmark.circle.fill" : "circle").font(.system(size: 25)).foregroundColor(viewModel.currentMission.drone == drone.name ? Color(.systemBlue) : Color(.systemGray3))
                             }
                         })
-                    }.padding([.horizontal, .bottom]).scrollOnOverflow()
+                        if drone != viewModel.drones.last {
+                            Divider()
+                        }
+                    }
+                }.padding([.horizontal, .bottom])
+            }
+            .frame(maxWidth: .infinity)
+            .background(.white)
+            .addBorder(.white, cornerRadius: 14)
+            
+            VStack (spacing: 0) {
+                VStack (spacing: 0) {
+                    VStack (spacing: 30) {
+                        Text("Cameras").font(SFPro.title_light_25)
+                        Text("Please choose the drone compatible cameras that you will use during the mission.").multilineTextAlignment(.center).foregroundColor(Color(.systemGray)).padding(.horizontal, 30)
+                    }.padding()
+                    VStack (spacing: 10) {
+                        ForEach(viewModel.cameras, id: \.self) { camera in
+                            Button(action: {
+                                viewModel.currentMission.camera = camera.name
+                            }, label: {
+                                HStack (spacing: 15) {
+                                    Image(camera.image).resizable().scaledToFit().frame(width: 150, height: 150)
+                                    VStack (alignment: .leading) {
+                                        Text(camera.name).foregroundColor(.black)
+                                        Text("Lens: \(camera.lens)").font(SFPro.subtitle).foregroundColor(Color(.systemGray))
+                                        Text("FOV: \(camera.fov)").font(SFPro.subtitle).foregroundColor(Color(.systemGray))
+                                        Text("Spectral bands: \(camera.spectral_bands)").font(SFPro.subtitle).foregroundColor(Color(.systemGray))
+                                    }.multilineTextAlignment(.leading).fixedSize(horizontal: false, vertical: true)
+                                    Spacer(minLength: 0)
+                                    Image(systemName: viewModel.currentMission.camera == camera.name ? "checkmark.circle.fill" : "circle").font(.system(size: 25)).foregroundColor(viewModel.currentMission.camera == camera.name ? Color(.systemBlue) : Color(.systemGray3))
+                                }
+                            })
+                            if camera != viewModel.cameras.last {
+                                Divider()
+                            }
+                        }
+                    }.padding([.horizontal, .bottom])
                 }
-                .frame(maxWidth: .infinity)
                 .background(.white)
                 .addBorder(.white, cornerRadius: 14)
                 
-                VStack (spacing: 0) {
-                    VStack (spacing: 0) {
-                        VStack (spacing: 30) {
-                            Text("Cameras").font(SFPro.title_regular)
-                            Text("Please choose the drone compatible cameras that you will use during the mission.").font(SFPro.body_regular).foregroundColor(Color(.systemGray)).padding(.horizontal, 30)
-                        }.padding()
-                        VStack (spacing: 10) {
-                            Text("test2")
-                        }.padding([.horizontal, .bottom]).scrollOnOverflow()
-                    }
-                    .background(.white)
-                    .addBorder(.white, cornerRadius: 14)
-                    
-                    Spacer(minLength: 0)
-                    
-                    HStack {
-                        Spacer()
-                        CustomButton(label: "Next step", action: {
-                            withAnimation(.linear) {
-                                viewModel.currentTab = .summary
-                            }
-                        })
-                    }.padding(.top)
-                }.frame(maxWidth: .infinity)
-            }.padding()
-        }.sheet(isPresented: $openSheet) {
-            NavigationView {
-                VStack {
-                    Button(action: {
-                        self.bluetoothConnector.searchBluetoothProducts()
-                    }, label: {
-                        Text("Search for products")
+                Spacer(minLength: 0)
+                
+                HStack {
+                    Spacer()
+                    CustomButton(label: "Next step", action: {
+                        viewModel.currentTab = .summary
                     })
-                }
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationTitle("Add a new drone")
-                .toolbar {
-                    Button("Close") {
-                        openSheet = false
-                    }
-                }
-            }
-            
-        }
+                }.padding(.top)
+            }.frame(maxWidth: .infinity)
+        }.padding()
     }
 }
-

@@ -6,28 +6,34 @@
 //
 
 import SwiftUI
-import Combine
 import MapKit
 
 class PlanningViewModel: ObservableObject {
     
-    @Published var currentTab: PlanningTab = .zone
+    var activites = [Activity]()
+    var cameras = [Camera]()
+    var drones = [Drone]()
+    var indices = [Index]()
     
-    @Published var locations: [CLLocationCoordinate2D] = [.init(latitude: 49.50631564241318, longitude: 5.941884408650027), .init(latitude: 49.50525665878009, longitude: 5.95445860403537), .init(latitude: 49.50039759347766, longitude: 5.954718385451161)]
+    @Published var currentTab: PlanningTab = .zone
+    @Published var currentMission: Mission
+    @Published var zoomIn: Bool = false
     
     var selectedArea: Int {
-        regionArea(locations: self.locations)
+        regionArea(locations: self.currentMission.locations.map { $0.coordinates.toLocation() })
     }
     
-    var indices = [Index]()
-    @Published var selectedIndices = [Index]()
-    
-    var activites = [Activity]()
-    @Published var selectedActivites = [Activity]()
-    
     init() {
-        self.indices = loadJson("indices.json")
         self.activites = loadJson("activities.json")
+        self.cameras = loadJson("cameras.json")
+        self.drones = loadJson("drones.json")
+        self.indices = loadJson("indices.json")
+        self.currentMission = Mission()
+    }
+    
+    func loadMission(mission: Mission) {
+        self.currentMission = mission
+        self.zoomIn = true
     }
     
     func radians(degrees: Double) -> Double {
@@ -53,3 +59,4 @@ class PlanningViewModel: ObservableObject {
     }
     
 }
+

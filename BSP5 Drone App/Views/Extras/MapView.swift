@@ -7,16 +7,24 @@
 
 import SwiftUI
 import MapKit
+import FirebaseFirestore
+import UIKit
 
 struct MapView: UIViewRepresentable {
     
-    let map = MKMapView()
+    var map: MKMapView
     let locationManager = CLLocationManager()
-    var firstRun: Bool = true
-    @Binding var locations: [CLLocationCoordinate2D]
+    @Binding var locations: [Location]
+    @Binding var mapType: MKMapType
+    @Binding var zoomIn: Bool
+    var annotationSize: CGFloat
     
-    public init(locations: Binding<[CLLocationCoordinate2D]> = .constant([])) {
+    public init(map: MKMapView, locations: Binding<[Location]> = .constant([]), mapType: Binding<MKMapType> = .constant(.satellite), zoomIn: Binding<Bool> = .constant(false), annotationSize: CGFloat = 20) {
+        self.map = map
         self._locations = locations
+        self._mapType = mapType
+        self._zoomIn = zoomIn
+        self.annotationSize = annotationSize
     }
     
     func makeCoordinator() -> MapView.Coordinator {
@@ -25,8 +33,11 @@ struct MapView: UIViewRepresentable {
     
     func makeUIView(context: UIViewRepresentableContext<MapView>) -> MKMapView {
         map.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 49.50458781521201, longitude: 5.94840754072138), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-        map.mapType = .satellite
+        map.mapType = self.mapType
         map.delegate = context.coordinator
+        
+        let longPressGesture = UILongPressGestureRecognizer(target: context.coordinator, action: #selector(context.coordinator.addAnnotation(_:)))
+        map.addGestureRecognizer(longPressGesture)
         return map
     }
     
@@ -45,21 +56,30 @@ struct MapView: UIViewRepresentable {
             map.setRegion(region, animated: true)
         }*/
         
+        uiView.mapType = self.mapType
         updateMap(locations: self.locations, mapView: uiView)
+        if self.zoomIn {
+            uiView.fitAll()
+            DispatchQueue.main.async {
+                self.zoomIn = false
+            }
+        }
     }
     
-    func updateMap(locations: [CLLocationCoordinate2D], mapView: MKMapView) {
+    func updateMap(locations: [Location], mapView: MKMapView) {
         mapView.removeAnnotations(mapView.annotations)
         
-        for (i, point) in locations.enumerated() {
+        let locationsSorted = sortAnnotations(locations: locations)
+        
+        for location in locationsSorted {
             let annotation = MKPointAnnotation()
-            annotation.coordinate = point
-            annotation.title = String(i)
+            annotation.coordinate = location.coordinates.toLocation()
+            annotation.title = String(location.id)
             mapView.addAnnotation(annotation)
         }
         
         mapView.removeOverlays(mapView.overlays)
-        mapView.addOverlay(MKPolygon(coordinates: locations, count: locations.count))
+        mapView.addOverlay(MKPolygon(coordinates: locationsSorted.map { $0.coordinates.toLocation() }, count: locationsSorted.count))
     }
     
     class Coordinator: NSObject, MKMapViewDelegate {
@@ -77,6 +97,18 @@ struct MapView: UIViewRepresentable {
             return customAnnotationView
         }
         
+        @objc func addAnnotation(_ gestureRecognizer: UIGestureRecognizer) {
+            if gestureRecognizer.state == .began {
+                DispatchQueue.main.async {
+                    let touchPoint = gestureRecognizer.location(in: gestureRecognizer.view)
+                    guard let coordinates = (gestureRecognizer.view as? MKMapView)?.convert(touchPoint, toCoordinateFrom: gestureRecognizer.view) else {
+                        return
+                    }
+                    self.parent.locations.append(.init(id: self.parent.locations.count+1, coordinates: .init(latitude: coordinates.latitude, longitude: coordinates.longitude)))
+                }
+            }
+        }
+        
         private func customAnnotationView(in mapView: MKMapView, for annotation: MKAnnotation) -> CustomAnnotationView {
             let identifier = "customPin"
 
@@ -84,7 +116,7 @@ struct MapView: UIViewRepresentable {
                 annotationView.annotation = annotation
                 return annotationView
             } else {
-                let customAnnotationView = CustomAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                let customAnnotationView = CustomAnnotationView(annotation: annotation, reuseIdentifier: identifier, size: parent.annotationSize)
                 customAnnotationView.canShowCallout = false
                 customAnnotationView.isDraggable = true
                 return customAnnotationView
@@ -102,8 +134,8 @@ struct MapView: UIViewRepresentable {
             
             if newState == .ending {
                 DispatchQueue.main.async {
-                    self.parent.locations.remove(at: index!)
-                    self.parent.locations.insert(.init(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude), at: index!)
+                    self.parent.locations.removeAll(where: { $0.id == index })
+                    self.parent.locations.append(.init(id: index ?? self.parent.locations.count+1, coordinates: .init(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)))
                     mapView.removeAnnotation(annotation)
                     self.parent.updateMap(locations: self.parent.locations, mapView: mapView)
                 }
@@ -121,13 +153,11 @@ struct MapView: UIViewRepresentable {
 }
 
 class CustomAnnotationView: MKAnnotationView {
-    private let annotationFrame = CGRect(x: 0, y: 0, width: 35, height: 35)
-
-    override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
+    
+    init(annotation: MKAnnotation?, reuseIdentifier: String?, size: CGFloat) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
-        self.frame = annotationFrame
         self.backgroundColor = .clear
-        self.set(image: UIImage(systemName: "circle.fill")!, with: .systemBlue)
+        self.set(image: UIImage(systemName: "circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: size))!, with: .systemBlue)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -136,7 +166,6 @@ class CustomAnnotationView: MKAnnotationView {
 }
 
 extension MKAnnotationView {
-
     public func set(image: UIImage, with color : UIColor) {
         let view = UIImageView(image: image.withRenderingMode(.alwaysTemplate))
         view.tintColor = color
@@ -147,5 +176,16 @@ extension MKAnnotationView {
         UIGraphicsEndImageContext()
         self.image = image
     }
-    
+}
+
+extension MKMapView {
+    func fitAll(padding: CGFloat = 100) {
+        var zoomRect = MKMapRect.null;
+        for annotation in annotations {
+            let annotationPoint = MKMapPoint(annotation.coordinate)
+            let pointRect = MKMapRect(x: annotationPoint.x, y: annotationPoint.y, width: 0.01, height: 0.01);
+            zoomRect = zoomRect.union(pointRect);
+        }
+        setVisibleMapRect(zoomRect, edgePadding: UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding), animated: true)
+    }
 }

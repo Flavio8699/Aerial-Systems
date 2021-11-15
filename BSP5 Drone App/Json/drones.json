@@ -1,0 +1,14 @@
+[
+  {
+    "name": "DJI Matrice 210",
+    "image": "matrice210",
+    "flight_time": 27,
+    "hovering_accuracy": "+- 1.5m or +- 0.3m"
+  },
+  {
+    "name": "DJI Mavic 2 Zoom",
+    "image": "mavicpro2",
+    "flight_time": 31,
+    "hovering_accuracy": "+- 1.5m or +- 0.3m"
+  }
+]
