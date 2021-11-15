@@ -8,4 +8,8 @@ target 'BSP5 Drone App' do
   # Pods for BSP5 Drone App
   pod 'DJI-SDK-iOS', '~> 4.15.2’
   pod 'Firebase/Auth'
+  pod 'Firebase/Core'
+  pod ‘Firebase/Firestore'
+  pod 'Firebase/Database'
+  pod 'FirebaseFirestoreSwift', '> 7.0-beta'
 end

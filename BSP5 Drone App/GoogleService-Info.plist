@@ -30,5 +30,7 @@
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
 	<string>1:57100448291:ios:107a0089f43ffa339ff796</string>
+	<key>DATABASE_URL</key>
+	<string>https://drone-mission-ipad-app-default-rtdb.europe-west1.firebasedatabase.app</string>
 </dict>
 </plist>

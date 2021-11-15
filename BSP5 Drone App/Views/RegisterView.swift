@@ -1,17 +1,18 @@
 //
-//  LoginView.swift
+//  RegisterView.swift
 //  BSP5 Drone App
 //
-//  Created by Flavio Matias on 19/10/2021.
+//  Created by Flavio Matias on 28/10/2021.
 //
 
 import SwiftUI
 
-struct LoginView: View {
+struct RegisterView: View {
 
-    @StateObject var viewModel = LoginViewModel()
+    @StateObject var viewModel = RegisterViewModel()
     @EnvironmentObject var session: SessionStore
     @EnvironmentObject var popupHandler: PopupHandler
+    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     
     var body: some View {
         GeometryReader { geometry in
@@ -19,9 +20,19 @@ struct LoginView: View {
                 HStack (spacing: 0) {
                     Spacer()
                     VStack (alignment: .leading, spacing: 15) {
-                        Text("Sign in to Aerial Systems").font(SFPro.frontpage_title_regular)
+                        Text("Sign up to Aerial Systems").font(SFPro.frontpage_title_regular)
                         Text("Please enter your credentials to proceed.").foregroundColor(Color(.systemGray))
                         VStack (spacing: 25) {
+                            VStack (alignment: .leading, spacing: 5) {
+                                Text("FULL NAME").font(.custom("SFProDisplay-Regular", size: 14)).foregroundColor(Color(.systemGray))
+                                TextField("", text: $viewModel.fullName)
+                                    .padding(.horizontal, 18)
+                                    .padding(.vertical, 13)
+                                    .foregroundColor(.black.opacity(0.8))
+                                    .background(Color("TextFieldBackground"))
+                                    .addBorder(Color("TextFieldBorder"), width: 1.5, cornerRadius: 6)
+                            }
+                            
                             VStack (alignment: .leading, spacing: 5) {
                                 Text("EMAIL ADDRESS").font(.custom("SFProDisplay-Regular", size: 14)).foregroundColor(Color(.systemGray))
                                 TextField("", text: $viewModel.email)
@@ -33,23 +44,7 @@ struct LoginView: View {
                             }
                             
                             VStack (alignment: .leading, spacing: 5) {
-                                HStack {
-                                    Text("PASSWORD").font(.custom("SFProDisplay-Regular", size: 14)).foregroundColor(Color(.systemGray))
-                                    Spacer()
-                                    Button(action: {
-                                        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to:nil, from:nil, for:nil)
-                                        session.passwordReset(email: viewModel.email) { result in
-                                            switch result {
-                                            case .success():
-                                                popupHandler.currentPopup = .success(message: "Please check your email inbox.", button: "Ok", action: popupHandler.close)
-                                            case .failure(let error):
-                                                popupHandler.currentPopup = .error(message: error.localizedDescription, button: "Ok", action: popupHandler.close)
-                                            }
-                                        }
-                                    }, label: {
-                                        Text("Forgot password?").font(SFPro.subtitle).foregroundColor(Color(.systemGray))
-                                    })
-                                }
+                                Text("PASSWORD").font(.custom("SFProDisplay-Regular", size: 14)).foregroundColor(Color(.systemGray))
                                 HStack {
                                     if viewModel.passwordVisible {
                                         TextField("", text: $viewModel.password)
@@ -68,14 +63,16 @@ struct LoginView: View {
                                 .background(Color("TextFieldBackground"))
                                 .addBorder(Color("TextFieldBorder"), width: 1.5, cornerRadius: 6)
                             }
-                            CustomButton(label: "Sign in", loading: viewModel.loading, entireWidth: true) {
+                            CustomButton(label: "Create Account", loading: viewModel.loading, entireWidth: true) {
                                 viewModel.loading = true
                                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to:nil, from:nil, for:nil)
-                                session.login(email: viewModel.email, password: viewModel.password) { result in
+                                session.register(email: viewModel.email, password: viewModel.password) { result in
                                     switch result {
                                     case .success():
-                                        UserDefaults.standard.set(true, forKey: "loggedIn")
-                                        NotificationCenter.default.post(name: NSNotification.Name("loggedIn"), object: nil)
+                                        popupHandler.currentPopup = .success(message: "Your account has been created.", button: "Sign in", action: {
+                                            popupHandler.close()
+                                            self.presentationMode.wrappedValue.dismiss()
+                                        })
                                     case .failure(let error):
                                         popupHandler.currentPopup = .error(message: error.localizedDescription, button: "Ok", action: popupHandler.close)
                                     }
@@ -83,10 +80,12 @@ struct LoginView: View {
                                 }
                             }
                             HStack {
-                                Text("Don't have an account?").foregroundColor(Color(.systemGray))
-                                NavigationLink(destination: RegisterView()) {
-                                    Text("Sign up")
-                                }
+                                Text("Already have an account?").foregroundColor(Color(.systemGray))
+                                Button(action: {
+                                    self.presentationMode.wrappedValue.dismiss()
+                                }, label: {
+                                    Text("Sign in")
+                                })
                             }.font(SFPro.subtitle)
                         }.padding(.top, 35)
                     }.padding(.bottom, 35)
@@ -96,7 +95,7 @@ struct LoginView: View {
                     Divider()
                     Image("dji").resizable().scaledToFill().frame(width: geometry.size.width/2)
                 }
-                .navigationBarTitle("Sign in", displayMode: .inline)
+                .navigationBarTitle("", displayMode: .inline)
                 .navigationBarHidden(true)
                 .edgesIgnoringSafeArea(.all)
             }
@@ -105,8 +104,8 @@ struct LoginView: View {
     }
 }
 
-struct LoginView_Previews: PreviewProvider {
+struct RegisterView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView().previewInterfaceOrientation(.landscapeLeft)
+        RegisterView().previewInterfaceOrientation(.landscapeLeft)
     }
 }
