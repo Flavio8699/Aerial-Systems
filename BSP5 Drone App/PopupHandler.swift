@@ -15,12 +15,19 @@ class PopupHandler: ObservableObject {
             self.showPopup = true
         }
     }
+    @Published var missionImagePopup: MissionImage? = nil {
+        didSet {
+            self.showPopup = true
+        }
+    }
     
     func isPopupOpen() -> Bool {
         return self.showPopup
     }
     
     func close() {
+        self.missionImagePopup = nil
+        self.currentPopup = nil
         self.showPopup = false
     }
 }

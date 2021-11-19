@@ -87,53 +87,57 @@ struct ContentView: View {
                 // Popups
                 if popupHandler.isPopupOpen() {
                     VisualEffectBlur(blurStyle: .dark).ignoresSafeArea()
-                    VStack (spacing: 20) {
-                        switch popupHandler.currentPopup {
-                        case .success(let message, let button, let action):
-                            Image(systemName: "checkmark.circle.fill").foregroundColor(Color(.systemGreen)).font(.system(size: 65))
-                            Text(message).multilineTextAlignment(.center)
-                            CustomButton(label: button, entireWidth: true, action: action).padding(.top, 15)
-                            
-                        case .error(let message, let button, let action):
-                            Image(systemName: "xmark.circle.fill").foregroundColor(Color(.systemRed)).font(.system(size: 65))
-                            Text(message).multilineTextAlignment(.center)
-                            CustomButton(label: button, entireWidth: true, action: action).padding(.top, 15)
-                            
-                        case .saveMission(let missionName, let action):
-                            Image(systemName: "pencil.circle.fill").foregroundColor(Color(.systemGray)).font(.system(size: 65))
-                            Text("test").multilineTextAlignment(.center)
-                            TextField("", text: missionName)
-                            HStack (spacing: 20) {
-                                CustomButton(label: "Close", entireWidth: true, action: popupHandler.close)
-                                CustomButton(label: "Save", color: .black, entireWidth: true, action: action)
-                            }.padding(.top, 15)
-                            
-                        case .deleteMission(let action):
-                            Image(systemName: "trash.circle.fill").foregroundColor(Color(.systemGray)).font(.system(size: 65))
-                            Text("Are you sure you want to delete the mission?").multilineTextAlignment(.center)
-                            HStack (spacing: 20) {
-                                CustomButton(label: "Cancel", entireWidth: true, action: popupHandler.close)
-                                CustomButton(label: "Delete", color: Color(.systemRed), entireWidth: true, action: action)
-                            }.padding(.top, 15)
-                            
-                        case .logout(let action):
-                            Image(systemName: "power").foregroundColor(Color(.systemGray)).font(.system(size: 65))
-                            Text("Are you sure you want to logout? All unsaved progress will be lost.").multilineTextAlignment(.center)
-                            HStack (spacing: 20) {
-                                CustomButton(label: "Cancel", entireWidth: true, action: popupHandler.close)
-                                CustomButton(label: "Logout", color: Color(.systemRed), entireWidth: true, action: action)
-                            }.padding(.top, 15)
-                            
-                        default:
-                            Text("error")
+                    if let missionImage = popupHandler.missionImagePopup {
+                        MissionImageView(missionImage: missionImage)
+                    } else {
+                        VStack (spacing: 20) {
+                            switch popupHandler.currentPopup {
+                            case .success(let message, let button, let action):
+                                Image(systemName: "checkmark.circle.fill").foregroundColor(Color(.systemGreen)).font(.system(size: 65))
+                                Text(message).multilineTextAlignment(.center)
+                                CustomButton(label: button, entireWidth: true, action: action).padding(.top, 15)
+                                
+                            case .error(let message, let button, let action):
+                                Image(systemName: "xmark.circle.fill").foregroundColor(Color(.systemRed)).font(.system(size: 65))
+                                Text(message).multilineTextAlignment(.center)
+                                CustomButton(label: button, entireWidth: true, action: action).padding(.top, 15)
+                                
+                            case .saveMission(let missionName, let action):
+                                Image(systemName: "pencil.circle.fill").foregroundColor(Color(.systemGray)).font(.system(size: 65))
+                                Text("test").multilineTextAlignment(.center)
+                                TextField("", text: missionName)
+                                HStack (spacing: 20) {
+                                    CustomButton(label: "Close", entireWidth: true, action: popupHandler.close)
+                                    CustomButton(label: "Save", color: .black, entireWidth: true, action: action)
+                                }.padding(.top, 15)
+                                
+                            case .deleteMission(let action):
+                                Image(systemName: "trash.circle.fill").foregroundColor(Color(.systemGray)).font(.system(size: 65))
+                                Text("Are you sure you want to delete the mission?").multilineTextAlignment(.center)
+                                HStack (spacing: 20) {
+                                    CustomButton(label: "Cancel", entireWidth: true, action: popupHandler.close)
+                                    CustomButton(label: "Delete", color: Color(.systemRed), entireWidth: true, action: action)
+                                }.padding(.top, 15)
+                                
+                            case .logout(let action):
+                                Image(systemName: "power").foregroundColor(Color(.systemGray)).font(.system(size: 65))
+                                Text("Are you sure you want to logout? All unsaved progress will be lost.").multilineTextAlignment(.center)
+                                HStack (spacing: 20) {
+                                    CustomButton(label: "Cancel", entireWidth: true, action: popupHandler.close)
+                                    CustomButton(label: "Logout", color: Color(.systemRed), entireWidth: true, action: action)
+                                }.padding(.top, 15)
+                                
+                            default:
+                                Text("error")
+                            }
                         }
+                        .padding(.horizontal, 40)
+                        .padding(.vertical, 35)
+                        .background(.white)
+                        .addBorder(.white, cornerRadius: 14)
+                        .frame(maxWidth: geometry.size.width/3)
+                        .transition(.slide)
                     }
-                    .padding(.horizontal, 40)
-                    .padding(.vertical, 35)
-                    .background(.white)
-                    .addBorder(.white, cornerRadius: 14)
-                    .frame(maxWidth: geometry.size.width/3)
-                    .transition(.slide)
                 }
             }.font(SFPro.body)
         }
