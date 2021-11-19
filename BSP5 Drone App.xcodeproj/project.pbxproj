@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		720D94032746EFE5000390F4 /* DroneLiveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D94022746EFE5000390F4 /* DroneLiveView.swift */; };
+		720D94062746F3B6000390F4 /* VideoPreviewerAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D94052746F3B6000390F4 /* VideoPreviewerAdapter.swift */; };
+		720D94082746F3DA000390F4 /* DecodeImageCalibrateLogic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720D94072746F3DA000390F4 /* DecodeImageCalibrateLogic.swift */; };
 		720FECD22718932100EC49FC /* Activity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 720FECD12718932100EC49FC /* Activity.swift */; };
 		720FECD42718944100EC49FC /* activities.json in Resources */ = {isa = PBXBuildFile; fileRef = 720FECD32718944100EC49FC /* activities.json */; };
 		72127D1A271D676700B28961 /* scrollOnOverflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72127D19271D676700B28961 /* scrollOnOverflow.swift */; };
@@ -28,6 +31,8 @@
 		727444B026FA327A00E5A114 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 727444AF26FA327A00E5A114 /* Assets.xcassets */; };
 		727444B326FA327A00E5A114 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 727444B226FA327A00E5A114 /* Preview Assets.xcassets */; };
 		727444B626FA327A00E5A114 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 727444B426FA327A00E5A114 /* LaunchScreen.storyboard */; };
+		727A9A972746F759009F83DD /* CameraFVPViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727A9A962746F759009F83DD /* CameraFVPViewController.swift */; };
+		7283770027426B0C006C4158 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 728376FF27426B0C006C4158 /* Location.swift */; };
 		729715CF2718885100326808 /* indices.json in Resources */ = {isa = PBXBuildFile; fileRef = 729715CE2718885100326808 /* indices.json */; };
 		729715D12718886A00326808 /* loadJson.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729715D02718886A00326808 /* loadJson.swift */; };
 		729715D42718888C00326808 /* Index.swift in Sources */ = {isa = PBXBuildFile; fileRef = 729715D32718888C00326808 /* Index.swift */; };
@@ -60,6 +65,12 @@
 		72CECB3E272A8B46004ECB03 /* RegisterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CECB3D272A8B46004ECB03 /* RegisterViewModel.swift */; };
 		72CECB40272A9174004ECB03 /* VisualEffectBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CECB3F272A9174004ECB03 /* VisualEffectBlur.swift */; };
 		72CECB42272A957C004ECB03 /* PopupHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CECB41272A957C004ECB03 /* PopupHandler.swift */; };
+		72EA32872747C217009A4B8D /* MissionHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72EA32862747C217009A4B8D /* MissionHistory.swift */; };
+		72EA32892747D203009A4B8D /* MissionImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72EA32882747D203009A4B8D /* MissionImageView.swift */; };
+		72EA328B2747EBE8009A4B8D /* IndexInfoSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72EA328A2747EBE8009A4B8D /* IndexInfoSheetView.swift */; };
+		72EA328D2747F6A4009A4B8D /* MissionHistoryRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72EA328C2747F6A4009A4B8D /* MissionHistoryRowView.swift */; };
+		72EA328F2747F9A3009A4B8D /* MissionImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72EA328E2747F9A3009A4B8D /* MissionImage.swift */; };
+		72EA32912747FB17009A4B8D /* StaticData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72EA32902747FB17009A4B8D /* StaticData.swift */; };
 		72FE95FA273D3A4300AFC5DD /* drones.json in Resources */ = {isa = PBXBuildFile; fileRef = 72FE95F9273D3A4300AFC5DD /* drones.json */; };
 		72FE95FC273D3A8000AFC5DD /* Drone.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72FE95FB273D3A8000AFC5DD /* Drone.swift */; };
 		72FE95FE273D4E4C00AFC5DD /* cameras.json in Resources */ = {isa = PBXBuildFile; fileRef = 72FE95FD273D4E4C00AFC5DD /* cameras.json */; };
@@ -82,6 +93,9 @@
 
 /* Begin PBXFileReference section */
 		3069CC307CD593BF05863D18 /* Pods-BSP5 Drone App.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BSP5 Drone App.release.xcconfig"; path = "Target Support Files/Pods-BSP5 Drone App/Pods-BSP5 Drone App.release.xcconfig"; sourceTree = "<group>"; };
+		720D94022746EFE5000390F4 /* DroneLiveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroneLiveView.swift; sourceTree = "<group>"; };
+		720D94052746F3B6000390F4 /* VideoPreviewerAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPreviewerAdapter.swift; sourceTree = "<group>"; };
+		720D94072746F3DA000390F4 /* DecodeImageCalibrateLogic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodeImageCalibrateLogic.swift; sourceTree = "<group>"; };
 		720FECD12718932100EC49FC /* Activity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Activity.swift; sourceTree = "<group>"; };
 		720FECD32718944100EC49FC /* activities.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = activities.json; sourceTree = "<group>"; };
 		72127D19271D676700B28961 /* scrollOnOverflow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scrollOnOverflow.swift; sourceTree = "<group>"; };
@@ -108,6 +122,8 @@
 		727444B226FA327A00E5A114 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		727444B526FA327A00E5A114 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		727444B726FA327A00E5A114 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		727A9A962746F759009F83DD /* CameraFVPViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraFVPViewController.swift; sourceTree = "<group>"; };
+		728376FF27426B0C006C4158 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		729715CE2718885100326808 /* indices.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = indices.json; sourceTree = "<group>"; };
 		729715D02718886A00326808 /* loadJson.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loadJson.swift; sourceTree = "<group>"; };
 		729715D32718888C00326808 /* Index.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Index.swift; sourceTree = "<group>"; };
@@ -140,6 +156,12 @@
 		72CECB3D272A8B46004ECB03 /* RegisterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewModel.swift; sourceTree = "<group>"; };
 		72CECB3F272A9174004ECB03 /* VisualEffectBlur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectBlur.swift; sourceTree = "<group>"; };
 		72CECB41272A957C004ECB03 /* PopupHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupHandler.swift; sourceTree = "<group>"; };
+		72EA32862747C217009A4B8D /* MissionHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionHistory.swift; sourceTree = "<group>"; };
+		72EA32882747D203009A4B8D /* MissionImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionImageView.swift; sourceTree = "<group>"; };
+		72EA328A2747EBE8009A4B8D /* IndexInfoSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexInfoSheetView.swift; sourceTree = "<group>"; };
+		72EA328C2747F6A4009A4B8D /* MissionHistoryRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionHistoryRowView.swift; sourceTree = "<group>"; };
+		72EA328E2747F9A3009A4B8D /* MissionImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionImage.swift; sourceTree = "<group>"; };
+		72EA32902747FB17009A4B8D /* StaticData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticData.swift; sourceTree = "<group>"; };
 		72FE95F9273D3A4300AFC5DD /* drones.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = drones.json; sourceTree = "<group>"; };
 		72FE95FB273D3A8000AFC5DD /* Drone.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Drone.swift; sourceTree = "<group>"; };
 		72FE95FD273D4E4C00AFC5DD /* cameras.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = cameras.json; sourceTree = "<group>"; };
@@ -177,6 +199,16 @@
 				3069CC307CD593BF05863D18 /* Pods-BSP5 Drone App.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		720D94042746F3A5000390F4 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				727A9A952746F747009F83DD /* fpv */,
+				720D94052746F3B6000390F4 /* VideoPreviewerAdapter.swift */,
+				720D94072746F3DA000390F4 /* DecodeImageCalibrateLogic.swift */,
+			);
+			path = Camera;
 			sourceTree = "<group>";
 		};
 		72127D18271D675500B28961 /* Extensions */ = {
@@ -218,6 +250,7 @@
 		727444A826FA327800E5A114 /* BSP5 Drone App */ = {
 			isa = PBXGroup;
 			children = (
+				720D94042746F3A5000390F4 /* Camera */,
 				725E5D802733F81500F60D45 /* Extensions */,
 				729715D22718887300326808 /* Models */,
 				729715CD2718883100326808 /* Json */,
@@ -237,6 +270,7 @@
 				722064052720AAF600989FF3 /* BSP5 Drone App.entitlements */,
 				726E3CC127229FE20074D4A6 /* SessionStore.swift */,
 				72CECB41272A957C004ECB03 /* PopupHandler.swift */,
+				72EA32902747FB17009A4B8D /* StaticData.swift */,
 			);
 			path = "BSP5 Drone App";
 			sourceTree = "<group>";
@@ -247,6 +281,14 @@
 				727444B226FA327A00E5A114 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		727A9A952746F747009F83DD /* fpv */ = {
+			isa = PBXGroup;
+			children = (
+				727A9A962746F759009F83DD /* CameraFVPViewController.swift */,
+			);
+			path = fpv;
 			sourceTree = "<group>";
 		};
 		729715CD2718883100326808 /* Json */ = {
@@ -269,6 +311,8 @@
 				725E5D7E2733F5FB00F60D45 /* User.swift */,
 				72FE95FB273D3A8000AFC5DD /* Drone.swift */,
 				72FE95FF273D4E5A00AFC5DD /* Camera.swift */,
+				728376FF27426B0C006C4158 /* Location.swift */,
+				72EA328E2747F9A3009A4B8D /* MissionImage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -314,6 +358,9 @@
 				72B8E77027108A8700755D99 /* Extras */,
 				7237E4C9271F063D00C5B0E0 /* LoginView.swift */,
 				72CECB3B272A8AE4004ECB03 /* RegisterView.swift */,
+				720D94022746EFE5000390F4 /* DroneLiveView.swift */,
+				72EA32862747C217009A4B8D /* MissionHistory.swift */,
+				72EA328C2747F6A4009A4B8D /* MissionHistoryRowView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -327,6 +374,7 @@
 				729CC221270F01030095014E /* MonitoringView.swift */,
 				7250ADA5271D7DBF000EA138 /* DronesCamerasView.swift */,
 				7214AC262722D5BD004A55B3 /* SummaryView.swift */,
+				72EA328A2747EBE8009A4B8D /* IndexInfoSheetView.swift */,
 			);
 			path = Planning;
 			sourceTree = "<group>";
@@ -337,6 +385,7 @@
 				723157672707477100316E62 /* MapView.swift */,
 				729CC21F270EFED00095014E /* CustomButton.swift */,
 				72CECB3F272A9174004ECB03 /* VisualEffectBlur.swift */,
+				72EA32882747D203009A4B8D /* MissionImageView.swift */,
 			);
 			path = Extras;
 			sourceTree = "<group>";
@@ -365,14 +414,13 @@
 				F42F5E94CEF9E19398BD79DA /* [CP] Embed Pods Frameworks */,
 				7299F3602715C05F00124189 /* ShellScript */,
 				722063FE2720A32E00989FF3 /* Embed App Extensions */,
+				3F999DF822FEDC10B67BEA93 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
 			name = "BSP5 Drone App";
-			packageProductDependencies = (
-			);
 			productName = "BSP5 Drone App";
 			productReference = 727444A626FA327800E5A114 /* BSP5 Drone App.app */;
 			productType = "com.apple.product-type.application";
@@ -400,8 +448,6 @@
 				Base,
 			);
 			mainGroup = 7274449D26FA327800E5A114;
-			packageReferences = (
-			);
 			productRefGroup = 727444A726FA327800E5A114 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -470,6 +516,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		3F999DF822FEDC10B67BEA93 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BSP5 Drone App/Pods-BSP5 Drone App-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-BSP5 Drone App/Pods-BSP5 Drone App-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-BSP5 Drone App/Pods-BSP5 Drone App-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		7299F3602715C05F00124189 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -513,14 +576,18 @@
 			files = (
 				725E5D84273425E900F60D45 /* String.swift in Sources */,
 				720FECD22718932100EC49FC /* Activity.swift in Sources */,
+				7283770027426B0C006C4158 /* Location.swift in Sources */,
 				72127D1A271D676700B28961 /* scrollOnOverflow.swift in Sources */,
 				7250ADA6271D7DBF000EA138 /* DronesCamerasView.swift in Sources */,
+				720D94062746F3B6000390F4 /* VideoPreviewerAdapter.swift in Sources */,
 				727444AA26FA327800E5A114 /* AppDelegate.swift in Sources */,
 				72B8E77327108AF800755D99 /* PlanningViewModel.swift in Sources */,
 				72FE95FC273D3A8000AFC5DD /* Drone.swift in Sources */,
 				725E5D7F2733F5FB00F60D45 /* User.swift in Sources */,
 				729CC222270F01030095014E /* MonitoringView.swift in Sources */,
 				729CC21E270EF9420095014E /* PlanningHeaderView.swift in Sources */,
+				727A9A972746F759009F83DD /* CameraFVPViewController.swift in Sources */,
+				720D94032746EFE5000390F4 /* DroneLiveView.swift in Sources */,
 				726E3CC227229FE20074D4A6 /* SessionStore.swift in Sources */,
 				725E5D7D2733F56C00F60D45 /* Mission.swift in Sources */,
 				7214AC272722D5BD004A55B3 /* SummaryView.swift in Sources */,
@@ -528,19 +595,26 @@
 				72CECB42272A957C004ECB03 /* PopupHandler.swift in Sources */,
 				729CC21A270EF27A0095014E /* PlanningView.swift in Sources */,
 				72CECB3C272A8AE4004ECB03 /* RegisterView.swift in Sources */,
+				72EA328D2747F6A4009A4B8D /* MissionHistoryRowView.swift in Sources */,
 				723157682707477100316E62 /* MapView.swift in Sources */,
 				7299F35D2715A7E200124189 /* ProductCommunicationManager.swift in Sources */,
 				729715D42718888C00326808 /* Index.swift in Sources */,
+				72EA328B2747EBE8009A4B8D /* IndexInfoSheetView.swift in Sources */,
+				720D94082746F3DA000390F4 /* DecodeImageCalibrateLogic.swift in Sources */,
+				72EA32892747D203009A4B8D /* MissionImageView.swift in Sources */,
 				725E5D822733F82000F60D45 /* GeoPoint.swift in Sources */,
 				72CECB40272A9174004ECB03 /* VisualEffectBlur.swift in Sources */,
 				729CC220270EFED00095014E /* CustomButton.swift in Sources */,
 				72FE9600273D4E5A00AFC5DD /* Camera.swift in Sources */,
+				72EA328F2747F9A3009A4B8D /* MissionImage.swift in Sources */,
 				729715D12718886A00326808 /* loadJson.swift in Sources */,
 				729CC21C270EF7870095014E /* ZoneView.swift in Sources */,
+				72EA32912747FB17009A4B8D /* StaticData.swift in Sources */,
 				727444AC26FA327800E5A114 /* SceneDelegate.swift in Sources */,
 				7237E4CA271F063D00C5B0E0 /* LoginView.swift in Sources */,
 				727444AE26FA327800E5A114 /* ContentView.swift in Sources */,
 				72127D1C271D67B900B28961 /* addBorder.swift in Sources */,
+				72EA32872747C217009A4B8D /* MissionHistory.swift in Sources */,
 				72CECB3E272A8B46004ECB03 /* RegisterViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -682,6 +756,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "BSP5 Drone App/BSP5 Drone App.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
@@ -710,6 +785,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "BSP5 Drone App/BSP5 Drone App.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
