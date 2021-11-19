@@ -6,14 +6,13 @@
 //
 
 import SwiftUI
-import DJISDK
 import FirebaseAuth
 import FirebaseDatabase
 import MapKit
 
 struct ContentView: View {
     
-    @State private var currentTab: Tab = .planning
+    @State private var currentTab: Tab = .history
     @State private var showSettings: Bool = false
     @State private var loggedIn: Bool = UserDefaults.standard.bool(forKey: "loggedIn")
     @EnvironmentObject var session: SessionStore
@@ -43,9 +42,9 @@ struct ContentView: View {
                                         Image(systemName: "rectangle.grid.3x2").font(.system(size: 30)).foregroundColor(currentTab == .live ? Color(.systemBlue) : Color(.systemGray))
                                     })
                                     Button(action: {
-                                        currentTab = .postmission
+                                        currentTab = .history
                                     }, label: {
-                                        Image(systemName: "circle.hexagonpath").font(.system(size: 30)).foregroundColor(currentTab == .postmission ? Color(.systemBlue) : Color(.systemGray))
+                                        Image(systemName: "circle.hexagonpath").font(.system(size: 30)).foregroundColor(currentTab == .history ? Color(.systemBlue) : Color(.systemGray))
                                     })
                                     Spacer()
                                     Button(action: {
@@ -64,26 +63,22 @@ struct ContentView: View {
                                         Image(systemName: "gearshape").font(.system(size: 30)).foregroundColor(showSettings ? Color(.systemBlue) : Color(.systemGray))
                                     })
                                 }.frame(maxWidth: 80).padding(.vertical, 30)
-                                Divider()
+                                Divider().edgesIgnoringSafeArea(.bottom)
                                 ZStack {
                                     Color(.systemGray6)
                                     switch currentTab {
                                     case .planning:
                                         PlanningView()
                                     case .live:
-                                        VStack {
-                                            Text("tab 2")
-                                            Text("SDK Version: \(DJISDKManager.sdkVersion())")
-                                        }
-                                        .navigationTitle("Tab 2")
-                                    case .postmission:
-                                        VStack {
-                                            Text(session.user?.map ?? "")
-                                        }
+                                        DroneLiveView()
+                                    case .history:
+                                        MissionHistory()
                                     }
                                 }.ignoresSafeArea(.all)
                             }
                             .navigationBarTitleDisplayMode(.inline)
+                            /*.navigationBarTitle("")
+                            .navigationBarHidden(true)*/
                         }.frame(maxHeight: .infinity)
                     }
                 }
@@ -179,7 +174,7 @@ struct ContentView: View {
 enum Tab {
     case planning
     case live
-    case postmission
+    case history
 }
 
 struct ContentView_Previews: PreviewProvider {
