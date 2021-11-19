@@ -27,12 +27,11 @@ struct ZoneView: View {
                 .padding()
                 .background(.white)
                 .cornerRadius(5)
-                .padding()
                 Spacer()
                 CustomButton(label: "Next step", action: {
                     viewModel.currentTab = .monitoring
-                }).padding()
-            }
+                })
+            }.padding(30)
         }
     }
 }

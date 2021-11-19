@@ -40,15 +40,10 @@ struct Mission: Identifiable, Codable {
     }
 }
 
-struct Location: Codable {
-    var id: Int
-    var coordinates: GeoPoint
-}
-
 extension Mission {
     func updateOrAdd() {
-        if let documentID = self.id {
-            self.update(id: documentID)
+        if let _ = self.id {
+            self.update()
         } else {
             self.create()
         }
@@ -64,10 +59,10 @@ extension Mission {
         }
     }
     
-    private func update(id: String) {
-        if let user = Auth.auth().currentUser {
+    private func update() {
+        if let user = Auth.auth().currentUser, let documentID = self.id {
             do {
-                let _ = try Firestore.firestore().collection("users/\(user.uid)/missions").document(id).setData(from: self)
+                let _ = try Firestore.firestore().collection("users/\(user.uid)/missions").document(documentID).setData(from: self)
             }
             catch {
                 print(error)

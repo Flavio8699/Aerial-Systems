@@ -39,7 +39,7 @@ struct CustomButton: View {
                 }
             }
             .padding(.horizontal, 30)
-            .padding(.vertical, 18)
+            .padding(.vertical, 16)
             .foregroundColor(.white)
             .background(color)
             .font(SFPro.title_regular)

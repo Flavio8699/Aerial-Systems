@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct Index: Hashable, Equatable, Decodable {
+struct Index: Identifiable, Hashable, Equatable, Decodable {
+    var id: UUID? = UUID()
     var title: String
     var subtitle: String
     var description: String

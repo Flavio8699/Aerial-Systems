@@ -48,10 +48,10 @@ struct PlanningView: View {
                                 })
                             }
                         }.onDelete { indexSet in
-                            if let missions = user.missions, indexSet.count > 0 {
+                            if indexSet.count > 0, user.getMissions().count >= indexSet.count {
                                 manageMissions = false
                                 let index = indexSet.first!
-                                let mission = missions[index]
+                                let mission = user.getMissions()[index]
                                 popupHandler.currentPopup = .deleteMission(action: {
                                     mission.delete()
                                     viewModel.loadMission(mission: Mission())
@@ -77,7 +77,10 @@ struct PlanningView: View {
                 Button(action: {
                     manageMissions = true
                 }, label: {
-                    Text("Manage missions")
+                    HStack {
+                        Image(systemName: "cloud")
+                        Text("Manage missions")
+                    }
                 })
             }
         }
