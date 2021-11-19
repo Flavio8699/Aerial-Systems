@@ -11,16 +11,17 @@ struct DronesCamerasView: View {
     
     @StateObject var viewModel: PlanningViewModel
     @State var selected = false
+    @EnvironmentObject var staticData: StaticData
     
     var body: some View {
-        HStack (alignment: .top, spacing: 15) {
+        HStack (alignment: .top, spacing: 30) {
             VStack (spacing: 0) {
                 VStack (spacing: 30) {
                     Text("Drones").font(SFPro.title_light_25)
                     Text("Please choose the drones that you would like to use during the mission.").multilineTextAlignment(.center).foregroundColor(Color(.systemGray)).padding(.horizontal, 30)
                 }.padding()
                 VStack (spacing: 10) {
-                    ForEach(viewModel.drones, id: \.self) { drone in
+                    ForEach(staticData.drones, id: \.self) { drone in
                         Button(action: {
                             viewModel.currentMission.drone = drone.name
                         }, label: {
@@ -35,7 +36,7 @@ struct DronesCamerasView: View {
                                 Image(systemName: viewModel.currentMission.drone == drone.name ? "checkmark.circle.fill" : "circle").font(.system(size: 25)).foregroundColor(viewModel.currentMission.drone == drone.name ? Color(.systemBlue) : Color(.systemGray3))
                             }
                         })
-                        if drone != viewModel.drones.last {
+                        if drone != staticData.drones.last {
                             Divider()
                         }
                     }
@@ -52,7 +53,7 @@ struct DronesCamerasView: View {
                         Text("Please choose the drone compatible cameras that you will use during the mission.").multilineTextAlignment(.center).foregroundColor(Color(.systemGray)).padding(.horizontal, 30)
                     }.padding()
                     VStack (spacing: 10) {
-                        ForEach(viewModel.cameras, id: \.self) { camera in
+                        ForEach(staticData.cameras, id: \.self) { camera in
                             Button(action: {
                                 viewModel.currentMission.camera = camera.name
                             }, label: {
@@ -68,7 +69,7 @@ struct DronesCamerasView: View {
                                     Image(systemName: viewModel.currentMission.camera == camera.name ? "checkmark.circle.fill" : "circle").font(.system(size: 25)).foregroundColor(viewModel.currentMission.camera == camera.name ? Color(.systemBlue) : Color(.systemGray3))
                                 }
                             })
-                            if camera != viewModel.cameras.last {
+                            if camera != staticData.cameras.last {
                                 Divider()
                             }
                         }
@@ -86,6 +87,6 @@ struct DronesCamerasView: View {
                     })
                 }.padding(.top)
             }.frame(maxWidth: .infinity)
-        }.padding()
+        }.padding(30)
     }
 }

@@ -10,17 +10,18 @@ import SwiftUI
 struct MonitoringView: View {
     
     @StateObject var viewModel: PlanningViewModel
-    @State var openSheet = false
+    @State var indexInfo: Index? = nil
+    @EnvironmentObject var staticData: StaticData
     
     var body: some View {
-        HStack (alignment: .top, spacing: 15) {
+        HStack (alignment: .top, spacing: 30) {
             VStack (spacing: 0) {
                 VStack (spacing: 30) {
                     Text("Indices").font(SFPro.title_light_25)
                     Text("Please choose the indices that you would like to capture during the mission.").multilineTextAlignment(.center).foregroundColor(Color(.systemGray)).padding(.horizontal, 30)
                 }.padding().padding(.bottom, 20)
                 VStack (spacing: 10) {
-                    ForEach(viewModel.indices, id: \.self) { index in
+                    ForEach(staticData.indices, id: \.self) { index in
                         HStack (spacing: 15) {
                             Button(action: {
                                 if viewModel.currentMission.indices.contains(index.title) {
@@ -37,10 +38,10 @@ struct MonitoringView: View {
                                 Spacer()
                             })
                             Image(systemName: "info.circle").font(.system(size: 25)).foregroundColor(Color(.systemBlue)).onTapGesture {
-                                openSheet = true
+                                indexInfo = index
                             }
                         }
-                        if index != viewModel.indices.last {
+                        if index != staticData.indices.last {
                             Divider()
                         }
                     }
@@ -57,7 +58,7 @@ struct MonitoringView: View {
                         Text("Please choose the activites that you would like to have activated during the mission.").multilineTextAlignment(.center).foregroundColor(Color(.systemGray)).padding(.horizontal, 30)
                     }.padding().padding(.bottom, 20)
                     VStack (spacing: 10) {
-                        ForEach(viewModel.activites, id: \.self) { activity in
+                        ForEach(staticData.activites, id: \.self) { activity in
                             HStack (spacing: 10) {
                                 Button(action: {
                                     if viewModel.currentMission.activities.contains(activity.title) {
@@ -74,7 +75,7 @@ struct MonitoringView: View {
                                     Spacer()
                                 })
                             }
-                            if activity != viewModel.activites.last {
+                            if activity != staticData.activites.last {
                                 Divider()
                             }
                         }
@@ -92,21 +93,9 @@ struct MonitoringView: View {
                     })
                 }.padding(.top)
             }.frame(maxWidth: .infinity)
-        }.padding()
-        .sheet(isPresented: $openSheet) {
-            NavigationView {
-                VStack {
-                    Text("test")
-                }
-                .navigationBarTitleDisplayMode(.inline)
-                .navigationTitle("Test title")
-                .toolbar {
-                    Button("Close") {
-                        openSheet = false
-                    }
-                }
-            }
-            
+        }.padding(30)
+        .sheet(item: $indexInfo) { index in
+            IndexInfoSheetView(index: index)
         }
     }
 }

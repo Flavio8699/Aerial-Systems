@@ -10,25 +10,12 @@ import MapKit
 
 class PlanningViewModel: ObservableObject {
     
-    var activites = [Activity]()
-    var cameras = [Camera]()
-    var drones = [Drone]()
-    var indices = [Index]()
-    
     @Published var currentTab: PlanningTab = .zone
-    @Published var currentMission: Mission
+    @Published var currentMission: Mission = Mission()
     @Published var zoomIn: Bool = false
     
     var selectedArea: Int {
         regionArea(locations: self.currentMission.locations.map { $0.coordinates.toLocation() })
-    }
-    
-    init() {
-        self.activites = loadJson("activities.json")
-        self.cameras = loadJson("cameras.json")
-        self.drones = loadJson("drones.json")
-        self.indices = loadJson("indices.json")
-        self.currentMission = Mission()
     }
     
     func loadMission(mission: Mission) {
