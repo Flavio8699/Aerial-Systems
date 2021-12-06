@@ -2,6 +2,8 @@
 This repository contains my Bachelor Semester Project 5 at the University of Luxembourg which is an iPad App for Drone Missions.
 The app was built using the SwiftUI framework.
 
+![frontpage](Screenshots/1.jpg)
+
 ## Requirements
 * Xcode version >= 13.1
 * iOS version >= 15.0
