@@ -15,6 +15,7 @@
 		72127D1A271D676700B28961 /* scrollOnOverflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72127D19271D676700B28961 /* scrollOnOverflow.swift */; };
 		72127D1C271D67B900B28961 /* addBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72127D1B271D67B900B28961 /* addBorder.swift */; };
 		7214AC272722D5BD004A55B3 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7214AC262722D5BD004A55B3 /* SummaryView.swift */; };
+		7230908D274FEDC500A9BBC9 /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7230908C274FEDC500A9BBC9 /* InputField.swift */; };
 		723157682707477100316E62 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723157672707477100316E62 /* MapView.swift */; };
 		7237E4CA271F063D00C5B0E0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7237E4C9271F063D00C5B0E0 /* LoginView.swift */; };
 		7237E4CC271F19C200C5B0E0 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7237E4CB271F19C200C5B0E0 /* LoginViewModel.swift */; };
@@ -104,6 +105,7 @@
 		722063DE2720A32E00989FF3 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		722063E92720A32E00989FF3 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		722064052720AAF600989FF3 /* BSP5 Drone App.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "BSP5 Drone App.entitlements"; sourceTree = "<group>"; };
+		7230908C274FEDC500A9BBC9 /* InputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
 		723157672707477100316E62 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		7237E4C9271F063D00C5B0E0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		7237E4CB271F19C200C5B0E0 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -386,6 +388,7 @@
 				729CC21F270EFED00095014E /* CustomButton.swift */,
 				72CECB3F272A9174004ECB03 /* VisualEffectBlur.swift */,
 				72EA32882747D203009A4B8D /* MissionImageView.swift */,
+				7230908C274FEDC500A9BBC9 /* InputField.swift */,
 			);
 			path = Extras;
 			sourceTree = "<group>";
@@ -604,6 +607,7 @@
 				72EA32892747D203009A4B8D /* MissionImageView.swift in Sources */,
 				725E5D822733F82000F60D45 /* GeoPoint.swift in Sources */,
 				72CECB40272A9174004ECB03 /* VisualEffectBlur.swift in Sources */,
+				7230908D274FEDC500A9BBC9 /* InputField.swift in Sources */,
 				729CC220270EFED00095014E /* CustomButton.swift in Sources */,
 				72FE9600273D4E5A00AFC5DD /* Camera.swift in Sources */,
 				72EA328F2747F9A3009A4B8D /* MissionImage.swift in Sources */,

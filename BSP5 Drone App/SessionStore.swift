@@ -15,6 +15,7 @@ import MapKit
 class SessionStore: ObservableObject {
     
     @Published var user: User?
+    @Published var loadingMissions: Bool = true
     var map: MKMapType {
         set {
             self.setMapType(map: newValue)
@@ -52,10 +53,13 @@ class SessionStore: ObservableObject {
             self.db.collection("users/\(user.getID())/missions").addSnapshotListener { documentSnapshot, error in
                 guard let missions = documentSnapshot?.documents else {
                     print("No missions found")
+                    self.loadingMissions = false
                     return
                 }
                 self.user!.missions = missions.compactMap { queryDocumentSnapshot -> Mission? in
-                    return try? queryDocumentSnapshot.data(as: Mission.self)
+                    let missions = try? queryDocumentSnapshot.data(as: Mission.self)
+                    self.loadingMissions = false
+                    return missions
                 }
             }
         }

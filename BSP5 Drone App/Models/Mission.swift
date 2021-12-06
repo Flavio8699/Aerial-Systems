@@ -83,39 +83,53 @@ extension Mission {
 }
 
 
-
 func sortAnnotations(locations: [Location]) -> [Location] {
     if locations.count > 0 {
-        var locationsCopy = locations
-        // Get first location and add it to the result list
-        let first = locationsCopy.remove(at: 0)
-        var result: [Location] = [first]
-        
+        var results: [CGFloat: [Location]] = [:]
         // Loop n times for n locations
-        for _ in 0..<locations.count {
-            // Define closestIndex and closestDistance as neutral values
-            var closestIndex = -1
-            var closestDistance: CGFloat = .infinity
+        for i in 0..<locations.count {
+            var locationsCopy = locations
+            let first = locationsCopy.remove(at: i)
+            var result: [Location] = [first]
             
-            // Loop over all the remaining locations in the list (does not contain the current location)
-            for (currentIndex, currentLocation) in locationsCopy.enumerated() {
-                // Calculate distance between the last location in the list and the current location
-                let distance = distanceInKmBetweenEarthCoordinates(point1: result.last!.coordinates, point2: currentLocation.coordinates)
+            for _ in 0..<locations.count {
+                // Define closestIndex and closestDistance as neutral values
+                var closestIndex = -1
+                var closestDistance: CGFloat = .infinity
                 
-                // If the current location is the closest to the last location in the list, update the values
-                if closestDistance > distance {
-                    closestDistance = distance
-                    closestIndex = currentIndex
+                // Loop over all the remaining locations in the list (does not contain the current location)
+                for (currentIndex, currentLocation) in locationsCopy.enumerated() {
+                    // Calculate distance between the last location in the list and the current location
+                    let distance = distanceInKmBetweenEarthCoordinates(point1: result.last!.coordinates, point2: currentLocation.coordinates)
+                    
+                    // If the current location is the closest to the last location in the list, update the values
+                    if closestDistance > distance {
+                        closestDistance = distance
+                        closestIndex = currentIndex
+                    }
+                }
+                
+                // If a new closest location was found, append it to the result and remove from the list
+                if closestIndex != -1 {
+                    result.append(locationsCopy[closestIndex])
+                    locationsCopy.remove(at: closestIndex)
                 }
             }
             
-            // If a new closest location was found, append it to the result and remove from the list
-            if closestIndex != -1 {
-                result.append(locationsCopy[closestIndex])
-                locationsCopy.remove(at: closestIndex)
+            var distance: CGFloat = 0
+            for i in 0..<result.count {
+                if i+1 < result.count {
+                    distance += distanceInKmBetweenEarthCoordinates(point1: result[i].coordinates, point2: result[i+1].coordinates)
+                } else {
+                    distance += distanceInKmBetweenEarthCoordinates(point1: result[i].coordinates, point2: result[0].coordinates)
+                }
             }
+        
+            results[distance] = result
         }
-        return result
+        if let minDistance = results.keys.min() {
+            return results[minDistance]!
+        }
     }
     return []
 }

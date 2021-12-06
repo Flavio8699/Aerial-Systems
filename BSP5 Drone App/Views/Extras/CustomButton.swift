@@ -10,12 +10,13 @@ import SwiftUI
 struct CustomButton: View {
     
     private let label: String
-    private let action : () -> Void
+    private let action: () -> Void
     private var color: Color
-     var loading: Bool
+    var loading: Bool
     private var entireWidth: Bool
+    @Environment(\.colorScheme) var colorScheme
     
-    init(label: String, color: Color = Color(.systemBlue), loading:Bool = false, entireWidth: Bool = false, action: @escaping () -> Void) {
+    init(label: String, color: Color = Color(.systemBlue), loading: Bool = false, entireWidth: Bool = false, action: @escaping () -> Void) {
         self.label = label
         self.color = color
         self.loading = loading
@@ -32,7 +33,7 @@ struct CustomButton: View {
                 if loading {
                     ProgressView()
                 } else {
-                    Text(label)
+                    Text(label).foregroundColor(color == Color(.systemBlue) || color == Color(.systemRed) ? .white : Color(UIColor.systemBackground))
                 }
                 if entireWidth {
                     Spacer(minLength: 0)

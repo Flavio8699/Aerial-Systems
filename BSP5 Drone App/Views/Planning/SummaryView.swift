@@ -15,9 +15,10 @@ struct SummaryView: View {
     @EnvironmentObject var session: SessionStore
     @EnvironmentObject var popupHandler: PopupHandler
     @EnvironmentObject var staticData: StaticData
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
-        HStack (alignment: .top, spacing: 30) {
+        HStack (alignment: .top, spacing: 20) {
             VStack (spacing: 15) {
                 VStack (spacing: 30) {
                     Text("Zone to scan").font(SFPro.title_light_25)
@@ -32,7 +33,7 @@ struct SummaryView: View {
                 }.cornerRadius(14)
             }.padding()
             .frame(maxWidth: .infinity)
-            .background(.white)
+            .background(Color(UIColor.systemBackground))
             .addBorder(.white, cornerRadius: 14)
                 
             VStack (spacing: 15) {
@@ -45,7 +46,7 @@ struct SummaryView: View {
                         if let indices = viewModel.currentMission.indices.summary(), indices != "" {
                             HStack (spacing: 10) {
                                 VStack (alignment: .leading, spacing: 3) {
-                                    Text("Indices").foregroundColor(.black)
+                                    Text("Indices").foregroundColor(colorScheme == .dark ? .white : .black)
                                     Text(indices).font(SFPro.subtitle).foregroundColor(Color(.systemGray))
                                 }
                                 Spacer()
@@ -56,7 +57,7 @@ struct SummaryView: View {
                         if let activities = viewModel.currentMission.activities.summary(), activities != "" {
                             HStack (spacing: 10) {
                                 VStack (alignment: .leading, spacing: 3) {
-                                    Text("Activites").foregroundColor(.black)
+                                    Text("Activites").foregroundColor(colorScheme == .dark ? .white : .black)
                                     Text(activities).font(SFPro.subtitle).foregroundColor(Color(.systemGray))
                                 }
                                 Spacer()
@@ -67,7 +68,7 @@ struct SummaryView: View {
                         if let drone = staticData.drones.first(where: { $0.name == viewModel.currentMission.drone }) {
                             HStack (spacing: 10) {
                                 VStack (alignment: .leading, spacing: 3) {
-                                    Text(drone.name).foregroundColor(.black)
+                                    Text(drone.name).foregroundColor(colorScheme == .dark ? .white : .black)
                                     Text("Flight time: \(drone.flight_time) minutes").font(SFPro.subtitle).foregroundColor(Color(.systemGray))
                                     Text("Hovering Accuracy: \(drone.hovering_accuracy)").font(SFPro.subtitle).foregroundColor(Color(.systemGray))
                                 }
@@ -79,7 +80,7 @@ struct SummaryView: View {
                         if let camera = staticData.cameras.first(where: { $0.name == viewModel.currentMission.camera }) {
                             HStack (spacing: 10) {
                                 VStack (alignment: .leading, spacing: 3) {
-                                    Text(camera.name).foregroundColor(.black)
+                                    Text(camera.name).foregroundColor(colorScheme == .dark ? .white : .black)
                                     Text("Lens: \(camera.lens)").font(SFPro.subtitle).foregroundColor(Color(.systemGray))
                                     Text("FOV: \(camera.fov)").font(SFPro.subtitle).foregroundColor(Color(.systemGray))
                                     Text("Spectral bands: \(camera.spectral_bands)").font(SFPro.subtitle).foregroundColor(Color(.systemGray))
@@ -91,22 +92,46 @@ struct SummaryView: View {
                     }
                     Divider()
                     HStack (spacing: 15) {
-                        CustomButton(label: "Save", color: .black, entireWidth: true, action: {
+                        CustomButton(label: "Save", color: colorScheme == .dark ? .white : .black, entireWidth: true, action: {
                             popupHandler.currentPopup = .saveMission(missionName: $viewModel.currentMission.name, action: {
                                 viewModel.currentMission.timestamp = .now
                                 viewModel.currentMission.updateOrAdd()
                                 popupHandler.currentPopup = .success(message: "The mission has been saved", button: "Close", action: popupHandler.close)
                             })
                         })
-                        CustomButton(label: "Start the mission", entireWidth: true, action: {
+                        CustomButton(label: "Launch", entireWidth: true, action: {
                             
                         })
-                    }.padding(.vertical, 25)
-                }.padding([.horizontal, .bottom])
+                    }.padding(.vertical)
+                }.padding(.horizontal)
             }
             .frame(maxWidth: .infinity)
-            .background(.white)
+            .background(Color(UIColor.systemBackground))
             .addBorder(.white, cornerRadius: 14)
-        }.padding(30)
+        }.padding(20)
     }
+}
+
+func tesxt(locations: [Location]) -> [Double] {
+    var top = Double(-Int.max)
+    var right = Double(-Int.max)
+    var left = Double(Int.max)
+    var bottom = Double(Int.max)
+    
+    for location in locations {
+        if abs(location.coordinates.longitude) > right {
+            right = location.coordinates.longitude
+        }
+        if abs(location.coordinates.longitude) < left {
+            left = location.coordinates.longitude
+        }
+        if abs(location.coordinates.latitude) < bottom {
+            bottom = location.coordinates.latitude
+        }
+        if abs(location.coordinates.latitude) > top {
+            top = location.coordinates.latitude
+        }
+    }
+    print([top, right, bottom, left])
+    return [top, right, bottom, left]
 }

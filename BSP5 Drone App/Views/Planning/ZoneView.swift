@@ -24,14 +24,15 @@ struct ZoneView: View {
                     Text("Toral area :").bold()
                     Text("\(viewModel.selectedArea)m²")
                 }
-                .padding()
-                .background(.white)
+                .padding(.vertical, 16)
+                .padding(.horizontal)
+                .background(Color(UIColor.systemBackground))
                 .cornerRadius(5)
                 Spacer()
                 CustomButton(label: "Next step", action: {
                     viewModel.currentTab = .monitoring
                 })
-            }.padding(30)
+            }.padding(20)
         }
     }
 }

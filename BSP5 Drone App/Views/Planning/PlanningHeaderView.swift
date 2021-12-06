@@ -24,7 +24,7 @@ struct PlanningHeaderView: View {
                                 Text(tab.description).font(SFPro.title_light)
                             }
                             .frame(width: geometry.size.width/4, height: geometry.size.height)
-                            .background(viewModel.currentTab == tab ? Color(.systemBlue) : Color("TabColor").opacity(0.9))
+                            .background(viewModel.currentTab == tab ? Color(.systemBlue) : Color(.systemGray5).opacity(0.9))
                             .foregroundColor(viewModel.currentTab == tab ? .white : Color(.systemGray))
                         })
                         Divider()

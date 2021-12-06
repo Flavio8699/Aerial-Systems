@@ -14,19 +14,17 @@ struct MissionHistory: View {
     var body: some View {
         ScrollView (.vertical) {
             if let user = session.user {
-                VStack (spacing: 30) {
-                    ForEach (user.getMissions(), id: \.id) { mission in
-                        MissionHistoryRowView(mission: mission)
+                VStack (spacing: 20) {
+                    if session.loadingMissions {
+                        ProgressView("Loading missions ...")
+                    } else {
+                        ForEach (user.getMissions(), id: \.id) { mission in
+                            MissionHistoryRowView(mission: mission)
+                        }
                     }
-                }.padding(30)
+                }.padding(20)
             }
         }
         .navigationTitle("Mission history")
-    }
-}
-
-struct MissionHistory_Previews: PreviewProvider {
-    static var previews: some View {
-        MissionHistory()
     }
 }

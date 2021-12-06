@@ -17,6 +17,7 @@ struct ContentView: View {
     @State private var loggedIn: Bool = UserDefaults.standard.bool(forKey: "loggedIn")
     @EnvironmentObject var session: SessionStore
     @EnvironmentObject var popupHandler: PopupHandler
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         GeometryReader { geometry in
@@ -104,11 +105,11 @@ struct ContentView: View {
                                 
                             case .saveMission(let missionName, let action):
                                 Image(systemName: "pencil.circle.fill").foregroundColor(Color(.systemGray)).font(.system(size: 65))
-                                Text("test").multilineTextAlignment(.center)
-                                TextField("", text: missionName)
+                                Text("Mission name:").multilineTextAlignment(.center)
+                                InputField("", text: missionName)
                                 HStack (spacing: 20) {
                                     CustomButton(label: "Close", entireWidth: true, action: popupHandler.close)
-                                    CustomButton(label: "Save", color: .black, entireWidth: true, action: action)
+                                    CustomButton(label: "Save", color: colorScheme == .dark ? .white : .black, entireWidth: true, action: action)
                                 }.padding(.top, 15)
                                 
                             case .deleteMission(let action):
@@ -133,9 +134,9 @@ struct ContentView: View {
                         }
                         .padding(.horizontal, 40)
                         .padding(.vertical, 35)
-                        .background(.white)
+                        .background(Color(UIColor.systemBackground))
                         .addBorder(.white, cornerRadius: 14)
-                        .frame(maxWidth: geometry.size.width/3)
+                        .frame(maxWidth: geometry.size.width*4/9)
                         .transition(.slide)
                     }
                 }

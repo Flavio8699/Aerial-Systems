@@ -12,6 +12,7 @@ struct LoginView: View {
     @StateObject var viewModel = LoginViewModel()
     @EnvironmentObject var session: SessionStore
     @EnvironmentObject var popupHandler: PopupHandler
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         GeometryReader { geometry in
@@ -24,12 +25,7 @@ struct LoginView: View {
                         VStack (spacing: 25) {
                             VStack (alignment: .leading, spacing: 5) {
                                 Text("EMAIL ADDRESS").font(.custom("SFProDisplay-Regular", size: 14)).foregroundColor(Color(.systemGray))
-                                TextField("", text: $viewModel.email)
-                                    .padding(.horizontal, 18)
-                                    .padding(.vertical, 13)
-                                    .foregroundColor(.black.opacity(0.8))
-                                    .background(Color("TextFieldBackground"))
-                                    .addBorder(Color("TextFieldBorder"), width: 1.5, cornerRadius: 6)
+                                InputField("", text: $viewModel.email)
                             }
                             
                             VStack (alignment: .leading, spacing: 5) {
@@ -50,23 +46,9 @@ struct LoginView: View {
                                         Text("Forgot password?").font(SFPro.subtitle).foregroundColor(Color(.systemGray))
                                     })
                                 }
-                                HStack {
-                                    if viewModel.passwordVisible {
-                                        TextField("", text: $viewModel.password)
-                                    } else {
-                                        SecureField("", text: $viewModel.password)
-                                    }
-                                    Button(action: {
-                                        viewModel.passwordVisible.toggle()
-                                    }, label: {
-                                        Image(systemName: viewModel.passwordVisible ? "eye.slash.fill" : "eye.fill")
-                                    })
-                                }
-                                .padding(.horizontal, 18)
-                                .padding(.vertical, 13)
-                                .foregroundColor(.black.opacity(0.8))
-                                .background(Color("TextFieldBackground"))
-                                .addBorder(Color("TextFieldBorder"), width: 1.5, cornerRadius: 6)
+                                InputField("", text: $viewModel.password, type: viewModel.passwordVisible ? .text : .password, icon: viewModel.passwordVisible ? "eye.slash.fill" : "eye.fill", iconAction: {
+                                    viewModel.passwordVisible.toggle()
+                                })
                             }
                             CustomButton(label: "Sign in", loading: viewModel.loading, entireWidth: true) {
                                 viewModel.loading = true
@@ -107,6 +89,6 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView().previewInterfaceOrientation(.landscapeLeft)
+        LoginView().previewInterfaceOrientation(.landscapeLeft).environmentObject(SessionStore()).environmentObject(PopupHandler()).preferredColorScheme(.dark)
     }
 }

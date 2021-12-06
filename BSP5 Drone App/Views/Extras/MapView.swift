@@ -27,8 +27,8 @@ struct MapView: UIViewRepresentable {
         self.annotationSize = annotationSize
     }
     
-    func makeCoordinator() -> MapView.Coordinator {
-        return MapView.Coordinator(parent: self)
+    func makeCoordinator() -> Coordinator {
+        Coordinator(parent: self)
     }
     
     func makeUIView(context: UIViewRepresentableContext<MapView>) -> MKMapView {
@@ -70,7 +70,7 @@ struct MapView: UIViewRepresentable {
         mapView.removeAnnotations(mapView.annotations)
         
         let locationsSorted = sortAnnotations(locations: locations)
-        
+    
         for location in locationsSorted {
             let annotation = MKPointAnnotation()
             annotation.coordinate = location.coordinates.toLocation()
@@ -78,13 +78,20 @@ struct MapView: UIViewRepresentable {
             mapView.addAnnotation(annotation)
         }
         
+        let test = tesxt(locations: locationsSorted)
+        
         mapView.removeOverlays(mapView.overlays)
+        mapView.addOverlay(MKPolyline(coordinates: [.init(latitude: test[0], longitude: test[3]), .init(latitude: test[0], longitude: test[1])], count: 2))
+        mapView.addOverlay(MKPolyline(coordinates: [.init(latitude: test[0], longitude: test[1]), .init(latitude: test[2], longitude: test[1])], count: 2))
+        mapView.addOverlay(MKPolyline(coordinates: [.init(latitude: test[2], longitude: test[1]), .init(latitude: test[2], longitude: test[3])], count: 2))
+        mapView.addOverlay(MKPolyline(coordinates: [.init(latitude: test[2], longitude: test[3]), .init(latitude: test[0], longitude: test[3])], count: 2))
         mapView.addOverlay(MKPolygon(coordinates: locationsSorted.map { $0.coordinates.toLocation() }, count: locationsSorted.count))
     }
     
-    class Coordinator: NSObject, MKMapViewDelegate {
+    public class Coordinator: NSObject, MKMapViewDelegate {
         
-        var parent: MapView
+        private var parent: MapView
+        public var overlays: [Overlay] = []
         
         init(parent: MapView) {
             self.parent = parent
@@ -93,8 +100,11 @@ struct MapView: UIViewRepresentable {
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             guard annotation is MKPointAnnotation else { return nil }
 
-            let customAnnotationView = self.customAnnotationView(in: mapView, for: annotation)
-            return customAnnotationView
+            if annotation.title == "top" {
+                return self.customAnnotationViewTop(in: mapView, for: annotation)
+            } else {
+                return self.customAnnotationView(in: mapView, for: annotation)
+            }
         }
         
         @objc func addAnnotation(_ gestureRecognizer: UIGestureRecognizer) {
@@ -123,6 +133,19 @@ struct MapView: UIViewRepresentable {
             }
         }
         
+        private func customAnnotationViewTop(in mapView: MKMapView, for annotation: MKAnnotation) -> CustomAnnotationView {
+            let identifier = "topPin"
+
+            if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? CustomAnnotationView {
+                annotationView.annotation = annotation
+                return annotationView
+            } else {
+                let customAnnotationView = CustomAnnotationView(annotation: annotation, reuseIdentifier: identifier, size: parent.annotationSize, color: .systemGray, test: "Top")
+                customAnnotationView.canShowCallout = false
+                return customAnnotationView
+            }
+        }
+        
         func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, didChange newState: MKAnnotationView.DragState, fromOldState oldState: MKAnnotationView.DragState) {
             guard let annotation = view.annotation else { return }
             let index = Int((annotation.title ?? "")!)
@@ -137,27 +160,43 @@ struct MapView: UIViewRepresentable {
                     self.parent.locations.removeAll(where: { $0.id == index })
                     self.parent.locations.append(.init(id: index ?? self.parent.locations.count+1, coordinates: .init(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)))
                     mapView.removeAnnotation(annotation)
-                    self.parent.updateMap(locations: self.parent.locations, mapView: mapView)
+                    //self.parent.updateMap(locations: self.parent.locations, mapView: mapView)
                 }
             }
         }
         
         func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
-            let renderer = MKPolygonRenderer(polygon: overlay as! MKPolygon)
-            renderer.fillColor = UIColor.systemBlue.withAlphaComponent(0.25)
-            renderer.strokeColor = .systemBlue
-            renderer.lineWidth = 2
-            return renderer
+            if let polygonOverlay = overlay as? MKPolygon {
+                let renderer = MKPolygonRenderer(polygon: polygonOverlay)
+                renderer.fillColor = UIColor.systemBlue.withAlphaComponent(0.2)
+                renderer.strokeColor = .systemBlue
+                renderer.lineWidth = 2
+                return renderer
+            } else if let polyLineOverlay = overlay as? MKPolyline {
+                let renderer = MKPolylineRenderer(polyline: polyLineOverlay)
+                renderer.strokeColor = .systemGray
+                renderer.lineWidth = 2
+                return renderer
+            }
+            return MKOverlayRenderer()
         }
     }
 }
 
 class CustomAnnotationView: MKAnnotationView {
+    private let label: UILabel
+    private let annotationFrame = CGRect(x: 0, y: 0, width: 40, height: 40)
     
-    init(annotation: MKAnnotation?, reuseIdentifier: String?, size: CGFloat) {
+    init(annotation: MKAnnotation?, reuseIdentifier: String?, size: CGFloat, color: UIColor = .systemBlue, test: String = "") {
+        self.label = UILabel(frame: annotationFrame.offsetBy(dx: 0, dy: -6))
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = .clear
-        self.set(image: UIImage(systemName: "circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: size))!, with: .systemBlue)
+        self.set(image: UIImage(systemName: "circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: size))!, with: color)
+        self.label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
+        self.label.textColor = .white
+        self.label.textAlignment = .center
+        self.label.text = test
+        self.addSubview(self.label)
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -187,5 +226,32 @@ extension MKMapView {
             zoomRect = zoomRect.union(pointRect);
         }
         setVisibleMapRect(zoomRect, edgePadding: UIEdgeInsets(top: padding, left: padding, bottom: padding, right: padding), animated: true)
+    }
+}
+
+struct Overlay {
+        
+    public static func == (lhs: Overlay, rhs: Overlay) -> Bool {
+        // maybe to use in the future for comparison of full array
+        lhs.shape.coordinate.latitude == rhs.shape.coordinate.latitude &&
+        lhs.shape.coordinate.longitude == rhs.shape.coordinate.longitude &&
+        lhs.fillColor == rhs.fillColor
+    }
+    
+    var shape: MKOverlay
+    var fillColor: UIColor?
+    var strokeColor: UIColor?
+    var lineWidth: CGFloat
+
+    public init(
+        shape: MKOverlay,
+        fillColor: UIColor? = nil,
+        strokeColor: UIColor? = nil,
+        lineWidth: CGFloat = 0
+    ) {
+        self.shape = shape
+        self.fillColor = fillColor
+        self.strokeColor = strokeColor
+        self.lineWidth = lineWidth
     }
 }
