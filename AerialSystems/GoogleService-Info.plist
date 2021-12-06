@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>57100448291-nmom15p2musci70r92o67n4arfs3svdr.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.57100448291-nmom15p2musci70r92o67n4arfs3svdr</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCDU5_yhm91gO1kW5oykUcCgYu0kxCXkqI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>57100448291</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>flavio.com.aerial-systems</string>
+	<key>PROJECT_ID</key>
+	<string>drone-mission-ipad-app</string>
+	<key>STORAGE_BUCKET</key>
+	<string>drone-mission-ipad-app.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:57100448291:ios:c2382b11252e84979ff796</string>
+	<key>DATABASE_URL</key>
+	<string>https://drone-mission-ipad-app-default-rtdb.europe-west1.firebasedatabase.app</string>
+</dict>
+</plist>
