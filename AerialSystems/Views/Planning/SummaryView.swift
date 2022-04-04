@@ -100,7 +100,8 @@ struct SummaryView: View {
                             })
                         })
                         CustomButton(label: "Launch", entireWidth: true, action: {
-                            
+                            session.performingMission = viewModel.currentMission
+                            popupHandler.currentPopup = .messageAutoClose(message: "Preparing mission...", closeAfter: 2.5)
                         })
                     }.padding(.vertical)
                 }.padding(.horizontal)
@@ -110,28 +111,4 @@ struct SummaryView: View {
             .addBorder(.white, cornerRadius: 14)
         }.padding(20)
     }
-}
-
-func tesxt(locations: [Location]) -> [Double] {
-    var top = Double(-Int.max)
-    var right = Double(-Int.max)
-    var left = Double(Int.max)
-    var bottom = Double(Int.max)
-    
-    for location in locations {
-        if abs(location.coordinates.longitude) > right {
-            right = location.coordinates.longitude
-        }
-        if abs(location.coordinates.longitude) < left {
-            left = location.coordinates.longitude
-        }
-        if abs(location.coordinates.latitude) < bottom {
-            bottom = location.coordinates.latitude
-        }
-        if abs(location.coordinates.latitude) > top {
-            top = location.coordinates.latitude
-        }
-    }
-    print([top, right, bottom, left])
-    return [top, right, bottom, left]
 }

@@ -21,8 +21,8 @@ struct ZoneView: View {
             }
             HStack (alignment: .bottom) {
                 HStack {
-                    Text("Toral area :").bold()
-                    Text("\(viewModel.selectedArea)m²")
+                    Text("Total area :").bold()
+                    Text("\(viewModel.selectedArea) m²")
                 }
                 .padding(.vertical, 16)
                 .padding(.horizontal)

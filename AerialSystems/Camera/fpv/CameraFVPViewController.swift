@@ -19,8 +19,6 @@ struct CameraFPVViewController: UIViewRepresentable {
         let camera = fetchCamera()
         camera?.delegate = test()
         
-        DJIVideoPreviewer.instance()?.start()
-        
         let x: VideoPreviewerAdapter? = VideoPreviewerAdapter.init()
         x?.start()
         
@@ -33,6 +31,7 @@ struct CameraFPVViewController: UIViewRepresentable {
         print("appear")
         let empty = UIView.init()
         empty.backgroundColor = UIColor(.blue)
+        DJIVideoPreviewer.instance()?.start()
         return fpvView ?? empty
     }
     

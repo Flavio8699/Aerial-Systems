@@ -139,15 +139,15 @@ func degreesToRadians(degrees: CGFloat) -> CGFloat {
 }
 
 func distanceInKmBetweenEarthCoordinates(point1: GeoPoint, point2: GeoPoint) -> CGFloat {
-    var earthRadiusKm: CGFloat = 6371;
+    let earthRadiusKm: CGFloat = 6371;
 
-    var dLat = degreesToRadians(degrees: point2.latitude-point1.latitude);
-    var dLon = degreesToRadians(degrees: point2.longitude-point1.longitude);
+    let dLat = degreesToRadians(degrees: point2.latitude-point1.latitude);
+    let dLon = degreesToRadians(degrees: point2.longitude-point1.longitude);
 
     let lat1 = degreesToRadians(degrees: point1.latitude);
     let lat2 = degreesToRadians(degrees: point2.latitude);
 
-    var a = sin(dLat/2) * sin(dLat/2) + sin(dLon/2) * sin(dLon/2) * cos(lat1) * cos(lat2);
-    var c = 2 * atan2(sqrt(a), sqrt(1-a));
+    let a = sin(dLat/2) * sin(dLat/2) + sin(dLon/2) * sin(dLon/2) * cos(lat1) * cos(lat2);
+    let c = 2 * atan2(sqrt(a), sqrt(1-a));
     return earthRadiusKm * c;
 }

@@ -15,6 +15,15 @@ import MapKit
 class SessionStore: ObservableObject {
     
     @Published var user: User?
+    @Published var currentTab: Tab = .planning
+    @Published var showSettings: Bool = false
+    @Published var loggedIn: Bool = UserDefaults.standard.bool(forKey: "loggedIn")
+    @Published var performingMission: Mission? {
+        didSet {
+            self.currentTab = .live
+        }
+    }
+    @Published var fullScreen: Bool = false
     @Published var loadingMissions: Bool = true
     var map: MKMapType {
         set {

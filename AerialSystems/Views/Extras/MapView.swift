@@ -42,7 +42,6 @@ struct MapView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: MKMapView, context: UIViewRepresentableContext<MapView>) {
-        /*map.showsUserLocation = true
         let status = CLLocationManager.authorizationStatus()
         locationManager.requestAlwaysAuthorization()
         locationManager.requestWhenInUseAuthorization()
@@ -54,7 +53,7 @@ struct MapView: UIViewRepresentable {
             let span = MKCoordinateSpan(latitudeDelta: 0.009, longitudeDelta: 0.009)
             let region = MKCoordinateRegion(center: location, span: span)
             map.setRegion(region, animated: true)
-        }*/
+        }
         
         uiView.mapType = self.mapType
         updateMap(locations: self.locations, mapView: uiView)
@@ -78,13 +77,10 @@ struct MapView: UIViewRepresentable {
             mapView.addAnnotation(annotation)
         }
         
-        let test = tesxt(locations: locationsSorted)
+        let (top, right, bottom, left) = getCornerLocations(locations: locationsSorted)
         
         mapView.removeOverlays(mapView.overlays)
-        mapView.addOverlay(MKPolyline(coordinates: [.init(latitude: test[0], longitude: test[3]), .init(latitude: test[0], longitude: test[1])], count: 2))
-        mapView.addOverlay(MKPolyline(coordinates: [.init(latitude: test[0], longitude: test[1]), .init(latitude: test[2], longitude: test[1])], count: 2))
-        mapView.addOverlay(MKPolyline(coordinates: [.init(latitude: test[2], longitude: test[1]), .init(latitude: test[2], longitude: test[3])], count: 2))
-        mapView.addOverlay(MKPolyline(coordinates: [.init(latitude: test[2], longitude: test[3]), .init(latitude: test[0], longitude: test[3])], count: 2))
+        mapView.addOverlay(MKPolyline(coordinates: [.init(latitude: top, longitude: left), .init(latitude: top, longitude: right), .init(latitude: bottom, longitude: right), .init(latitude: bottom, longitude: left)], count: 4))
         mapView.addOverlay(MKPolygon(coordinates: locationsSorted.map { $0.coordinates.toLocation() }, count: locationsSorted.count))
     }
     
@@ -99,12 +95,7 @@ struct MapView: UIViewRepresentable {
         
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
             guard annotation is MKPointAnnotation else { return nil }
-
-            if annotation.title == "top" {
-                return self.customAnnotationViewTop(in: mapView, for: annotation)
-            } else {
-                return self.customAnnotationView(in: mapView, for: annotation)
-            }
+            return self.customAnnotationView(in: mapView, for: annotation)
         }
         
         @objc func addAnnotation(_ gestureRecognizer: UIGestureRecognizer) {
@@ -120,7 +111,7 @@ struct MapView: UIViewRepresentable {
         }
         
         private func customAnnotationView(in mapView: MKMapView, for annotation: MKAnnotation) -> CustomAnnotationView {
-            let identifier = "customPin"
+            let identifier = "location"
 
             if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? CustomAnnotationView {
                 annotationView.annotation = annotation
@@ -129,19 +120,6 @@ struct MapView: UIViewRepresentable {
                 let customAnnotationView = CustomAnnotationView(annotation: annotation, reuseIdentifier: identifier, size: parent.annotationSize)
                 customAnnotationView.canShowCallout = false
                 customAnnotationView.isDraggable = true
-                return customAnnotationView
-            }
-        }
-        
-        private func customAnnotationViewTop(in mapView: MKMapView, for annotation: MKAnnotation) -> CustomAnnotationView {
-            let identifier = "topPin"
-
-            if let annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? CustomAnnotationView {
-                annotationView.annotation = annotation
-                return annotationView
-            } else {
-                let customAnnotationView = CustomAnnotationView(annotation: annotation, reuseIdentifier: identifier, size: parent.annotationSize, color: .systemGray, test: "Top")
-                customAnnotationView.canShowCallout = false
                 return customAnnotationView
             }
         }
@@ -184,19 +162,10 @@ struct MapView: UIViewRepresentable {
 }
 
 class CustomAnnotationView: MKAnnotationView {
-    private let label: UILabel
-    private let annotationFrame = CGRect(x: 0, y: 0, width: 40, height: 40)
-    
-    init(annotation: MKAnnotation?, reuseIdentifier: String?, size: CGFloat, color: UIColor = .systemBlue, test: String = "") {
-        self.label = UILabel(frame: annotationFrame.offsetBy(dx: 0, dy: -6))
+    init(annotation: MKAnnotation?, reuseIdentifier: String?, size: CGFloat, color: UIColor = .systemBlue) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = .clear
         self.set(image: UIImage(systemName: "circle.fill", withConfiguration: UIImage.SymbolConfiguration(pointSize: size))!, with: color)
-        self.label.font = UIFont.systemFont(ofSize: 24, weight: .semibold)
-        self.label.textColor = .white
-        self.label.textAlignment = .center
-        self.label.text = test
-        self.addSubview(self.label)
     }
 
     required init?(coder aDecoder: NSCoder) {

@@ -9,12 +9,10 @@ import SwiftUI
 import FirebaseAuth
 import FirebaseDatabase
 import MapKit
+import DJISDK
 
 struct ContentView: View {
     
-    @State private var currentTab: Tab = .planning
-    @State private var showSettings: Bool = false
-    @State private var loggedIn: Bool = UserDefaults.standard.bool(forKey: "loggedIn")
     @EnvironmentObject var session: SessionStore
     @EnvironmentObject var popupHandler: PopupHandler
     @Environment(\.colorScheme) var colorScheme
@@ -23,51 +21,55 @@ struct ContentView: View {
         GeometryReader { geometry in
             ZStack {
                 NavigationView {
-                    if !loggedIn {
+                    if !session.loggedIn {
                         LoginView()
                             .navigationBarTitle("")
                             .navigationBarHidden(true)
                     } else {
                         VStack (alignment: .leading, spacing: 0) {
-                            Divider()
+                            if !session.fullScreen {
+                                Divider()
+                            }
                             HStack (spacing: 0) {
-                                VStack (spacing: 50) {
-                                    Button(action: {
-                                        currentTab = .planning
-                                    }, label: {
-                                        Image(systemName: "doc.plaintext").font(.system(size: 30)).foregroundColor(currentTab == .planning ? Color(.systemBlue) : Color(.systemGray))
-                                    })
-                                    Button(action: {
-                                        currentTab = .live
-                                    }, label: {
-                                        Image(systemName: "rectangle.grid.3x2").font(.system(size: 30)).foregroundColor(currentTab == .live ? Color(.systemBlue) : Color(.systemGray))
-                                    })
-                                    Button(action: {
-                                        currentTab = .history
-                                    }, label: {
-                                        Image(systemName: "circle.hexagonpath").font(.system(size: 30)).foregroundColor(currentTab == .history ? Color(.systemBlue) : Color(.systemGray))
-                                    })
-                                    Spacer()
-                                    Button(action: {
-                                        popupHandler.currentPopup = .logout(action: {
-                                            try! Auth.auth().signOut()
-                                            UserDefaults.standard.set(false, forKey: "loggedIn")
-                                            NotificationCenter.default.post(name: NSNotification.Name("loggedIn"), object: nil)
-                                            popupHandler.close()
+                                if !session.fullScreen {
+                                    VStack (spacing: 50) {
+                                        Button(action: {
+                                            session.currentTab = .planning
+                                        }, label: {
+                                            Image(systemName: "doc.plaintext").font(.system(size: 30)).foregroundColor(session.currentTab == .planning ? Color(.systemBlue) : Color(.systemGray))
+                                        }).disabled(session.performingMission != nil)
+                                        Button(action: {
+                                            session.currentTab = .live
+                                        }, label: {
+                                            Image(systemName: "rectangle.grid.3x2").font(.system(size: 30)).foregroundColor(session.currentTab == .live ? Color(.systemBlue) : Color(.systemGray))
                                         })
-                                    }, label: {
-                                        Image(systemName: "power").font(.system(size: 30)).foregroundColor(Color(.systemGray))
-                                    })
-                                    Button(action: {
-                                        showSettings = true
-                                    }, label: {
-                                        Image(systemName: "gearshape").font(.system(size: 30)).foregroundColor(showSettings ? Color(.systemBlue) : Color(.systemGray))
-                                    })
-                                }.frame(maxWidth: 80).padding(.vertical, 30)
-                                Divider().edgesIgnoringSafeArea(.bottom)
+                                        Button(action: {
+                                            session.currentTab = .history
+                                        }, label: {
+                                            Image(systemName: "circle.hexagonpath").font(.system(size: 30)).foregroundColor(session.currentTab == .history ? Color(.systemBlue) : Color(.systemGray))
+                                        }).disabled(session.performingMission != nil)
+                                        Spacer()
+                                        Button(action: {
+                                            popupHandler.currentPopup = .logout(action: {
+                                                try! Auth.auth().signOut()
+                                                UserDefaults.standard.set(false, forKey: "loggedIn")
+                                                NotificationCenter.default.post(name: NSNotification.Name("loggedIn"), object: nil)
+                                                popupHandler.close()
+                                            })
+                                        }, label: {
+                                            Image(systemName: "power").font(.system(size: 30)).foregroundColor(Color(.systemGray))
+                                        })
+                                        Button(action: {
+                                            session.showSettings = true
+                                        }, label: {
+                                            Image(systemName: "gearshape").font(.system(size: 30)).foregroundColor(session.showSettings ? Color(.systemBlue) : Color(.systemGray))
+                                        })
+                                    }.frame(maxWidth: 80).padding(.vertical, 30)
+                                    Divider().edgesIgnoringSafeArea(.bottom)
+                                }
                                 ZStack {
                                     Color(.systemGray6)
-                                    switch currentTab {
+                                    switch session.currentTab {
                                     case .planning:
                                         PlanningView()
                                     case .live:
@@ -78,8 +80,7 @@ struct ContentView: View {
                                 }.ignoresSafeArea(.all)
                             }
                             .navigationBarTitleDisplayMode(.inline)
-                            /*.navigationBarTitle("")
-                            .navigationBarHidden(true)*/
+                            .navigationBarHidden(session.fullScreen)
                         }.frame(maxHeight: .infinity)
                     }
                 }
@@ -128,6 +129,13 @@ struct ContentView: View {
                                     CustomButton(label: "Logout", color: Color(.systemRed), entireWidth: true, action: action)
                                 }.padding(.top, 15)
                                 
+                            case .messageAutoClose(let message, let closeAfter):
+                                LoadingPopup(message: message, duration: closeAfter).onAppear {
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + closeAfter) {
+                                        popupHandler.close()
+                                    }
+                                }
+                                
                             default:
                                 Text("error")
                             }
@@ -142,8 +150,8 @@ struct ContentView: View {
                 }
             }.font(SFPro.body)
         }
-        .sheet(isPresented: $showSettings) {
-            if let user = session.user {
+        .sheet(isPresented: $session.showSettings) {
+            if let _ = session.user {
                 NavigationView {
                     VStack {
                         Form {
@@ -153,13 +161,25 @@ struct ContentView: View {
                                     Text("Satellite").tag(MKMapType.satellite)
                                 }
                             }
+                            Section(header: Text("ABOUT")) {
+                                HStack {
+                                    Text("Version")
+                                    Spacer()
+                                    Text("1.0")
+                                }
+                                HStack {
+                                    Text("DJI Mobile SDK")
+                                    Spacer()
+                                    Text(DJISDKManager.sdkVersion())
+                                }
+                            }
                         }
                     }
                     .navigationBarTitleDisplayMode(.inline)
                     .navigationTitle("Settings")
                     .toolbar {
                         Button(action: {
-                            showSettings = false
+                            session.showSettings = false
                         }, label: {
                             Text("Close")
                         })
@@ -170,7 +190,7 @@ struct ContentView: View {
         .onAppear {
             session.listen()
             NotificationCenter.default.addObserver(forName: NSNotification.Name("loggedIn"), object: nil, queue: .main) { _ in
-                self.loggedIn = UserDefaults.standard.bool(forKey: "loggedIn")
+                self.session.loggedIn = UserDefaults.standard.bool(forKey: "loggedIn")
             }
         }
     }

@@ -38,4 +38,5 @@ enum PopupType {
     case saveMission(missionName: Binding<String>, action: () -> Void)
     case deleteMission(action: () -> Void)
     case logout(action: () -> Void)
+    case messageAutoClose(message: String, closeAfter: CGFloat)
 }
