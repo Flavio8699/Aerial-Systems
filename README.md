@@ -34,7 +34,7 @@ The app was built using the SwiftUI framework.
 4. Tap the *Run* button (or <kbd>Command</kbd> + <kbd>R</kbd>) and wait until all the tasks are finished
 
 ## Connect a drone to the iOS simulator
-To connect a drone to the iOS simulator, the **DJI Bridge App** is required. Since you cannot connect the drone's remote controler to an iOS simulator, you need to connect the remote controler to a physical device with the Bridge App. This app will forward everything wirelessly to the simulator on your computer.
+To connect a drone to the iOS simulator, the [**DJI Bridge App**](https://developer.dji.com/mobile-sdk/documentation/ios-tutorials/BridgeAppDemo.html#importing-the-dji-sdk) is required. Since you cannot connect the drone's remote controler to an iOS simulator, you need to connect the remote controler to a physical device with the Bridge App. This app will forward everything wirelessly to the simulator on your computer.
 1. Download and install the ***DJI Bridge App*** on a physical device (it doesn't matter if it is a phone, tablet or android phone).
 2. Turn on the drone and remote controler.
 3. Connect the remote controler to your device.
