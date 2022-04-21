@@ -4,6 +4,7 @@ The app was built using the SwiftUI framework.
 
 * [Requirements](#requirements)
 * [Installation](#installation)
+* [Connect with DJI App](#connect-with-dji-app)
 * [Build and simulate](#build-and-simulate)
 * [Connect a drone to the iOS simulator](#connect-a-drone-to-the-ios-simulator)
 * [Contact](#contact)
@@ -18,6 +19,13 @@ The app was built using the SwiftUI framework.
 1. Clone the repository to your computer: `git clone https://github.com/Flavio8699/Aerial-Systems.git`
 2. Enter the newly created directory (Mac): `cd Aerial-Systems`
 3. Install the necessary pods with `pod install`
+
+## Connect with DJI App
+1. Go to https://developer.dji.com/user/apps
+2. Click on **CREATE APP**
+3. Create a DJI App according to your needs
+4. Once the app is created, copy the **App Key**
+5. Go to **Info.plist** and change the value of **DJISDKAppKey** to your key
 
 ## Build and simulate
 1. Open the project file ***AerialSystems.xcworkspace***
