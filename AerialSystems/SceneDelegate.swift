@@ -19,9 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         // Create the SwiftUI view that provides the window contents.
-        let droneManager = DJIDroneManager()
-        droneManager.registerWithSDK()
-        let contentView = ContentView().environmentObject(SessionStore()).environmentObject(PopupHandler()).environmentObject(StaticData()).environmentObject(droneManager)
+        let contentView = ContentView().environmentObject(SessionStore()).environmentObject(PopupHandler()).environmentObject(StaticData())
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

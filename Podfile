@@ -15,4 +15,5 @@ target 'Aerial Systems' do
   pod ‘Firebase/Firestore'
   pod 'Firebase/Database'
   pod 'FirebaseFirestoreSwift', '> 7.0-beta'
+  pod 'Firebase/Storage'
 end

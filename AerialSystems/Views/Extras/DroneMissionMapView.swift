@@ -114,7 +114,7 @@ class DroneAnnotationView: MKAnnotationView {
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = .clear
-        self.set(image: UIImage(named: "aircraft")!, with: .blue)
+        self.set(image: UIImage(systemName: "airplane", withConfiguration: UIImage.SymbolConfiguration(pointSize: 20))!, with: .systemRed)
     }
 
     required init?(coder aDecoder: NSCoder) {

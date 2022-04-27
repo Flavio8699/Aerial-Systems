@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct MissionImageView: View {
     
@@ -18,10 +19,10 @@ struct MissionImageView: View {
     var body: some View {
         GeometryReader { geometry in
             VStack (spacing: 50) {
-                Text("Image 25").foregroundColor(.white).font(SFPro.title_light_25).bold()
+                Text(missionImage.name).foregroundColor(.white).font(SFPro.title_light_25).bold()
                 HStack (alignment: .center, spacing: 50) {
                     Spacer()
-                    Image(missionImage.image).resizable().frame(width: geometry.size.width/3, height: geometry.size.height/2).cornerRadius(14)
+                    WebImage(url: missionImage.url).resizable().frame(width: geometry.size.width/3, height: geometry.size.height/2).cornerRadius(14)
                     VStack (spacing: 0) {
                         VStack (spacing: 15) {
                             Text("Indices").font(SFPro.title_light_25)

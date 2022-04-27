@@ -10,7 +10,9 @@ import DJISDK
 import DJIWidget
 
 class DJIDroneManager: NSObject, ObservableObject {
-
+    
+    static let shared = DJIDroneManager()
+    
     fileprivate let enableBridgeMode = false
     fileprivate let bridgeAppIP = "192.168.178.81"
 
@@ -94,6 +96,44 @@ extension DJIDroneManager: DJICameraDelegate {
             return (product as! DJIHandheld).camera
         }
         return nil
+    }
+    
+    func camera(_ camera: DJICamera, didUpdate systemState: DJICameraSystemState) {
+        //print("STATE STATE", systemState.mode)
+        if systemState.mode != .recordVideo && systemState.mode != .shootPhoto {
+            return
+        }
+        /*if needToSetMode == false {
+            return
+        }
+        needToSetMode = false
+        */camera.setMode(.shootPhoto) { (error) in
+            if error != nil {
+                //self?.needToSetMode = true
+            }
+        }
+    }
+    
+    func camera(_ camera: DJICamera, didGenerateNewMediaFile newMedia: DJIMediaFile) {
+        /*camera.setMode( .mediaDownload, withCompletion: {(error) in
+            if error != nil {
+                newMedia.fetchData(withOffset: 0, update: DispatchQueue.main, update: {(_ data: Data?, _ isComplete: Bool, _ error: Error?) -> Void in
+                    if error != nil {
+                        print("error? \(error?.localizedDescription)")
+                    }
+                    else {
+                        // unwrap downloaded data and create image
+                        if let data = data, let downloadedImage = UIImage(data: data) {
+                            print("downloaded")
+                            //images.append( downloadedImage )
+                        }
+                    }
+                    
+                })
+            } else {
+                print("test error", error?.localizedDescription)
+            }
+        })*/
     }
 }
 

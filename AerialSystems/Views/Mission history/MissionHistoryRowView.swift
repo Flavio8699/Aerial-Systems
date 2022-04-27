@@ -7,12 +7,14 @@
 
 import SwiftUI
 import MapKit
+import FirebaseStorage
+import SDWebImageSwiftUI
 
 struct MissionHistoryRowView: View {
     
     let mission: Mission
+    @State var images = [MissionImage]()
     @State var missionLocation: String = ""
-    let images = ["field_sample", "field_sample_2", "field_sample", "field_sample_2", "field_sample", "field_sample_2", "field_sample", "field_sample_2"]
     @EnvironmentObject var popupHandler: PopupHandler
     @EnvironmentObject var staticData: StaticData
     @Environment(\.colorScheme) var colorScheme
@@ -22,10 +24,11 @@ struct MissionHistoryRowView: View {
             HStack (spacing: 30) {
                 Text(mission.name).font(SFPro.title_light).foregroundColor(Color(.systemBlue))
                 Spacer()
+                /*ForEach(mission.images, id: \.self) { image in
+                    Text(image)
+                }*/
                 HStack (spacing: 10) {
                     Image(systemName: "location.fill").foregroundColor(Color(.systemBlue))
-                    
-                    
                     Text(missionLocation).foregroundColor(Color(.systemGray))
                 }
                 HStack (spacing: 10) {
@@ -49,19 +52,17 @@ struct MissionHistoryRowView: View {
             }.padding(.horizontal, 40)
             Text("Orthomosaic images").padding(.horizontal, 40)
             ScrollView (.horizontal, showsIndicators: false) {
-                HStack (spacing: 30) {
+                LazyHStack (spacing: 30) {
                     ForEach(images, id: \.self) { image in
                         Button(action: {
-                            popupHandler.missionImagePopup = MissionImage(image: image, availableIndices: staticData.indices.filter { index in
-                                return mission.indices.contains(index.title)
-                            })
+                            popupHandler.missionImagePopup = image
                         }, label: {
-                            Image(image).resizable().overlay {
-                                //if image == images.first {
+                            WebImage(url: image.url).resizable().overlay {
+                                if image == images.first {
                                     ZStack {
                                         Image(systemName: "magnifyingglass").foregroundColor(colorScheme == .dark ? Color(.systemGray) : .white).font(.system(size: 40))
                                     }.frame(maxWidth: .infinity, maxHeight: .infinity).background(.black.opacity(0.3))
-                                //}
+                                }
                             }
                         }).frame(width: 150, height: 150).cornerRadius(6)
                     }
@@ -70,7 +71,7 @@ struct MissionHistoryRowView: View {
             Text("Activities images").padding(.horizontal, 40)
             ScrollView (.horizontal, showsIndicators: false) {
                 HStack (spacing: 30) {
-                    ForEach(images, id: \.self) { image in
+                    /*ForEach(images, id: \.self) { image in
                         Button(action: {
                             
                         }, label: {
@@ -82,7 +83,7 @@ struct MissionHistoryRowView: View {
                                 //}
                             }
                         }).frame(width: 150, height: 150).cornerRadius(6)
-                    }
+                    }*/
                 }.padding(.horizontal, 40)
             }
         }
@@ -91,6 +92,8 @@ struct MissionHistoryRowView: View {
         .background(Color(UIColor.systemBackground))
         .addBorder(.white, cornerRadius: 14)
         .onAppear {
+            self.downloadImages()
+            
             if self.mission.locations.count > 0 {
                 let location = CLLocation(latitude: self.mission.locations[0].coordinates.latitude, longitude: self.mission.locations[0].coordinates.longitude)
 
@@ -109,6 +112,30 @@ struct MissionHistoryRowView: View {
                 })
             } else {
                 self.missionLocation = "N/D"
+            }
+        }
+    }
+    
+    func downloadImages() {
+        if let id = self.mission.id {
+            let storage = Storage.storage()
+            let storageReference = storage.reference().child(id)
+            storageReference.listAll { (result, error) in
+                var counter: Int = 1
+                for image in result.items {
+                    image.downloadURL { url, error in
+                        if error != nil {
+                            print(error?.localizedDescription)
+                        } else {
+                            if let url = url {
+                                images.append(MissionImage(name: "Image \(counter)", availableIndices: staticData.indices.filter { index in
+                                    return mission.indices.contains(index.title)
+                                }, url: url))
+                                counter += 1
+                            }
+                        }
+                    }
+                }
             }
         }
     }

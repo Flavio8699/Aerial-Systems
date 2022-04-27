@@ -13,6 +13,7 @@ import DJISDK
 
 struct ContentView: View {
     
+    @StateObject var droneManager = DJIDroneManager.shared
     @EnvironmentObject var session: SessionStore
     @EnvironmentObject var popupHandler: PopupHandler
     @Environment(\.colorScheme) var colorScheme
@@ -192,6 +193,7 @@ struct ContentView: View {
             NotificationCenter.default.addObserver(forName: NSNotification.Name("loggedIn"), object: nil, queue: .main) { _ in
                 self.session.loggedIn = UserDefaults.standard.bool(forKey: "loggedIn")
             }
+            droneManager.registerWithSDK()
         }
     }
 }

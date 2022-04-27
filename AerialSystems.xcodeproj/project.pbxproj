@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,7 +14,9 @@
 		72127D1A271D676700B28961 /* scrollOnOverflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72127D19271D676700B28961 /* scrollOnOverflow.swift */; };
 		72127D1C271D67B900B28961 /* addBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72127D1B271D67B900B28961 /* addBorder.swift */; };
 		7214AC272722D5BD004A55B3 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7214AC262722D5BD004A55B3 /* SummaryView.swift */; };
-		7220A55A27D14EDD0000A15B /* FPVViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7220A55927D14EDD0000A15B /* FPVViewController.swift */; };
+		7220A55A27D14EDD0000A15B /* FPVViewController (unused).swift in Sources */ = {isa = PBXBuildFile; fileRef = 7220A55927D14EDD0000A15B /* FPVViewController (unused).swift */; };
+		72275AA72812CDFE00867274 /* MissionHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72275AA62812CDFE00867274 /* MissionHistoryViewModel.swift */; };
+		72275AAA2812D26900867274 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 72275AA92812D26900867274 /* SDWebImageSwiftUI */; };
 		7230908D274FEDC500A9BBC9 /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7230908C274FEDC500A9BBC9 /* InputField.swift */; };
 		723157682707477100316E62 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723157672707477100316E62 /* MapView.swift */; };
 		7237E4CA271F063D00C5B0E0 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7237E4C9271F063D00C5B0E0 /* LoginView.swift */; };
@@ -70,6 +72,7 @@
 		72CECB40272A9174004ECB03 /* VisualEffectBlur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CECB3F272A9174004ECB03 /* VisualEffectBlur.swift */; };
 		72CECB42272A957C004ECB03 /* PopupHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72CECB41272A957C004ECB03 /* PopupHandler.swift */; };
 		72E65055275E3DE8006F5362 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 72E65054275E3DE8006F5362 /* GoogleService-Info.plist */; };
+		72E7B51128118E8F008C184A /* DroneImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E7B51028118E8F008C184A /* DroneImage.swift */; };
 		72E9E6A027DB74AC00E02060 /* DroneMissionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E9E69F27DB74AC00E02060 /* DroneMissionViewModel.swift */; };
 		72E9E6A227DB7AF100E02060 /* DroneMissionMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72E9E6A127DB7AF100E02060 /* DroneMissionMapView.swift */; };
 		72EA32872747C217009A4B8D /* MissionHistory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72EA32862747C217009A4B8D /* MissionHistory.swift */; };
@@ -111,7 +114,8 @@
 		722063DE2720A32E00989FF3 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		722063E92720A32E00989FF3 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		722064052720AAF600989FF3 /* AerialSystems.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = AerialSystems.entitlements; sourceTree = "<group>"; };
-		7220A55927D14EDD0000A15B /* FPVViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FPVViewController.swift; sourceTree = "<group>"; };
+		7220A55927D14EDD0000A15B /* FPVViewController (unused).swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FPVViewController (unused).swift"; sourceTree = "<group>"; };
+		72275AA62812CDFE00867274 /* MissionHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionHistoryViewModel.swift; sourceTree = "<group>"; };
 		7230908C274FEDC500A9BBC9 /* InputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
 		723157672707477100316E62 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		7237E4C9271F063D00C5B0E0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -169,6 +173,7 @@
 		72CECB3F272A9174004ECB03 /* VisualEffectBlur.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectBlur.swift; sourceTree = "<group>"; };
 		72CECB41272A957C004ECB03 /* PopupHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopupHandler.swift; sourceTree = "<group>"; };
 		72E65054275E3DE8006F5362 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		72E7B51028118E8F008C184A /* DroneImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroneImage.swift; sourceTree = "<group>"; };
 		72E9E69F27DB74AC00E02060 /* DroneMissionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroneMissionViewModel.swift; sourceTree = "<group>"; };
 		72E9E6A127DB7AF100E02060 /* DroneMissionMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroneMissionMapView.swift; sourceTree = "<group>"; };
 		72EA32862747C217009A4B8D /* MissionHistory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionHistory.swift; sourceTree = "<group>"; };
@@ -191,6 +196,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72275AAA2812D26900867274 /* SDWebImageSwiftUI in Frameworks */,
 				F273AD9B801BE29B762C329E /* Pods_Aerial_Systems.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -306,9 +312,8 @@
 				72E65054275E3DE8006F5362 /* GoogleService-Info.plist */,
 				727444B726FA327A00E5A114 /* Info.plist */,
 				727444B126FA327A00E5A114 /* Preview Content */,
-				7220A55927D14EDD0000A15B /* FPVViewController.swift */,
+				7220A55927D14EDD0000A15B /* FPVViewController (unused).swift */,
 				7245D38527D8DF0100011C5C /* DJIDroneManager.swift */,
-				727ED8E127F48D8C007B0BC0 /* CustomAnnotation.swift */,
 			);
 			path = AerialSystems;
 			sourceTree = "<group>";
@@ -351,6 +356,7 @@
 				72FE95FF273D4E5A00AFC5DD /* Camera.swift */,
 				728376FF27426B0C006C4158 /* Location.swift */,
 				72EA328E2747F9A3009A4B8D /* MissionImage.swift */,
+				72E7B51028118E8F008C184A /* DroneImage.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -426,6 +432,7 @@
 				72EA32882747D203009A4B8D /* MissionImageView.swift */,
 				7230908C274FEDC500A9BBC9 /* InputField.swift */,
 				72C24A7627D768BF005B8239 /* LoadingPopup.swift */,
+				727ED8E127F48D8C007B0BC0 /* CustomAnnotation.swift */,
 			);
 			path = Extras;
 			sourceTree = "<group>";
@@ -437,6 +444,7 @@
 				7237E4CB271F19C200C5B0E0 /* LoginViewModel.swift */,
 				72CECB3D272A8B46004ECB03 /* RegisterViewModel.swift */,
 				72E9E69F27DB74AC00E02060 /* DroneMissionViewModel.swift */,
+				72275AA62812CDFE00867274 /* MissionHistoryViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -462,6 +470,9 @@
 			dependencies = (
 			);
 			name = "Aerial Systems";
+			packageProductDependencies = (
+				72275AA92812D26900867274 /* SDWebImageSwiftUI */,
+			);
 			productName = "BSP5 Drone App";
 			productReference = 727444A626FA327800E5A114 /* Aerial Systems.app */;
 			productType = "com.apple.product-type.application";
@@ -490,6 +501,7 @@
 			);
 			mainGroup = 7274449D26FA327800E5A114;
 			packageReferences = (
+				72275AA82812D26900867274 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
 			productRefGroup = 727444A726FA327800E5A114 /* Products */;
 			projectDirPath = "";
@@ -633,6 +645,7 @@
 				729CC21E270EF9420095014E /* PlanningHeaderView.swift in Sources */,
 				727A9A972746F759009F83DD /* CameraFVPViewController.swift in Sources */,
 				726E3CC227229FE20074D4A6 /* SessionStore.swift in Sources */,
+				72E7B51128118E8F008C184A /* DroneImage.swift in Sources */,
 				7245D38627D8DF0100011C5C /* DJIDroneManager.swift in Sources */,
 				725E5D7D2733F56C00F60D45 /* Mission.swift in Sources */,
 				7214AC272722D5BD004A55B3 /* SummaryView.swift in Sources */,
@@ -643,7 +656,7 @@
 				72EA328D2747F6A4009A4B8D /* MissionHistoryRowView.swift in Sources */,
 				723157682707477100316E62 /* MapView.swift in Sources */,
 				729715D42718888C00326808 /* Index.swift in Sources */,
-				7220A55A27D14EDD0000A15B /* FPVViewController.swift in Sources */,
+				7220A55A27D14EDD0000A15B /* FPVViewController (unused).swift in Sources */,
 				72EA328B2747EBE8009A4B8D /* IndexInfoSheetView.swift in Sources */,
 				72E9E6A027DB74AC00E02060 /* DroneMissionViewModel.swift in Sources */,
 				720D94082746F3DA000390F4 /* DecodeImageCalibrateLogic.swift in Sources */,
@@ -660,6 +673,7 @@
 				72E9E6A227DB7AF100E02060 /* DroneMissionMapView.swift in Sources */,
 				72EA32912747FB17009A4B8D /* StaticData.swift in Sources */,
 				727444AC26FA327800E5A114 /* SceneDelegate.swift in Sources */,
+				72275AA72812CDFE00867274 /* MissionHistoryViewModel.swift in Sources */,
 				7237E4CA271F063D00C5B0E0 /* LoginView.swift in Sources */,
 				72C24A7727D768BF005B8239 /* LoadingPopup.swift in Sources */,
 				727444AE26FA327800E5A114 /* ContentView.swift in Sources */,
@@ -877,6 +891,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		72275AA82812D26900867274 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		72275AA92812D26900867274 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 72275AA82812D26900867274 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7274449E26FA327800E5A114 /* Project object */;
 }

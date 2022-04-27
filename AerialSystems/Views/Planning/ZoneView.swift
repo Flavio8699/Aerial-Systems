@@ -26,7 +26,7 @@ struct ZoneView: View {
                 }
                 .padding(.vertical, 16)
                 .padding(.horizontal)
-                .background(Color(UIColor.systemBackground))
+                .background(Color(UIColor.systemBackground).opacity(0.8))
                 .cornerRadius(5)
                 Spacer()
                 CustomButton(label: "Next step", action: {

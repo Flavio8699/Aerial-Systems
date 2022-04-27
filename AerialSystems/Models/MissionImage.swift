@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct MissionImage {
-    var image: String
+struct MissionImage: Hashable {
+    var name: String
     var availableIndices: [Index]
+    var url: URL
 }

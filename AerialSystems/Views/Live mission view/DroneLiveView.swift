@@ -12,10 +12,11 @@ import DJIWidget
 struct DroneLiveView: View {
     
     @State var fpvFullscreen: Bool = false
+    @State var missionStarted: Bool = false
+    @State var missionPaused: Bool = false
     @StateObject var droneMissionVM = DroneMissionViewModel()
     @EnvironmentObject var session: SessionStore
-    @EnvironmentObject var droneManager: DJIDroneManager
-    
+
     var body: some View {
         ZStack (alignment: .center) {
             if session.performingMission != nil {
@@ -25,30 +26,61 @@ struct DroneLiveView: View {
                     self.getMap()
                 }
                 VStack (spacing: 0) {
-                    HStack {
+                    HStack (spacing: 20) {
                         Button(action: {
                             session.fullScreen.toggle()
                         }, label: {
                             HStack {
                                 if session.fullScreen {
                                     Image(systemName: "arrow.down.right.and.arrow.up.left")
-                                    Text("Exit Fullscreen")
+                                    Text("Exit Fullscreen").bold()
                                 } else {
                                     Image(systemName: "arrow.up.left.and.arrow.down.right")
-                                    Text("Fullscreen")
+                                    Text("Fullscreen").bold()
                                 }
                             }
                         })
+                        .foregroundColor(.primary)
                         .padding(.vertical, 16)
                         .padding(.horizontal)
-                        .foregroundColor(.white)
-                        .background(.black.opacity(0.6))
+                        .background(Color(UIColor.systemBackground).opacity(0.8))
                         .cornerRadius(5)
                         Spacer()
-                    }.padding(.vertical, 40).padding(.horizontal, 20)
-                    Spacer()
+                        HStack (spacing: 20) {
+                            HStack {
+                                Text("Drone Battery:").bold()
+                                Text("\(droneMissionVM.droneInformation.batteryPercentageRemaining) %")
+                            }
+                            HStack {
+                                Text("Speed:").bold()
+                                Text("33 km/h")
+                            }
+                            HStack {
+                                Text("Altitude:").bold()
+                                Text("\(droneMissionVM.droneInformation.altitudeInMeters) m")
+                            }
+                            HStack {
+                                Text("Identification Photos:").bold()
+                                Text("\(droneMissionVM.droneInformation.photosTaken)/\(droneMissionVM.droneInformation.photosToTake)")
+                            }
+                        }
+                        .padding(.vertical, 16)
+                        .padding(.horizontal)
+                        .background(Color(UIColor.systemBackground).opacity(0.8))
+                        .cornerRadius(5)
+                    }.padding()
                     HStack {
-                        Spacer()
+                        /*ForEach(droneMissionVM.downloadedImages, id: \.self) { image in
+                            if let data = image.data {
+                                VStack {
+                                    //Image(uiImage: UIImage(data: data)!).resizable().frame(width: 50, height: 50)
+                                    Text(image.name)
+                                }
+                            }
+                        }*/
+                    }
+                    Spacer()
+                    HStack (alignment: .bottom, spacing: 20) {
                         ZStack (alignment: .topLeading) {
                             Color(.systemGray6)
                             if fpvFullscreen {
@@ -69,38 +101,31 @@ struct DroneLiveView: View {
                         }
                         .frame(width: 400, height: 250)
                         .cornerRadius(5)
-                    }.padding()
-                    HStack (alignment: .bottom) {
-                        HStack (spacing: 20) {
-                            HStack {
-                                Text("Drone Battery:").bold()
-                                Text("\(droneMissionVM.droneInformation.batteryPercentageRemaining) %")
-                            }
-                            HStack {
-                                Text("Speed:").bold()
-                                Text("33 km/h")
-                            }
-                            HStack {
-                                Text("Altitude:").bold()
-                                Text("\(droneMissionVM.droneInformation.altitudeInMeters) m")
-                            }
-                            HStack {
-                                Text("Identification Photos:").bold()
-                                Text("16")
-                            }
-                        }
-                        .padding(.vertical, 16)
-                        .padding(.horizontal)
-                        .foregroundColor(.white)
-                        .background(.black.opacity(0.6))
-                        .cornerRadius(5)
                         Spacer()
-                        CustomButton(label: "Stop mission", color: .red, action: {
-                            session.fullScreen = false
-                            session.performingMission = nil
-                            droneManager.resetVideo()
-                        })
-                    }.padding(20)
+                        if missionStarted {
+                            CustomButton(label: missionPaused ? "Resume mission" : "Pause mission", action: {
+                                if missionPaused {
+                                    missionPaused = false
+                                    droneMissionVM.resumeMission()
+                                } else {
+                                    missionPaused = true
+                                    droneMissionVM.pauseMission()
+                                }
+                            })
+                            CustomButton(label: "Stop mission", color: .red, action: {
+                                /*session.fullScreen = false
+                                session.performingMission = nil
+                                droneManager.resetVideo()*/
+                                missionStarted = false
+                                droneMissionVM.stopMission()
+                            })
+                        } else {
+                            CustomButton(label: "Take off", action: {
+                                missionStarted = true
+                                droneMissionVM.startMission()
+                            })
+                        }
+                    }.padding()
                 }
             } else {
                 VStack {
@@ -114,9 +139,9 @@ struct DroneLiveView: View {
         .onAppear {
             guard let currentMission = session.performingMission else { return }
             
-            droneManager.setupVideo()
-            droneMissionVM.startListeners()
             droneMissionVM.currentMission = currentMission
+            droneMissionVM.setupVideo()
+            droneMissionVM.startListeners()
             droneMissionVM.configureMission()
         }
     }
@@ -128,12 +153,7 @@ struct DroneLiveView: View {
     }
     
     func getFPV() -> some View {
-        return droneManager.videoFeed
+        return droneMissionVM.droneManager.videoFeed
     }
 }
 
-struct DroneLiveView_Previews: PreviewProvider {
-    static var previews: some View {
-        DroneLiveView().environmentObject(SessionStore()).environmentObject(DJIDroneManager())
-    }
-}

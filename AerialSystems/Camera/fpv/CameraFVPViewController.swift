@@ -58,10 +58,6 @@ class test: NSObject, DJICameraDelegate {
         
     }
     
-    func camera(_ camera: DJICamera, didUpdateTemperatureData temperature: Float) {
-        //tempLabel.text = String(format: "%f", temperature)
-    }
-    
 }
     
 func fetchCamera() -> DJICamera? {
