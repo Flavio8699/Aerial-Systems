@@ -97,8 +97,8 @@ class SessionStore: ObservableObject {
     func login(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             Auth.auth().signIn(withEmail: email, password: password) { (res, error) in
-                if error != nil {
-                    completion(.failure(error!))
+                if let error = error {
+                    completion(.failure(error))
                 } else {
                     completion(.success(()))
                 }
@@ -106,13 +106,16 @@ class SessionStore: ObservableObject {
         }
     }
     
-    func register(email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
+    func register(name: String, email: String, password: String, completion: @escaping (Result<Void, Error>) -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
             Auth.auth().createUser(withEmail: email, password: password) { (res, error) in
-                if error != nil {
-                    completion(.failure(error!))
+                if let error = error {
+                    completion(.failure(error))
                 } else {
-                    completion(.success(()))
+                    if let res = res {
+                        self.db.collection("users").document(res.user.uid).setData(["fullname": name, "map": "satellite"])
+                        completion(.success(()))
+                    }
                 }
             }
         }
@@ -120,8 +123,8 @@ class SessionStore: ObservableObject {
     
     func passwordReset(email: String, completion: @escaping (Result<Void, Error>) -> Void) {
         Auth.auth().sendPasswordReset(withEmail: email) { error in
-            if error != nil {
-                completion(.failure(error!))
+            if let error = error {
+                completion(.failure(error))
             } else {
                 completion(.success(()))
             }

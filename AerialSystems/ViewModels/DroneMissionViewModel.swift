@@ -20,25 +20,11 @@ class DroneMissionViewModel: ObservableObject {
     private var aircraftAnnotation = CustomAnnotation(identifier: "aircraft")
     @Published var aircraftAnnotationView: MKAnnotationView?
     @Published var droneManager = DJIDroneManager.shared
-    @Published var downloadedImages = [DroneImage]()
     
     func test() {
         let task = URLSession.shared.dataTask(with: URL(string: "https://conservationnation.org/wp-content/uploads/2020/02/bengal-tiger-hero.jpg")!) { data, response, error in
             guard let data = data else { return }
-            DispatchQueue.main.async {
-                let filePath = "6Y2yDqQBQ5XP8jxepMkc/image.jpg" // path where you wanted to store img in storage
-                let metaData = StorageMetadata()
-                metaData.contentType = "image/jpg"
-                let storageRef = Storage.storage().reference()
-                    storageRef.child(filePath).putData(data as Data, metadata: metaData) { metaData, error in
-                        if let error = error {
-                            print(error.localizedDescription)
-                            return
-                        }else{
-                            print(metaData)
-                        }
-                    }
-            }
+            self.uploadImagesToFirebase([.init(name: "test.jpg", data: data)])
         }
         task.resume()
     }
@@ -68,18 +54,15 @@ class DroneMissionViewModel: ObservableObject {
             self.map.addOverlay(MKPolyline(coordinates: coordinates, count: coordinates.count))
 
             if let mission = self.createMission(altitude: 120, coordinates: coordinates) {
-                let takeoff_error = DJISDKManager.missionControl()?.scheduleElement(DJITakeOffAction())
+                var elements = [DJIMissionControlTimelineElement]()
                 
-                if takeoff_error != nil {
-                    NSLog("Error scheduling element \(String(describing: takeoff_error))")
-                    return;
-                }
+                elements.append(DJITakeOffAction())
+                elements.append(mission)
+                elements.append(DJIGoHomeAction())
                 
-                let mission_error = DJISDKManager.missionControl()?.scheduleElement(mission)
-                
-                if mission_error != nil {
-                    NSLog("Error scheduling element \(String(describing: mission_error))")
-                    return;
+                let error = DJISDKManager.missionControl()?.scheduleElements(elements)
+                if error != nil {
+                    print("Error detected with the mission")
                 }
             }
         }
@@ -127,7 +110,7 @@ class DroneMissionViewModel: ObservableObject {
         return DJIWaypointMission(mission: mission)
     }
     
-    func getListOfPhotoCoordinates(topLeft: CLLocationCoordinate2D, bottomRight: CLLocationCoordinate2D, overlap: CGFloat = 0.7) -> [CLLocationCoordinate2D] {
+    private func getListOfPhotoCoordinates(topLeft: CLLocationCoordinate2D, bottomRight: CLLocationCoordinate2D, overlap: CGFloat = 0.7) -> [CLLocationCoordinate2D] {
         var coordinates = [CLLocationCoordinate2D]()
         let (x, y) = getSizeFromFOV(HFOV: 57.12, VFOV: 42.44, altitude: 120)
         
@@ -161,37 +144,31 @@ class DroneMissionViewModel: ObservableObject {
         return coordinates
     }
     
-    func getSizeFromFOV(HFOV: CGFloat, VFOV: CGFloat, altitude: CGFloat) -> (CGFloat, CGFloat) {
+    private func getSizeFromFOV(HFOV: CGFloat, VFOV: CGFloat, altitude: CGFloat) -> (CGFloat, CGFloat) {
         let x = tan(HFOV / 2 * CGFloat.pi / 180) * altitude
         let y = tan(VFOV / 2 * CGFloat.pi / 180) * altitude
         return (x, y)
     }
     
-    func addVerticalMeters(_ meters: CGFloat, at latitude: CLLocationDegrees) -> CLLocationDegrees {
+    private func addVerticalMeters(_ meters: CGFloat, at latitude: CLLocationDegrees) -> CLLocationDegrees {
         return latitude + (meters / 6378000) * (180 / CGFloat.pi);
     }
     
-    func addHorizontalMeters(_ meters: CGFloat, at longitude: CLLocationDegrees) -> CLLocationDegrees {
+    private func addHorizontalMeters(_ meters: CGFloat, at longitude: CLLocationDegrees) -> CLLocationDegrees {
         return longitude + (meters / 6378000) * (180 / CGFloat.pi) / cos(longitude * CGFloat.pi / 180);
     }
     
     func startListeners() {
-        // Timeline events listener (start, pause, resume and stop mission)
-        /*DJISDKManager.missionControl()?.addListener(self, toTimelineProgressWith: { (event: DJIMissionControlTimelineEvent, element: DJIMissionControlTimelineElement?, error: Error?, info: Any?) in
-            
-            switch event {
-            case .started:
-                self.startMission()
-            case .stopped:
-                self.stopMission()
-            case .paused:
-                self.pauseMission()
-            case .resumed:
-                self.resumeMission()
-            default:
-                break
+        // TEST
+        DJIWaypointMissionOperator().addListener(toExecutionEvent: self, with: DispatchQueue.main) { event in
+            print("Event")
+            if let progress = event.progress {
+                print("Is waypoint reached:", progress.isWaypointReached)
+                print("Target waypoint index (next waypoint):", progress.targetWaypointIndex)
+            } else {
+                print("Error with event progress")
             }
-        })*/
+        }
         
         // Drone location
         if let aircarftLocationKey = DJIFlightControllerKey(param: DJIFlightControllerParamAircraftLocation)  {
@@ -241,7 +218,12 @@ class DroneMissionViewModel: ObservableObject {
             
             DJISDKManager.keyManager()?.startListeningForChanges(on: batteryLevelKey, withListener: self) { [unowned self] (oldValue: DJIKeyedValue?, newValue: DJIKeyedValue?) in
                 if newValue != nil {
-                    self.droneInformation.batteryPercentageRemaining = newValue!.unsignedIntegerValue
+                    let battery = newValue!.unsignedIntegerValue
+                    self.droneInformation.batteryPercentageRemaining = battery
+                    
+                    if battery <= 20 {
+                        print("BATTERY BELOW 20%, SHOULD ABORT MISSION, SAVE CURRENT WAYPOINT INDEX, RTH AND CONTINUE LATER")
+                    }
                 }
             }
         }
@@ -262,7 +244,29 @@ class DroneMissionViewModel: ObservableObject {
         }
     }
     
-    func listFiles(amount: Int) {
+    func setupVideo() {
+        droneManager.setupVideo()
+        guard  let camera: DJICamera = droneManager.fetchCamera() else { return }
+        camera.setMode(.shootPhoto)
+    }
+    
+    func startMission() {
+        DJISDKManager.missionControl()?.startTimeline()
+    }
+    
+    func pauseMission() {
+        DJISDKManager.missionControl()?.pauseTimeline()
+    }
+    
+    func resumeMission() {
+        DJISDKManager.missionControl()?.resumeTimeline()
+    }
+    
+    func stopMission() {
+        DJISDKManager.missionControl()?.stopTimeline()
+    }
+    
+    func getImages(amount: Int) {
         guard  let camera: DJICamera = droneManager.fetchCamera() else { return }
         let manager = camera.mediaManager!
             
@@ -279,8 +283,9 @@ class DroneMissionViewModel: ObservableObject {
                         let images = files.filter { $0.mediaType == .JPEG || $0.mediaType == .TIFF }
                         
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                            self.downloadImages(images, amount: amount) { images in
-                                self.downloadedImages = images
+                            self.downloadImagesFromSDCard(images, amount: amount) { images in
+                                self.uploadImagesToFirebase(images)
+                                camera.setMode(.shootPhoto)
                             }
                         }
                     }
@@ -289,14 +294,56 @@ class DroneMissionViewModel: ObservableObject {
         })
     }
     
-    func downloadImages(_ files: [DJIMediaFile], amount: Int, completion: @escaping ([DroneImage]) -> Void) {
+    private func uploadImagesToFirebase(_ images: [DroneImage]) {
+        if let currentMission = currentMission, let documentID = currentMission.id {
+            DispatchQueue.main.async {
+                for image in images {
+                    if let data = image.data {
+                        let filePath = "\(documentID)/\(image.name)"
+                        
+                        let metaData = StorageMetadata()
+                        metaData.contentType = "image/jpg"
+                        
+                        Storage.storage().reference().child(filePath).putData(data as Data, metadata: metaData) { metaData, error in
+                            if let error = error {
+                                print(error.localizedDescription)
+                                return
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    private func downloadImagesFromSDCard(_ files: [DJIMediaFile], amount: Int, completion: @escaping ([DroneImage]) -> Void) {
         var counter: Int = 0
         var images = [DroneImage]()
         let files = Array(files.suffix(amount))
         
         func downloadImageData(_ file: DJIMediaFile) {
             var imageData: Data?
-            file.fetchData(withOffset: 0, update: DispatchQueue.main, update: {(_ data: Data?, _ isComplete: Bool, _ error: Error?) -> Void in
+            file.fetchPreview { error in
+                if let error = error {
+                    print(error.localizedDescription)
+                    return
+                } else {
+                    if let preview = file.preview, let data = preview.jpegData(compressionQuality: 1) {
+                        let file = DroneImage(name: file.fileName, data: data)
+                        images.append(file)
+                        
+                        counter += 1
+                        if files.count > counter {
+                            downloadImageData(files[counter])
+                        } else {
+                            completion(images)
+                        }
+                    }
+                }
+            }
+            
+            // Full image
+            /*file.fetchData(withOffset: 0, update: DispatchQueue.main, update: {(_ data: Data?, _ isComplete: Bool, _ error: Error?) -> Void in
                 if error != nil {
                     NSLog("ERROR: downloading media data: \(String(describing: error?.localizedDescription))")
                 } else {
@@ -320,31 +367,11 @@ class DroneMissionViewModel: ObservableObject {
                         }
                     }
                 }
-            })
+            })*/
         }
         
         // Start downloading images
         downloadImageData(files[counter])
-    }
-    
-    func setupVideo() {
-        droneManager.setupVideo()
-    }
-    
-    func startMission() {
-        DJISDKManager.missionControl()?.startTimeline()
-    }
-    
-    func pauseMission() {
-        DJISDKManager.missionControl()?.pauseTimeline()
-    }
-    
-    func resumeMission() {
-        DJISDKManager.missionControl()?.resumeTimeline()
-    }
-    
-    func stopMission() {
-        DJISDKManager.missionControl()?.stopTimeline()
     }
 }
 

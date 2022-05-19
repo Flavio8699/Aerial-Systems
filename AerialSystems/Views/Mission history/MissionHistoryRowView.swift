@@ -14,7 +14,7 @@ struct MissionHistoryRowView: View {
     
     let mission: Mission
     @State var images = [MissionImage]()
-    @State var missionLocation: String = ""
+    @State var missionLocation: String = "N/D"
     @EnvironmentObject var popupHandler: PopupHandler
     @EnvironmentObject var staticData: StaticData
     @Environment(\.colorScheme) var colorScheme
@@ -24,9 +24,6 @@ struct MissionHistoryRowView: View {
             HStack (spacing: 30) {
                 Text(mission.name).font(SFPro.title_light).foregroundColor(Color(.systemBlue))
                 Spacer()
-                /*ForEach(mission.images, id: \.self) { image in
-                    Text(image)
-                }*/
                 HStack (spacing: 10) {
                     Image(systemName: "location.fill").foregroundColor(Color(.systemBlue))
                     Text(missionLocation).foregroundColor(Color(.systemGray))
@@ -37,12 +34,29 @@ struct MissionHistoryRowView: View {
                 }
                 Menu {
                     Button(action: {
-                        
+                        let mission = Mission(name: "Copy of \(mission.name)", locations: mission.locations, activities: mission.activities, indices: mission.indices, drone: mission.drone, camera: mission.camera, timestamp: .now, completed: false)
+                        mission.updateOrAdd { result in
+                            switch result {
+                            case .success():
+                                popupHandler.currentPopup = .success(message: "A new mission has been created from this mission!", button: "Close", action: popupHandler.close)
+                            case .failure(let error):
+                                popupHandler.currentPopup = .error(message: error.localizedDescription, button: "Ok", action: popupHandler.close)
+                            }
+                        }
                     }) {
-                        Label("Create draft from mission", systemImage: "plus")
+                        Label("Create new mission from this mission", systemImage: "plus")
                     }
-                    Button(action: {
-                        
+                    Button(role: .destructive, action: {
+                        popupHandler.currentPopup = .deleteMission(action: {
+                            mission.delete { result in
+                                switch result {
+                                case .success():
+                                    popupHandler.currentPopup = .success(message: "The mission was deleted successfully!", button: "Ok", action: popupHandler.close)
+                                case .failure(let error):
+                                    popupHandler.currentPopup = .error(message: error.localizedDescription, button: "Ok", action: popupHandler.close)
+                                }
+                            }
+                        })
                     }) {
                         Label("Delete", systemImage: "trash")
                     }
@@ -57,7 +71,12 @@ struct MissionHistoryRowView: View {
                         Button(action: {
                             popupHandler.missionImagePopup = image
                         }, label: {
-                            WebImage(url: image.url).resizable().overlay {
+                            WebImage(url: image.url).resizable()
+                            .placeholder {
+                                Color.black.opacity(0.3)
+                            }
+                            .indicator(.activity)
+                            .overlay {
                                 if image == images.first {
                                     ZStack {
                                         Image(systemName: "magnifyingglass").foregroundColor(colorScheme == .dark ? Color(.systemGray) : .white).font(.system(size: 40))
@@ -110,9 +129,9 @@ struct MissionHistoryRowView: View {
                         print("Problem with the data received from geocoder")
                     }
                 })
-            } else {
-                self.missionLocation = "N/D"
             }
+        }.onDisappear {
+            images = []
         }
     }
     
@@ -125,7 +144,7 @@ struct MissionHistoryRowView: View {
                 for image in result.items {
                     image.downloadURL { url, error in
                         if error != nil {
-                            print(error?.localizedDescription)
+                            print(error!.localizedDescription)
                         } else {
                             if let url = url {
                                 images.append(MissionImage(name: "Image \(counter)", availableIndices: staticData.indices.filter { index in

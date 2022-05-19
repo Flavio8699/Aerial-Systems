@@ -32,7 +32,6 @@ struct MapView: UIViewRepresentable {
     }
     
     func makeUIView(context: UIViewRepresentableContext<MapView>) -> MKMapView {
-        map.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 49.50458781521201, longitude: 5.94840754072138), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
         map.mapType = self.mapType
         map.delegate = context.coordinator
         
@@ -46,14 +45,15 @@ struct MapView: UIViewRepresentable {
         locationManager.requestAlwaysAuthorization()
         locationManager.requestWhenInUseAuthorization()
         
-        if status == .authorizedAlways || status == .authorizedWhenInUse {
+        /*if status == .authorizedAlways || status == .authorizedWhenInUse {
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
             let location: CLLocationCoordinate2D = locationManager.location!.coordinate
-            let span = MKCoordinateSpan(latitudeDelta: 0.009, longitudeDelta: 0.009)
+            let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
             let region = MKCoordinateRegion(center: location, span: span)
+            map.showsUserLocation = true
             map.setRegion(region, animated: true)
-        }
+        }*/
         
         uiView.mapType = self.mapType
         updateMap(locations: self.locations, mapView: uiView)

@@ -32,35 +32,47 @@ struct PlanningView: View {
         .sheet(isPresented: $manageMissions) {
             if let user = session.user {
                 NavigationView {
-                    List {
-                        ForEach (user.getMissions(), id: \.id) { mission in
-                            HStack {
-                                VStack (alignment: .leading) {
-                                    Text(mission.name)
-                                    Text("Last save: \(mission.dateString)").font(SFPro.subtitle).foregroundColor(Color(.systemGray))
+                    VStack (spacing: 0) {
+                        if let missions = user.getMissions(), missions.count > 0 {
+                            List {
+                                ForEach (missions, id: \.id) { mission in
+                                    HStack {
+                                        VStack (alignment: .leading) {
+                                            Text(mission.name)
+                                            Text("Last save: \(mission.dateString)").font(SFPro.subtitle).foregroundColor(Color(.systemGray))
+                                        }
+                                        Spacer()
+                                        Button(action: {
+                                            viewModel.loadMission(mission: mission)
+                                            manageMissions = false
+                                        }, label: {
+                                            Text("Load mission")
+                                        })
+                                    }
+                                }.onDelete { indexSet in
+                                    if indexSet.count > 0, missions.count >= indexSet.count {
+                                        manageMissions = false
+                                        let index = indexSet.first!
+                                        let mission = missions[index]
+                                        popupHandler.currentPopup = .deleteMission(action: {
+                                            mission.delete { result in
+                                                switch result {
+                                                case .success():
+                                                    popupHandler.currentPopup = .success(message: "The mission was deleted successfully!", button: "Ok", action: popupHandler.close)
+                                                    viewModel.loadMission(mission: Mission())
+                                                case .failure(let error):
+                                                    popupHandler.currentPopup = .error(message: error.localizedDescription, button: "Ok", action: popupHandler.close)
+                                                }
+                                            }
+                                        })
+                                    }
                                 }
-                                Spacer()
-                                Button(action: {
-                                    viewModel.loadMission(mission: mission)
-                                    manageMissions = false
-                                }, label: {
-                                    Text("Load mission")
-                                })
                             }
-                        }.onDelete { indexSet in
-                            if indexSet.count > 0, user.getMissions().count >= indexSet.count {
-                                manageMissions = false
-                                let index = indexSet.first!
-                                let mission = user.getMissions()[index]
-                                popupHandler.currentPopup = .deleteMission(action: {
-                                    mission.delete()
-                                    viewModel.loadMission(mission: Mission())
-                                    popupHandler.currentPopup = .success(message: "The mission was deleted successfully!", button: "Ok", action: popupHandler.close)
-                                })
-                            }
+                        } else {
+                            Text("No missions found.")
                         }
                     }
-                    .navigationBarTitle("Manage missions", displayMode: .inline)
+                    .navigationBarTitle("Manage mission", displayMode: .inline)
                     .navigationBarItems(trailing:
                         Button(action: {
                             manageMissions = false
@@ -79,7 +91,7 @@ struct PlanningView: View {
                 }, label: {
                     HStack {
                         Image(systemName: "cloud")
-                        Text("Manage missions")
+                        Text("Manage mission")
                     }
                 })
             }

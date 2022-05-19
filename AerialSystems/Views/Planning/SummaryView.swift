@@ -95,8 +95,14 @@ struct SummaryView: View {
                         CustomButton(label: "Save", color: colorScheme == .dark ? .white : .black, entireWidth: true, action: {
                             popupHandler.currentPopup = .saveMission(missionName: $viewModel.currentMission.name, action: {
                                 viewModel.currentMission.timestamp = .now
-                                viewModel.currentMission.updateOrAdd()
-                                popupHandler.currentPopup = .success(message: "The mission has been saved", button: "Close", action: popupHandler.close)
+                                viewModel.currentMission.updateOrAdd { result in
+                                    switch result {
+                                    case .success():
+                                        popupHandler.currentPopup = .success(message: "The mission has been saved", button: "Close", action: popupHandler.close)
+                                    case .failure(let error):
+                                        popupHandler.currentPopup = .error(message: error.localizedDescription, button: "Ok", action: popupHandler.close)
+                                    }
+                                }
                             })
                         })
                         CustomButton(label: "Launch", entireWidth: true, action: {

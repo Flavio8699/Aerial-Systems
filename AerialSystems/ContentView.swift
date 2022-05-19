@@ -152,11 +152,16 @@ struct ContentView: View {
             }.font(SFPro.body)
         }
         .sheet(isPresented: $session.showSettings) {
-            if let _ = session.user {
+            if let user = session.user {
                 NavigationView {
                     VStack {
                         Form {
                             Section(header: Text("GENERAL")) {
+                                HStack {
+                                    Text("Full name")
+                                    Spacer()
+                                    Text(user.fullname)
+                                }
                                 Picker(selection: $session.map, label: Text("Map")) {
                                     Text("Standard").tag(MKMapType.standard)
                                     Text("Satellite").tag(MKMapType.satellite)

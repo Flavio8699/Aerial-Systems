@@ -15,7 +15,6 @@
 		72127D1C271D67B900B28961 /* addBorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72127D1B271D67B900B28961 /* addBorder.swift */; };
 		7214AC272722D5BD004A55B3 /* SummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7214AC262722D5BD004A55B3 /* SummaryView.swift */; };
 		7220A55A27D14EDD0000A15B /* FPVViewController (unused).swift in Sources */ = {isa = PBXBuildFile; fileRef = 7220A55927D14EDD0000A15B /* FPVViewController (unused).swift */; };
-		72275AA72812CDFE00867274 /* MissionHistoryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72275AA62812CDFE00867274 /* MissionHistoryViewModel.swift */; };
 		72275AAA2812D26900867274 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 72275AA92812D26900867274 /* SDWebImageSwiftUI */; };
 		7230908D274FEDC500A9BBC9 /* InputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7230908C274FEDC500A9BBC9 /* InputField.swift */; };
 		723157682707477100316E62 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723157672707477100316E62 /* MapView.swift */; };
@@ -115,7 +114,6 @@
 		722063E92720A32E00989FF3 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		722064052720AAF600989FF3 /* AerialSystems.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = AerialSystems.entitlements; sourceTree = "<group>"; };
 		7220A55927D14EDD0000A15B /* FPVViewController (unused).swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FPVViewController (unused).swift"; sourceTree = "<group>"; };
-		72275AA62812CDFE00867274 /* MissionHistoryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionHistoryViewModel.swift; sourceTree = "<group>"; };
 		7230908C274FEDC500A9BBC9 /* InputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputField.swift; sourceTree = "<group>"; };
 		723157672707477100316E62 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		7237E4C9271F063D00C5B0E0 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
@@ -444,7 +442,6 @@
 				7237E4CB271F19C200C5B0E0 /* LoginViewModel.swift */,
 				72CECB3D272A8B46004ECB03 /* RegisterViewModel.swift */,
 				72E9E69F27DB74AC00E02060 /* DroneMissionViewModel.swift */,
-				72275AA62812CDFE00867274 /* MissionHistoryViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -673,7 +670,6 @@
 				72E9E6A227DB7AF100E02060 /* DroneMissionMapView.swift in Sources */,
 				72EA32912747FB17009A4B8D /* StaticData.swift in Sources */,
 				727444AC26FA327800E5A114 /* SceneDelegate.swift in Sources */,
-				72275AA72812CDFE00867274 /* MissionHistoryViewModel.swift in Sources */,
 				7237E4CA271F063D00C5B0E0 /* LoginView.swift in Sources */,
 				72C24A7727D768BF005B8239 /* LoadingPopup.swift in Sources */,
 				727444AE26FA327800E5A114 /* ContentView.swift in Sources */,

@@ -44,7 +44,7 @@ struct RegisterView: View {
                             CustomButton(label: "Create Account", loading: viewModel.loading, entireWidth: true) {
                                 viewModel.loading = true
                                 UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to:nil, from:nil, for:nil)
-                                session.register(email: viewModel.email, password: viewModel.password) { result in
+                                session.register(name: viewModel.fullName, email: viewModel.email, password: viewModel.password) { result in
                                     switch result {
                                     case .success():
                                         popupHandler.currentPopup = .success(message: "Your account has been created.", button: "Sign in", action: {

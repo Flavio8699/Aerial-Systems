@@ -16,6 +16,7 @@ struct DroneLiveView: View {
     @State var missionPaused: Bool = false
     @StateObject var droneMissionVM = DroneMissionViewModel()
     @EnvironmentObject var session: SessionStore
+    @EnvironmentObject var popupHandler: PopupHandler
 
     var body: some View {
         ZStack (alignment: .center) {
@@ -69,16 +70,6 @@ struct DroneLiveView: View {
                         .background(Color(UIColor.systemBackground).opacity(0.8))
                         .cornerRadius(5)
                     }.padding()
-                    HStack {
-                        /*ForEach(droneMissionVM.downloadedImages, id: \.self) { image in
-                            if let data = image.data {
-                                VStack {
-                                    //Image(uiImage: UIImage(data: data)!).resizable().frame(width: 50, height: 50)
-                                    Text(image.name)
-                                }
-                            }
-                        }*/
-                    }
                     Spacer()
                     HStack (alignment: .bottom, spacing: 20) {
                         ZStack (alignment: .topLeading) {
@@ -113,14 +104,28 @@ struct DroneLiveView: View {
                                 }
                             })
                             CustomButton(label: "Stop mission", color: .red, action: {
-                                /*session.fullScreen = false
-                                session.performingMission = nil
-                                droneManager.resetVideo()*/
-                                missionStarted = false
-                                droneMissionVM.stopMission()
+                                if var mission = session.performingMission {
+                                    mission.completed = true
+                                    mission.timestamp = .now
+                                    mission.updateOrAdd { result in
+                                        switch result {
+                                        case .success():
+                                            //droneMissionVM.resetVideo()
+                                            missionStarted = false
+                                            droneMissionVM.stopMission()
+                                            session.fullScreen = false
+                                            session.performingMission = nil
+                                            session.currentTab = .history
+                                        case .failure(let error):
+                                            popupHandler.currentPopup = .error(message: error.localizedDescription, button: "Ok", action: popupHandler.close)
+                                        }
+                                    }
+                                }
                             })
                         } else {
                             CustomButton(label: "Take off", action: {
+                                droneMissionVM.getImages(amount: 30)
+                                //droneMissionVM.test()
                                 missionStarted = true
                                 droneMissionVM.startMission()
                             })

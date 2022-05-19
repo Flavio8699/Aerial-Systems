@@ -40,14 +40,14 @@ struct DroneMissionMapView: UIViewRepresentable {
         locationManager.requestAlwaysAuthorization()
         locationManager.requestWhenInUseAuthorization()
         
-        if status == .authorizedAlways || status == .authorizedWhenInUse {
+        /*if status == .authorizedAlways || status == .authorizedWhenInUse {
             locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
             locationManager.startUpdatingLocation()
             let location: CLLocationCoordinate2D = locationManager.location!.coordinate
             let span = MKCoordinateSpan(latitudeDelta: 0.009, longitudeDelta: 0.009)
             let region = MKCoordinateRegion(center: location, span: span)
             map.setRegion(region, animated: true)
-        }
+        }*/
         
         uiView.mapType = self.mapType
     }

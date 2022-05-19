@@ -13,12 +13,12 @@ struct MissionHistory: View {
     
     var body: some View {
         ScrollView (.vertical) {
-            if let user = session.user {
+            if let user = session.user, let missions = user.getCompletedMissions() {
                 VStack (spacing: 20) {
                     if session.loadingMissions {
                         ProgressView("Loading missions ...")
                     } else {
-                        ForEach (user.getMissions(), id: \.id) { mission in
+                        ForEach (missions, id: \.id) { mission in
                             MissionHistoryRowView(mission: mission)
                         }
                     }

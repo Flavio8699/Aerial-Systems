@@ -24,8 +24,9 @@ struct Mission: Identifiable, Codable {
         formatter.dateFormat = "dd/MM/yyyy 'at' HH:mm"
         return formatter.string(from: timestamp)
     }
+    var completed: Bool
     
-    init(name: String = "Unnamed", locations: [Location] = [], activities: [String] = [], indices: [String] = [], drone: String = "DJI Matrice 210", camera: String = "Zenmuse XT", timestamp: Date = .now) {
+    init(name: String = "Unnamed", locations: [Location] = [], activities: [String] = [], indices: [String] = [], drone: String = "DJI Matrice 210", camera: String = "Zenmuse XT", timestamp: Date = .now, completed: Bool = false) {
         self.name = name
         self.locations = locations
         self.activities = activities
@@ -33,6 +34,7 @@ struct Mission: Identifiable, Codable {
         self.drone = drone
         self.camera = camera
         self.timestamp = timestamp
+        self.completed = completed
     }
     
     static func == (lhs: Mission, rhs: Mission) -> Bool {
@@ -41,42 +43,46 @@ struct Mission: Identifiable, Codable {
 }
 
 extension Mission {
-    func updateOrAdd() {
+    func updateOrAdd(_ completion: @escaping (Result<Void, Error>) -> Void) {
         if let _ = self.id {
-            self.update()
+            self.update(completion)
         } else {
-            self.create()
+            self.create(completion)
         }
     }
     
-    func delete() {
+    func delete(_ completion: @escaping (Result<Void, Error>) -> Void) {
         if let documentID = self.id, let user = Auth.auth().currentUser {
             Firestore.firestore().collection("users/\(user.uid)/missions").document(documentID).delete { error in
                 if let error = error {
-                    print(error)
+                    completion(.failure(error))
+                } else {
+                    completion(.success(()))
                 }
             }
         }
     }
     
-    private func update() {
+    private func update(_ completion: (Result<Void, Error>) -> Void) {
         if let user = Auth.auth().currentUser, let documentID = self.id {
             do {
                 let _ = try Firestore.firestore().collection("users/\(user.uid)/missions").document(documentID).setData(from: self)
+                completion(.success(()))
             }
             catch {
-                print(error)
+                completion(.failure(error))
             }
         }
     }
     
-    private func create() {
+    private func create(_ completion: (Result<Void, Error>) -> Void) {
         if let user = Auth.auth().currentUser {
             do {
                 let _ = try Firestore.firestore().collection("users/\(user.uid)/missions").addDocument(from: self)
+                completion(.success(()))
             }
             catch {
-                print(error)
+                completion(.failure(error))
             }
         }
     }
