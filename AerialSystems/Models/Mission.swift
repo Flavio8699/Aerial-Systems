@@ -140,8 +140,8 @@ func sortAnnotations(locations: [Location]) -> [Location] {
     return []
 }
 
-func degreesToRadians(degrees: CGFloat) -> CGFloat {
-    return degrees * CGFloat.pi / 180;
+func degreesToRadians(degrees: Double) -> Double {
+    return degrees * Double.pi / 180;
 }
 
 func distanceInKmBetweenEarthCoordinates(point1: GeoPoint, point2: GeoPoint) -> CGFloat {

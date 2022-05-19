@@ -59,7 +59,6 @@ struct PlanningView: View {
                                                 switch result {
                                                 case .success():
                                                     popupHandler.currentPopup = .success(message: "The mission was deleted successfully!", button: "Ok", action: popupHandler.close)
-                                                    viewModel.loadMission(mission: Mission())
                                                 case .failure(let error):
                                                     popupHandler.currentPopup = .error(message: error.localizedDescription, button: "Ok", action: popupHandler.close)
                                                 }
