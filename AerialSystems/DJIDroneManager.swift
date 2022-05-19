@@ -13,10 +13,13 @@ class DJIDroneManager: NSObject, ObservableObject {
     
     static let shared = DJIDroneManager()
     
-    fileprivate let enableBridgeMode = false
+    fileprivate let enableBridgeMode = true
     fileprivate let bridgeAppIP = "192.168.178.81"
 
     @Published var videoFeed = DroneLiveFPV()
+    
+    var adapter: VideoPreviewerAdapter?
+    var needToSetMode = false
     
     func registerWithSDK() {
         let appKey = Bundle.main.object(forInfoDictionaryKey: SDK_APP_KEY_INFO_PLIST_KEY) as? String
@@ -99,42 +102,22 @@ extension DJIDroneManager: DJICameraDelegate {
     }
     
     func camera(_ camera: DJICamera, didUpdate systemState: DJICameraSystemState) {
-        //print("STATE STATE", systemState.mode)
         if systemState.mode != .recordVideo && systemState.mode != .shootPhoto {
             return
         }
-        /*if needToSetMode == false {
+        if needToSetMode == false {
             return
         }
+        
         needToSetMode = false
-        */camera.setMode(.shootPhoto) { (error) in
+        camera.setMode(.shootPhoto) { (error) in
             if error != nil {
-                //self?.needToSetMode = true
+                self.needToSetMode = true
             }
         }
     }
     
-    func camera(_ camera: DJICamera, didGenerateNewMediaFile newMedia: DJIMediaFile) {
-        /*camera.setMode( .mediaDownload, withCompletion: {(error) in
-            if error != nil {
-                newMedia.fetchData(withOffset: 0, update: DispatchQueue.main, update: {(_ data: Data?, _ isComplete: Bool, _ error: Error?) -> Void in
-                    if error != nil {
-                        print("error? \(error?.localizedDescription)")
-                    }
-                    else {
-                        // unwrap downloaded data and create image
-                        if let data = data, let downloadedImage = UIImage(data: data) {
-                            print("downloaded")
-                            //images.append( downloadedImage )
-                        }
-                    }
-                    
-                })
-            } else {
-                print("test error", error?.localizedDescription)
-            }
-        })*/
-    }
+    func camera(_ camera: DJICamera, didGenerateNewMediaFile newMedia: DJIMediaFile) { }
 }
 
 extension DJIDroneManager: DJIVideoPreviewerFrameControlDelegate {
@@ -167,33 +150,29 @@ extension DJIDroneManager: DJIVideoPreviewerFrameControlDelegate {
 extension DJIDroneManager {
     func setupVideo() {
         DJIVideoPreviewer.instance().setView(self.videoFeed.view)
-        let product = DJISDKManager.product();
         
-        //Use "SecondaryVideoFeed" if the DJI Product is A3, N3, Matrice 600, or Matrice 600 Pro, otherwise, use "primaryVideoFeed".
-        if ((product?.model == DJIAircraftModelNameA3)
-            || (product?.model == DJIAircraftModelNameN3)
-            || (product?.model == DJIAircraftModelNameMatrice600)
-            || (product?.model == DJIAircraftModelNameMatrice600Pro)) {
-            DJISDKManager.videoFeeder()?.secondaryVideoFeed.add(self, with: nil)
-        } else {
-            DJISDKManager.videoFeeder()?.primaryVideoFeed.add(self, with: nil)
+        let camera = self.fetchCamera()
+        camera?.delegate = self
+        
+        needToSetMode = true
+
+        DJIVideoPreviewer.instance()?.start()
+        
+        adapter = VideoPreviewerAdapter.init()
+        adapter?.start()
+        
+        if camera?.displayName == DJICameraDisplayNameMavic2ZoomCamera ||
+            camera?.displayName == DJICameraDisplayNameMavic2ProCamera {
+            adapter?.setupFrameControlHandler()
         }
-        DJIVideoPreviewer.instance().start()
-        DJIVideoPreviewer.instance()?.frameControlHandler = self;
     }
     
     func resetVideo() {
-        DJIVideoPreviewer.instance().unSetView()
-        let product = DJISDKManager.product();
+        DJIVideoPreviewer.instance()?.unSetView()
         
-        //Use "SecondaryVideoFeed" if the DJI Product is A3, N3, Matrice 600, or Matrice 600 Pro, otherwise, use "primaryVideoFeed".
-        if ((product?.model == DJIAircraftModelNameA3)
-            || (product?.model == DJIAircraftModelNameN3)
-            || (product?.model == DJIAircraftModelNameMatrice600)
-            || (product?.model == DJIAircraftModelNameMatrice600Pro)) {
-            DJISDKManager.videoFeeder()?.secondaryVideoFeed.remove(self)
-        } else {
-            DJISDKManager.videoFeeder()?.primaryVideoFeed.remove(self)
+        if adapter != nil {
+            adapter?.stop()
+            adapter = nil
         }
     }
 }
