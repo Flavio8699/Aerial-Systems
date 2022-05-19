@@ -19,7 +19,7 @@ class DroneMissionViewModel: ObservableObject {
     private var homeAnnotation = CustomAnnotation(identifier: "home")
     private var aircraftAnnotation = CustomAnnotation(identifier: "aircraft")
     @Published var aircraftAnnotationView: MKAnnotationView?
-    @Published var droneManager = DJIDroneManager.shared
+    var droneManager = DJIDroneManager.shared
     
     func test() {
         let task = URLSession.shared.dataTask(with: URL(string: "https://conservationnation.org/wp-content/uploads/2020/02/bengal-tiger-hero.jpg")!) { data, response, error in
@@ -246,8 +246,6 @@ class DroneMissionViewModel: ObservableObject {
     
     func setupVideo() {
         droneManager.setupVideo()
-        guard  let camera: DJICamera = droneManager.fetchCamera() else { return }
-        camera.setMode(.shootPhoto)
     }
     
     func startMission() {
@@ -377,7 +375,7 @@ class DroneMissionViewModel: ObservableObject {
 
 struct DroneInformation {
     var altitudeInMeters: UInt = 0
-    var batteryPercentageRemaining: UInt = 100
+    var batteryPercentageRemaining: UInt = 0
     var photosTaken: Int = 0
     var photosToTake: Int = 0
 }
