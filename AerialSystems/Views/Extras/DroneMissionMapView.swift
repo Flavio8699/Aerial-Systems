@@ -28,7 +28,6 @@ struct DroneMissionMapView: UIViewRepresentable {
     }
     
     func makeUIView(context: UIViewRepresentableContext<DroneMissionMapView>) -> MKMapView {
-        //map.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 49.50458781521201, longitude: 5.94840754072138), span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
         map.mapType = self.mapType
         map.delegate = context.coordinator
         
@@ -36,18 +35,22 @@ struct DroneMissionMapView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: MKMapView, context: UIViewRepresentableContext<DroneMissionMapView>) {
-        let status = CLLocationManager.authorizationStatus()
-        locationManager.requestAlwaysAuthorization()
-        locationManager.requestWhenInUseAuthorization()
-        
-        /*if status == .authorizedAlways || status == .authorizedWhenInUse {
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
-            let location: CLLocationCoordinate2D = locationManager.location!.coordinate
-            let span = MKCoordinateSpan(latitudeDelta: 0.009, longitudeDelta: 0.009)
-            let region = MKCoordinateRegion(center: location, span: span)
-            map.setRegion(region, animated: true)
-        }*/
+        if CLLocationManager.locationServicesEnabled() {
+            let status = CLLocationManager.authorizationStatus()
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestWhenInUseAuthorization()
+            
+            if status == .authorizedAlways || status == .authorizedWhenInUse {
+                locationManager.startUpdatingLocation()
+                
+                if let location = locationManager.location {
+                    let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                    let region = MKCoordinateRegion(center: location.coordinate, span: span)
+                    //map.showsUserLocation = true
+                    map.setRegion(region, animated: true)
+                }
+            }
+        }
         
         uiView.mapType = self.mapType
     }
@@ -61,39 +64,41 @@ struct DroneMissionMapView: UIViewRepresentable {
         }
         
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-            let annotation = annotation as! CustomAnnotation
-            
-            switch annotation.identifier {
-            case "aircraft":
-                var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotation.identifier)
-                
-                if annotationView == nil {
-                    annotationView = DroneAnnotationView(annotation: annotation, reuseIdentifier: annotation.identifier)
+            if let annotation = annotation as? CustomAnnotation {
+                switch annotation.identifier {
+                case "aircraft":
+                    var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotation.identifier)
+                    
+                    if annotationView == nil {
+                        annotationView = DroneAnnotationView(annotation: annotation, reuseIdentifier: annotation.identifier)
+                    }
+                    
+                    if annotationView != nil {
+                        self.parent.aircraftAnnotationView = annotationView!
+                        self.parent.aircraftAnnotationView!.transform = CGAffineTransform(rotationAngle: CGFloat(degreesToRadians(degrees: Double(annotation.heading))))
+                    }
+                     
+                    return annotationView
+                case "photo":
+                    var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotation.identifier)
+                    
+                    if annotationView == nil {
+                        annotationView = PhotoAnnotationView(annotation: annotation, reuseIdentifier: annotation.identifier)
+                    }
+                    
+                    return annotationView
+                case "home":
+                    var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotation.identifier)
+                    
+                    if annotationView == nil {
+                        annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotation.identifier)
+                    }
+                    
+                    return annotationView
+                default:
+                    return nil
                 }
-                
-                if annotationView != nil {
-                    self.parent.aircraftAnnotationView = annotationView!
-                    self.parent.aircraftAnnotationView!.transform = CGAffineTransform(rotationAngle: CGFloat(degreesToRadians(degrees: Double(annotation.heading))))
-                }
-                 
-                return annotationView
-            case "photo":
-                var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotation.identifier)
-                
-                if annotationView == nil {
-                    annotationView = PhotoAnnotationView(annotation: annotation, reuseIdentifier: annotation.identifier)
-                }
-                
-                return annotationView
-            case "home":
-                var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: annotation.identifier)
-                
-                if annotationView == nil {
-                    annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: annotation.identifier)
-                }
-                
-                return annotationView
-            default:
+            } else {
                 return nil
             }
         }

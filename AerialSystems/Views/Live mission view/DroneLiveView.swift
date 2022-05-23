@@ -71,9 +71,8 @@ struct DroneLiveView: View {
                         .cornerRadius(5)
                     }.padding()
                     Spacer()
-                    HStack (alignment: .bottom, spacing: 20) {
+                    HStack (alignment: .bottom, spacing: 0) {
                         ZStack (alignment: .topLeading) {
-                            Color(.systemGray6)
                             if fpvFullscreen {
                                 self.getMap()
                             } else {
@@ -90,7 +89,7 @@ struct DroneLiveView: View {
                                     .cornerRadius(5)
                             }).padding()
                         }
-                        .frame(width: 400, height: 250)
+                        .frame(maxWidth: 350, maxHeight: 250)
                         .cornerRadius(5)
                         Spacer()
                         if missionStarted {
@@ -113,9 +112,9 @@ struct DroneLiveView: View {
                                             //droneMissionVM.resetVideo()
                                             missionStarted = false
                                             droneMissionVM.stopMission()
-                                            session.fullScreen = false
+                                            /*session.fullScreen = false
                                             session.performingMission = nil
-                                            session.currentTab = .history
+                                            session.currentTab = .history*/
                                         case .failure(let error):
                                             popupHandler.currentPopup = .error(message: error.localizedDescription, button: "Ok", action: popupHandler.close)
                                         }
@@ -143,14 +142,16 @@ struct DroneLiveView: View {
         .navigationTitle("Live mission view")
         .onAppear {
             guard let currentMission = session.performingMission else { return }
-            
+
             droneMissionVM.currentMission = currentMission
             droneMissionVM.setupVideo()
             droneMissionVM.startListeners()
             droneMissionVM.configureMission()
+        }.onDisappear {
+            droneMissionVM.stopListeners()
         }
     }
-    
+        
     func getMap() -> some View {
         DroneMissionMapView(map: droneMissionVM.map, aircraftAnnotationView: $droneMissionVM.aircraftAnnotationView, mapType: $session.map).onAppear {
             droneMissionVM.map.fitAll()

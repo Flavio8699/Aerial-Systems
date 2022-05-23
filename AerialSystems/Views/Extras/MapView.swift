@@ -41,19 +41,22 @@ struct MapView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: MKMapView, context: UIViewRepresentableContext<MapView>) {
-        let status = CLLocationManager.authorizationStatus()
-        locationManager.requestAlwaysAuthorization()
-        locationManager.requestWhenInUseAuthorization()
-        
-        /*if status == .authorizedAlways || status == .authorizedWhenInUse {
-            locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
-            locationManager.startUpdatingLocation()
-            let location: CLLocationCoordinate2D = locationManager.location!.coordinate
-            let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-            let region = MKCoordinateRegion(center: location, span: span)
-            map.showsUserLocation = true
-            map.setRegion(region, animated: true)
-        }*/
+        if CLLocationManager.locationServicesEnabled() {
+            let status = CLLocationManager.authorizationStatus()
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.requestWhenInUseAuthorization()
+            
+            if status == .authorizedAlways || status == .authorizedWhenInUse {
+                locationManager.startUpdatingLocation()
+                
+                if let location = locationManager.location {
+                    let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+                    let region = MKCoordinateRegion(center: location.coordinate, span: span)
+                    //map.showsUserLocation = true
+                    map.setRegion(region, animated: true)
+                }
+            }
+        }
         
         uiView.mapType = self.mapType
         updateMap(locations: self.locations, mapView: uiView)
@@ -63,6 +66,10 @@ struct MapView: UIViewRepresentable {
                 self.zoomIn = false
             }
         }
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        
     }
     
     func updateMap(locations: [Location], mapView: MKMapView) {
@@ -84,7 +91,7 @@ struct MapView: UIViewRepresentable {
         mapView.addOverlay(MKPolygon(coordinates: locationsSorted.map { $0.coordinates.toLocation() }, count: locationsSorted.count))
     }
     
-    public class Coordinator: NSObject, MKMapViewDelegate {
+    public class Coordinator: NSObject, MKMapViewDelegate, CLLocationManagerDelegate {
         
         private var parent: MapView
         public var overlays: [Overlay] = []
