@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MapKit
+import DJISDK
 
 struct SummaryView: View {
     
@@ -106,8 +107,13 @@ struct SummaryView: View {
                             })
                         })
                         CustomButton(label: "Launch", entireWidth: true, action: {
-                            session.performingMission = viewModel.currentMission
-                            popupHandler.currentPopup = .messageAutoClose(message: "Preparing mission...", closeAfter: 2.5)
+                            // REMOVE COMMENTS
+                            //if let _ = DJISDKManager.product() {
+                                session.performingMission = viewModel.currentMission
+                                popupHandler.currentPopup = .messageAutoClose(message: "Preparing mission...", closeAfter: 2.5)
+//                            } else {
+//                                popupHandler.currentPopup = .error(message: "No product connected! Please connect your drone.", button: "Close", action: popupHandler.close)
+//                            }
                         })
                     }.padding(.vertical)
                 }.padding(.horizontal)

@@ -35,6 +35,9 @@ struct DroneMissionMapView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: MKMapView, context: UIViewRepresentableContext<DroneMissionMapView>) {
+        /*let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+        var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 49.504555167575, longitude: 5.94839559876671), span: span)
+        
         if CLLocationManager.locationServicesEnabled() {
             let status = CLLocationManager.authorizationStatus()
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -44,13 +47,12 @@ struct DroneMissionMapView: UIViewRepresentable {
                 locationManager.startUpdatingLocation()
                 
                 if let location = locationManager.location {
-                    let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-                    let region = MKCoordinateRegion(center: location.coordinate, span: span)
+                    region = MKCoordinateRegion(center: location.coordinate, span: span)
                     //map.showsUserLocation = true
-                    map.setRegion(region, animated: true)
                 }
             }
         }
+        map.setRegion(region, animated: true)*/
         
         uiView.mapType = self.mapType
     }

@@ -56,13 +56,19 @@ class DroneMissionViewModel: ObservableObject {
             if let mission = self.createMission(altitude: 120, coordinates: coordinates) {
                 var elements = [DJIMissionControlTimelineElement]()
                 
+                guard let test = DJIGoToAction(altitude: 25) else {
+                    print("Error with goto action")
+                    return
+                }
+                
                 elements.append(DJITakeOffAction())
+                elements.append(test)
                 elements.append(mission)
                 elements.append(DJIGoHomeAction())
                 
                 let error = DJISDKManager.missionControl()?.scheduleElements(elements)
                 if error != nil {
-                    print("Error detected with the mission")
+                    print("Error detected with the mission TEST2 \(error?.localizedDescription)")
                 }
             }
         }
@@ -70,9 +76,15 @@ class DroneMissionViewModel: ObservableObject {
     
     func createMission(altitude: Float, coordinates: [CLLocationCoordinate2D]) -> DJIWaypointMission? {
         let mission = DJIMutableWaypointMission()
-        mission.exitMissionOnRCSignalLost = true
-        mission.flightPathMode = .normal
+        mission.maxFlightSpeed = 15
+        mission.autoFlightSpeed = 8
         mission.finishedAction = .noAction
+        mission.headingMode = .auto
+        mission.flightPathMode = .normal
+        mission.rotateGimbalPitch = true
+        mission.exitMissionOnRCSignalLost = true
+        mission.gotoFirstWaypointMode = .safely
+        mission.repeatTimes = 1
         
         
         guard let droneLocationKey = DJIFlightControllerKey(param: DJIFlightControllerParamAircraftLocation) else {
@@ -114,28 +126,28 @@ class DroneMissionViewModel: ObservableObject {
         var coordinates = [CLLocationCoordinate2D]()
         let (x, y) = getSizeFromFOV(HFOV: 57.12, VFOV: 42.44, altitude: 120)
         
-        let start = CLLocationCoordinate2D(latitude: addVerticalMeters(-y/2, at: topLeft.latitude), longitude: addHorizontalMeters(x/2, at: topLeft.longitude))
+        let start = CLLocationCoordinate2DMake(addVerticalMeters(-y/2, at: topLeft.latitude), addHorizontalMeters(x/2, at: topLeft.longitude))
         coordinates.append(start)
         
         while coordinates.last!.longitude < addHorizontalMeters(-x/2, at: bottomRight.longitude) {
             while coordinates.last!.latitude > addVerticalMeters(y/2, at: bottomRight.latitude) {
                 let lastCoordinate = coordinates.last!
-                let newLocation = CLLocationCoordinate2D(latitude: addVerticalMeters(-(1-overlap) * y, at: lastCoordinate.latitude), longitude: lastCoordinate.longitude)
+                let newLocation = CLLocationCoordinate2DMake(addVerticalMeters(-(1-overlap) * y, at: lastCoordinate.latitude), lastCoordinate.longitude)
                 coordinates.append(newLocation)
             }
             
             let lastCoordinate = coordinates.last!
-            let bottomConnector = CLLocationCoordinate2D(latitude: lastCoordinate.latitude, longitude: addHorizontalMeters((1-overlap) * x, at: lastCoordinate.longitude))
+            let bottomConnector = CLLocationCoordinate2DMake(lastCoordinate.latitude, addHorizontalMeters((1-overlap) * x, at: lastCoordinate.longitude))
             coordinates.append(bottomConnector)
             
             while coordinates.last!.latitude < addVerticalMeters(-y/2, at: topLeft.latitude) {
                 let lastCoordinate = coordinates.last!
-                let newLocation = CLLocationCoordinate2D(latitude: addVerticalMeters((1-overlap) * y, at: lastCoordinate.latitude), longitude: lastCoordinate.longitude)
+                let newLocation = CLLocationCoordinate2DMake(addVerticalMeters((1-overlap) * y, at: lastCoordinate.latitude), lastCoordinate.longitude)
                 coordinates.append(newLocation)
             }
             
             let lastCoordinate2 = coordinates.last!
-            let topConnector = CLLocationCoordinate2D(latitude: lastCoordinate2.latitude, longitude: addHorizontalMeters((1-overlap) * x, at: lastCoordinate2.longitude))
+            let topConnector = CLLocationCoordinate2DMake(lastCoordinate2.latitude, addHorizontalMeters((1-overlap) * x, at: lastCoordinate2.longitude))
             coordinates.append(topConnector)
         }
         
@@ -262,6 +274,16 @@ class DroneMissionViewModel: ObservableObject {
     
     func stopMission() {
         DJISDKManager.missionControl()?.stopTimeline()
+        DJISDKManager.missionControl()?.unscheduleEverything()
+        var elements = [DJIMissionControlTimelineElement]()
+        
+        elements.append(DJIGoHomeAction())
+        
+        let error = DJISDKManager.missionControl()?.scheduleElements(elements)
+        if error != nil {
+            print("Error detected with the mission TEST \(error?.localizedDescription)")
+        }
+        self.startMission()
     }
     
     func getImages(amount: Int) {

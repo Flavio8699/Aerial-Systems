@@ -41,6 +41,9 @@ struct MapView: UIViewRepresentable {
     }
     
     func updateUIView(_ uiView: MKMapView, context: UIViewRepresentableContext<MapView>) {
+        let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+        var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 49.504555167575, longitude: 5.94839559876671), span: span)
+        
         if CLLocationManager.locationServicesEnabled() {
             let status = CLLocationManager.authorizationStatus()
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -50,14 +53,13 @@ struct MapView: UIViewRepresentable {
                 locationManager.startUpdatingLocation()
                 
                 if let location = locationManager.location {
-                    let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-                    let region = MKCoordinateRegion(center: location.coordinate, span: span)
+                    region = MKCoordinateRegion(center: location.coordinate, span: span)
                     //map.showsUserLocation = true
-                    map.setRegion(region, animated: true)
                 }
             }
         }
-        
+        map.setRegion(region, animated: true)
+
         uiView.mapType = self.mapType
         updateMap(locations: self.locations, mapView: uiView)
         if self.zoomIn {
@@ -84,10 +86,10 @@ struct MapView: UIViewRepresentable {
             mapView.addAnnotation(annotation)
         }
         
-        let (top, right, bottom, left) = getCornerLocations(locations: locationsSorted)
+        //let (top, right, bottom, left) = getCornerLocations(locations: locationsSorted)
         
         mapView.removeOverlays(mapView.overlays)
-        mapView.addOverlay(MKPolyline(coordinates: [.init(latitude: top, longitude: left), .init(latitude: top, longitude: right), .init(latitude: bottom, longitude: right), .init(latitude: bottom, longitude: left)], count: 4))
+        //mapView.addOverlay(MKPolyline(coordinates: [.init(latitude: top, longitude: left), .init(latitude: top, longitude: right), .init(latitude: bottom, longitude: right), .init(latitude: bottom, longitude: left)], count: 4))
         mapView.addOverlay(MKPolygon(coordinates: locationsSorted.map { $0.coordinates.toLocation() }, count: locationsSorted.count))
     }
     

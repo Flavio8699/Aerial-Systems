@@ -7,7 +7,6 @@
 
 import SwiftUI
 import DJISDK
-import DJIWidget
 
 struct DroneLiveView: View {
     
@@ -103,7 +102,8 @@ struct DroneLiveView: View {
                                 }
                             })
                             CustomButton(label: "Stop mission", color: .red, action: {
-                                if var mission = session.performingMission {
+                                droneMissionVM.stopMission()
+                                /*if var mission = session.performingMission {
                                     mission.completed = true
                                     mission.timestamp = .now
                                     mission.updateOrAdd { result in
@@ -119,11 +119,11 @@ struct DroneLiveView: View {
                                             popupHandler.currentPopup = .error(message: error.localizedDescription, button: "Ok", action: popupHandler.close)
                                         }
                                     }
-                                }
+                                }*/
                             })
                         } else {
                             CustomButton(label: "Take off", action: {
-                                droneMissionVM.getImages(amount: 30)
+                                //droneMissionVM.getImages(amount: 30)
                                 //droneMissionVM.test()
                                 missionStarted = true
                                 droneMissionVM.startMission()
@@ -147,15 +147,14 @@ struct DroneLiveView: View {
             droneMissionVM.setupVideo()
             droneMissionVM.startListeners()
             droneMissionVM.configureMission()
+            droneMissionVM.map.fitAll()
         }.onDisappear {
             droneMissionVM.stopListeners()
         }
     }
         
     func getMap() -> some View {
-        DroneMissionMapView(map: droneMissionVM.map, aircraftAnnotationView: $droneMissionVM.aircraftAnnotationView, mapType: $session.map).onAppear {
-            droneMissionVM.map.fitAll()
-        }
+        DroneMissionMapView(map: droneMissionVM.map, aircraftAnnotationView: $droneMissionVM.aircraftAnnotationView, mapType: $session.map)
     }
     
     func getFPV() -> some View {

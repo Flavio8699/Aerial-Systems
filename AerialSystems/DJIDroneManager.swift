@@ -13,8 +13,8 @@ class DJIDroneManager: NSObject, ObservableObject {
     
     static let shared = DJIDroneManager()
     
-    fileprivate let enableBridgeMode = false
-    fileprivate let bridgeAppIP = "192.168.178.81"
+    fileprivate let enableBridgeMode = true
+    fileprivate let bridgeAppIP = "172.20.10.10"
 
     @Published var videoFeed = DroneLiveFPV()
     
@@ -59,13 +59,14 @@ extension DJIDroneManager: DJISDKManagerDelegate {
         if let camera = fetchCamera() {
             camera.delegate = self
         }
+        print("PRODUCT CONNECTED")
     }
     
     func productDisconnected() {
         if let camera = fetchCamera(), let delegate = camera.delegate, delegate.isEqual(self) {
             camera.delegate = nil
         }
-        
+        print("PRODUCT DISCONNECTED")
         self.resetVideo()
     }
     

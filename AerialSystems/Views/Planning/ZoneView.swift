@@ -17,7 +17,9 @@ struct ZoneView: View {
     var body: some View {
         ZStack (alignment: .bottom) {
             MapView(map: map, locations: $viewModel.currentMission.locations, mapType: $session.map, zoomIn: $viewModel.zoomIn).onAppear {
-                map.fitAll()
+                if viewModel.currentMission.locations.count > 0 {
+                    map.fitAll()
+                }
             }
             HStack (alignment: .bottom) {
                 HStack {
