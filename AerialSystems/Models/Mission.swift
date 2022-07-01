@@ -25,8 +25,10 @@ struct Mission: Identifiable, Codable {
         return formatter.string(from: timestamp)
     }
     var completed: Bool
+    var started: Bool
+    var nextWaypoint: Int
     
-    init(name: String = "Unnamed", locations: [Location] = [], activities: [String] = [], indices: [String] = [], drone: String = "DJI Matrice 210", camera: String = "Zenmuse XT", timestamp: Date = .now, completed: Bool = false) {
+    init(name: String = "Unnamed", locations: [Location] = [], activities: [String] = [], indices: [String] = [], drone: String = "DJI Matrice 210", camera: String = "Zenmuse XT", timestamp: Date = .now, completed: Bool = false, started: Bool = false, nextWaypoint: Int = 0) {
         self.name = name
         self.locations = locations
         self.activities = activities
@@ -35,11 +37,22 @@ struct Mission: Identifiable, Codable {
         self.camera = camera
         self.timestamp = timestamp
         self.completed = completed
+        self.started = started
+        self.nextWaypoint = nextWaypoint
     }
     
     static func == (lhs: Mission, rhs: Mission) -> Bool {
         return lhs.id == rhs.id
     }
+}
+
+enum MissionState {
+    case not_started
+    case started
+    case paused
+    case stopped
+    case finished
+    case rth
 }
 
 extension Mission {

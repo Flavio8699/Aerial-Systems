@@ -106,14 +106,17 @@ struct SummaryView: View {
                                 }
                             })
                         })
-                        CustomButton(label: "Launch", entireWidth: true, action: {
-                            // REMOVE COMMENTS
-                            //if let _ = DJISDKManager.product() {
-                                session.performingMission = viewModel.currentMission
-                                popupHandler.currentPopup = .messageAutoClose(message: "Preparing mission...", closeAfter: 2.5)
-//                            } else {
-//                                popupHandler.currentPopup = .error(message: "No product connected! Please connect your drone.", button: "Close", action: popupHandler.close)
-//                            }
+                        CustomButton(label: viewModel.currentMission.started ? "Resume" : "Launch", entireWidth: true, action: {
+                            if viewModel.currentMission.locations.count > 2 {
+                                if let _ = DJISDKManager.product() {
+                                    session.performingMission = viewModel.currentMission
+                                    popupHandler.currentPopup = .messageAutoClose(message: "Preparing mission...", closeAfter: 1.5)
+                                } else {
+                                    popupHandler.currentPopup = .error(message: "No product connected! Please connect your drone.", button: "Close", action: popupHandler.close)
+                                }
+                            } else {
+                                popupHandler.currentPopup = .error(message: "You need at least 3 locations on the map!", button: "Close", action: popupHandler.close)
+                            }
                         })
                     }.padding(.vertical)
                 }.padding(.horizontal)

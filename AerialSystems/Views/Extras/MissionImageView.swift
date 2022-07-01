@@ -22,7 +22,7 @@ struct MissionImageView: View {
                 Text(missionImage.name).foregroundColor(.white).font(SFPro.title_light_25).bold()
                 HStack (alignment: .center, spacing: 50) {
                     Spacer()
-                    WebImage(url: missionImage.url).resizable().frame(width: geometry.size.width/3, height: geometry.size.height/2).cornerRadius(14)
+                    WebImage(url: missionImage.url).resizable().aspectRatio(4/3, contentMode: .fit).cornerRadius(14)
                     VStack (spacing: 0) {
                         VStack (spacing: 15) {
                             Text("Indices").font(SFPro.title_light_25)
@@ -58,11 +58,11 @@ struct MissionImageView: View {
                             
                         }).padding()
                     }
-                    .frame(width: geometry.size.width/3, height: geometry.size.height/2)
+                    .frame(width: geometry.size.width/3)
                     .background(Color(UIColor.systemBackground))
                     .addBorder(.white, cornerRadius: 14)
                     Spacer()
-                }
+                }.frame(maxHeight: geometry.size.height*2/3)
                 Button(action: {
                     popupHandler.close()
                 }, label: {

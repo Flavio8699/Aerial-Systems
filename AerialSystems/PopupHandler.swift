@@ -39,4 +39,5 @@ enum PopupType {
     case deleteMission(action: () -> Void)
     case logout(action: () -> Void)
     case messageAutoClose(message: String, closeAfter: CGFloat)
+    case lowBattery(action1: () -> Void, action2: () -> Void)
 }

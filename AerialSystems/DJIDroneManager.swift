@@ -13,8 +13,8 @@ class DJIDroneManager: NSObject, ObservableObject {
     
     static let shared = DJIDroneManager()
     
-    fileprivate let enableBridgeMode = true
-    fileprivate let bridgeAppIP = "172.20.10.10"
+    fileprivate let enableBridgeMode = false
+    fileprivate let bridgeAppIP = "10.164.33.30"
 
     @Published var videoFeed = DroneLiveFPV()
     

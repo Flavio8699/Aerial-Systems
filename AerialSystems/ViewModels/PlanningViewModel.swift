@@ -21,6 +21,10 @@ class PlanningViewModel: ObservableObject {
     func loadMission(mission: Mission) {
         self.currentMission = mission
         self.zoomIn = true
+        
+        if self.currentMission.started {
+            self.currentTab = .summary
+        }
     }
     
     func radians(degrees: Double) -> Double {

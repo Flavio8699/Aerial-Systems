@@ -136,6 +136,14 @@ struct ContentView: View {
                                         popupHandler.close()
                                     }
                                 }
+                            
+                            case .lowBattery(let action1, let action2):
+                                Image(systemName: "exclamationmark.triangle").foregroundColor(Color(.systemGray)).font(.system(size: 65))
+                                Text("The mission was paused because the battery percentage of your drone is critical. Please stop the mission to change batteries and continue afterwards.").multilineTextAlignment(.center)
+                                HStack (spacing: 20) {
+                                    CustomButton(label: "Resume", color: Color(.systemRed), entireWidth: true, action: action1)
+                                    CustomButton(label: "Stop mission", entireWidth: true, action: action2)
+                                }.padding(.top, 15)
                                 
                             default:
                                 Text("error")

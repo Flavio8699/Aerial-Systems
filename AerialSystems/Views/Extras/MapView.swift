@@ -86,10 +86,7 @@ struct MapView: UIViewRepresentable {
             mapView.addAnnotation(annotation)
         }
         
-        //let (top, right, bottom, left) = getCornerLocations(locations: locationsSorted)
-        
         mapView.removeOverlays(mapView.overlays)
-        //mapView.addOverlay(MKPolyline(coordinates: [.init(latitude: top, longitude: left), .init(latitude: top, longitude: right), .init(latitude: bottom, longitude: right), .init(latitude: bottom, longitude: left)], count: 4))
         mapView.addOverlay(MKPolygon(coordinates: locationsSorted.map { $0.coordinates.toLocation() }, count: locationsSorted.count))
     }
     

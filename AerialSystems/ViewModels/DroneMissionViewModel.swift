@@ -15,19 +15,13 @@ class DroneMissionViewModel: ObservableObject {
     let map = MKMapView()
     @Published var droneInformation = DroneInformation()
     @Published var currentMission: Mission?
+    @Published var alerts = [AlertMessage]()
+    @Published var state: MissionState = .not_started
     
     private var homeAnnotation = CustomAnnotation(identifier: "home")
     private var aircraftAnnotation = CustomAnnotation(identifier: "aircraft")
     @Published var aircraftAnnotationView: MKAnnotationView?
     var droneManager = DJIDroneManager.shared
-    
-    func test() {
-        let task = URLSession.shared.dataTask(with: URL(string: "https://conservationnation.org/wp-content/uploads/2020/02/bengal-tiger-hero.jpg")!) { data, response, error in
-            guard let data = data else { return }
-            self.uploadImagesToFirebase([.init(name: "test.jpg", data: data)])
-        }
-        task.resume()
-    }
     
     func configureMission() {
         if let currentMission = currentMission {
@@ -36,14 +30,8 @@ class DroneMissionViewModel: ObservableObject {
             let topLeft = CLLocationCoordinate2D(latitude: top, longitude: left)
             let bottomRight = CLLocationCoordinate2D(latitude: bottom, longitude: right)
             
-            // TEST
-//            self.homeAnnotation.coordinate = topLeft
-//            self.aircraftAnnotation.coordinate = .init(latitude: 49.60490126703951, longitude: 6.072680099918782)
-//            self.aircraftAnnotation.heading = 123
-            self.map.addAnnotations([self.aircraftAnnotation, self.homeAnnotation])
             
             let coordinates = self.getListOfPhotoCoordinates(topLeft: topLeft, bottomRight: bottomRight)
-            droneInformation.photosToTake = coordinates.count
             
             for coordinate in coordinates {
                 let location = CustomAnnotation(identifier: "photo")
@@ -53,28 +41,26 @@ class DroneMissionViewModel: ObservableObject {
             
             self.map.addOverlay(MKPolyline(coordinates: coordinates, count: coordinates.count))
 
-            if let mission = self.createMission(altitude: 120, coordinates: coordinates) {
+            if let mission = self.createMission(altitude: 40, coordinates: coordinates, startAt: currentMission.nextWaypoint) {
+                self.droneInformation.photosToTake = Int(mission.waypointCount)
                 var elements = [DJIMissionControlTimelineElement]()
                 
-                guard let test = DJIGoToAction(altitude: 25) else {
-                    print("Error with goto action")
-                    return
-                }
-                
-                elements.append(DJITakeOffAction())
-                elements.append(test)
                 elements.append(mission)
                 elements.append(DJIGoHomeAction())
                 
                 let error = DJISDKManager.missionControl()?.scheduleElements(elements)
-                if error != nil {
-                    print("Error detected with the mission TEST2 \(error?.localizedDescription)")
+                if let error = error {
+                    self.alerts.append(.init(message: "Error \(error.localizedDescription)"))
                 }
+                
+                self.droneInformation.photosToTake += currentMission.nextWaypoint
+                self.droneInformation.photosTaken += currentMission.nextWaypoint
+                self.droneInformation.nextWaypointIndex += currentMission.nextWaypoint
             }
         }
     }
     
-    func createMission(altitude: Float, coordinates: [CLLocationCoordinate2D]) -> DJIWaypointMission? {
+    func createMission(altitude: Float, coordinates: [CLLocationCoordinate2D], startAt: Int) -> DJIWaypointMission? {
         let mission = DJIMutableWaypointMission()
         mission.maxFlightSpeed = 15
         mission.autoFlightSpeed = 8
@@ -85,7 +71,6 @@ class DroneMissionViewModel: ObservableObject {
         mission.exitMissionOnRCSignalLost = true
         mission.gotoFirstWaypointMode = .safely
         mission.repeatTimes = 1
-        
         
         guard let droneLocationKey = DJIFlightControllerKey(param: DJIFlightControllerParamAircraftLocation) else {
             return nil
@@ -104,25 +89,32 @@ class DroneMissionViewModel: ObservableObject {
         
         mission.pointOfInterest = droneCoordinates
         self.aircraftAnnotation.coordinate = droneCoordinates
+        self.homeAnnotation.coordinate = droneCoordinates
         
+        self.map.addAnnotations([self.aircraftAnnotation, self.homeAnnotation])
 
-        for coordinate in coordinates {
+        for coordinate in coordinates.suffix(coordinates.count-startAt) {
             let waypoint = DJIWaypoint(coordinate: coordinate)
             waypoint.altitude = altitude
             waypoint.heading = 0
             waypoint.actionRepeatTimes = 1
             waypoint.actionTimeoutInSeconds = 60
             waypoint.turnMode = .clockwise
-            waypoint.gimbalPitch = 0
+            waypoint.gimbalPitch = -90
             waypoint.add(DJIWaypointAction(actionType: .shootPhoto, param: 0))
             
             mission.add(waypoint)
         }
         
+        if let error = mission.checkParameters() {
+            self.alerts.append(.init(message: "Error: \(error.localizedDescription)"))
+            return error as? DJIWaypointMission
+        }
+        
         return DJIWaypointMission(mission: mission)
     }
     
-    private func getListOfPhotoCoordinates(topLeft: CLLocationCoordinate2D, bottomRight: CLLocationCoordinate2D, overlap: CGFloat = 0.7) -> [CLLocationCoordinate2D] {
+    private func getListOfPhotoCoordinates(topLeft: CLLocationCoordinate2D, bottomRight: CLLocationCoordinate2D, overlap: CGFloat = 0.4) -> [CLLocationCoordinate2D] {
         var coordinates = [CLLocationCoordinate2D]()
         let (x, y) = getSizeFromFOV(HFOV: 57.12, VFOV: 42.44, altitude: 120)
         
@@ -171,86 +163,106 @@ class DroneMissionViewModel: ObservableObject {
     }
     
     func startListeners() {
-        // TEST
-        DJIWaypointMissionOperator().addListener(toExecutionEvent: self, with: DispatchQueue.main) { event in
-            print("Event")
-            if let progress = event.progress {
-                print("Is waypoint reached:", progress.isWaypointReached)
-                print("Target waypoint index (next waypoint):", progress.targetWaypointIndex)
-            } else {
-                print("Error with event progress")
-            }
-        }
-        
-        // Drone location
-        if let aircarftLocationKey = DJIFlightControllerKey(param: DJIFlightControllerParamAircraftLocation)  {
-            DJISDKManager.keyManager()?.startListeningForChanges(on: aircarftLocationKey, withListener: self) { [unowned self] (oldValue: DJIKeyedValue?, newValue: DJIKeyedValue?) in
-                if newValue != nil {
-                    let newLocationValue = newValue!.value as! CLLocation
-                    
-                    if CLLocationCoordinate2DIsValid(newLocationValue.coordinate) {
-                        self.aircraftAnnotation.coordinate = newLocationValue.coordinate
+        if let currentMission = currentMission {
+            // Mission execution state
+            DJISDKManager.missionControl()?.waypointMissionOperator().addListener(toExecutionEvent: self, with: DispatchQueue.main) { event in
+                if let progress = event.progress {
+                    if progress.execState == .finishedAction && progress.isWaypointReached && progress.targetWaypointIndex + currentMission.nextWaypoint == self.droneInformation.nextWaypointIndex {
+                        self.droneInformation.nextWaypointIndex += 1
+                        self.droneInformation.photosTaken += 1
                     }
                 }
             }
-        }
-        
-        // Drone rotation
-        if let aircraftHeadingKey = DJIFlightControllerKey(param: DJIFlightControllerParamCompassHeading) {
-            DJISDKManager.keyManager()?.startListeningForChanges(on: aircraftHeadingKey, withListener: self) { [unowned self] (oldValue: DJIKeyedValue?, newValue: DJIKeyedValue?) in
-                if (newValue != nil) {
-                    self.aircraftAnnotation.heading = newValue!.doubleValue
-                    if let aircraftAnnotationView = self.aircraftAnnotationView {
-                        aircraftAnnotationView.transform = CGAffineTransform(rotationAngle: CGFloat(degreesToRadians(degrees: Double(self.aircraftAnnotation.heading))))
-                    }
-                }
-            }
-        }
-        
-        // Home location
-        if let homeLocationKey = DJIFlightControllerKey(param: DJIFlightControllerParamHomeLocation) {
-            DJISDKManager.keyManager()?.startListeningForChanges(on: homeLocationKey, withListener: self) { [unowned self] (oldValue: DJIKeyedValue?, newValue: DJIKeyedValue?) in
-                if (newValue != nil) {
-                    let newLocationValue = newValue!.value as! CLLocation
-                    
-                    if CLLocationCoordinate2DIsValid(newLocationValue.coordinate) {
-                        self.homeAnnotation.coordinate = newLocationValue.coordinate
-                    }
-                }
-            }
-        }
-        
-        // Drone battery percentage
-        if let batteryLevelKey = DJIBatteryKey(param: DJIBatteryParamChargeRemainingInPercent)  {
-            DJISDKManager.keyManager()?.getValueFor(batteryLevelKey, withCompletion: { [unowned self] (value: DJIKeyedValue?, error: Error?) in
-                if error == nil, value != nil {
-                    self.droneInformation.batteryPercentageRemaining = value!.unsignedIntegerValue
-                }
-            })
             
-            DJISDKManager.keyManager()?.startListeningForChanges(on: batteryLevelKey, withListener: self) { [unowned self] (oldValue: DJIKeyedValue?, newValue: DJIKeyedValue?) in
-                if newValue != nil {
-                    let battery = newValue!.unsignedIntegerValue
-                    self.droneInformation.batteryPercentageRemaining = battery
-                    
-                    if battery <= 20 {
-                        print("BATTERY BELOW 20%, SHOULD ABORT MISSION, SAVE CURRENT WAYPOINT INDEX, RTH AND CONTINUE LATER")
+            // Drone location
+            if let aircarftLocationKey = DJIFlightControllerKey(param: DJIFlightControllerParamAircraftLocation)  {
+                DJISDKManager.keyManager()?.startListeningForChanges(on: aircarftLocationKey, withListener: self) { [unowned self] (oldValue: DJIKeyedValue?, newValue: DJIKeyedValue?) in
+                    if newValue != nil {
+                        let newLocationValue = newValue!.value as! CLLocation
+                        
+                        if CLLocationCoordinate2DIsValid(newLocationValue.coordinate) {
+                            self.aircraftAnnotation.coordinate = newLocationValue.coordinate
+                        }
                     }
                 }
             }
-        }
-        
-        // Drone altitude in meters
-        if let altitudeKey = DJIFlightControllerKey(param: DJIFlightControllerParamAltitudeInMeters) {
-            DJISDKManager.keyManager()?.getValueFor(altitudeKey, withCompletion: { [unowned self] (value: DJIKeyedValue?, error: Error?) in
-                if error == nil, value != nil {
-                    self.droneInformation.altitudeInMeters = value!.unsignedIntegerValue
-                }
-            })
             
-            DJISDKManager.keyManager()?.startListeningForChanges(on: altitudeKey, withListener: self) { [unowned self] (oldValue: DJIKeyedValue?, newValue: DJIKeyedValue?) in
-                if newValue != nil {
-                    self.droneInformation.altitudeInMeters = newValue!.unsignedIntegerValue
+            // Drone rotation
+            if let aircraftHeadingKey = DJIFlightControllerKey(param: DJIFlightControllerParamCompassHeading) {
+                DJISDKManager.keyManager()?.startListeningForChanges(on: aircraftHeadingKey, withListener: self) { [unowned self] (oldValue: DJIKeyedValue?, newValue: DJIKeyedValue?) in
+                    if (newValue != nil) {
+                        self.aircraftAnnotation.heading = newValue!.doubleValue
+                        if let aircraftAnnotationView = self.aircraftAnnotationView {
+                            aircraftAnnotationView.transform = CGAffineTransform(rotationAngle: CGFloat(degreesToRadians(degrees: Double(self.aircraftAnnotation.heading))))
+                        }
+                    }
+                }
+            }
+            
+            // Home location
+            if let homeLocationKey = DJIFlightControllerKey(param: DJIFlightControllerParamHomeLocation) {
+                DJISDKManager.keyManager()?.startListeningForChanges(on: homeLocationKey, withListener: self) { [unowned self] (oldValue: DJIKeyedValue?, newValue: DJIKeyedValue?) in
+                    if (newValue != nil) {
+                        let newLocationValue = newValue!.value as! CLLocation
+                        
+                        if CLLocationCoordinate2DIsValid(newLocationValue.coordinate) {
+                            self.homeAnnotation.coordinate = newLocationValue.coordinate
+                        }
+                    }
+                }
+            }
+            
+            // RTH Execution
+            if let RTHkey = DJIFlightControllerKey(param: DJIFlightControllerParamGoHomeExecutionState) {
+                DJISDKManager.keyManager()?.startListeningForChanges(on: RTHkey, withListener: self) { [unowned self] (oldValue: DJIKeyedValue?, newValue: DJIKeyedValue?) in
+                    if (newValue != nil) {
+                        NotificationCenter.default.post(name: NSNotification.Name("dji.go.home.state"), object: nil, userInfo: ["state": newValue!.value])
+                    }
+                }
+            }
+            
+            // Drone battery percentage
+            if let batteryLevelKey = DJIBatteryKey(param: DJIBatteryParamChargeRemainingInPercent)  {
+                DJISDKManager.keyManager()?.getValueFor(batteryLevelKey, withCompletion: { [unowned self] (value: DJIKeyedValue?, error: Error?) in
+                    if error == nil, value != nil {
+                        self.droneInformation.batteryPercentageRemaining = value!.unsignedIntegerValue
+                    }
+                })
+                
+                DJISDKManager.keyManager()?.startListeningForChanges(on: batteryLevelKey, withListener: self) { [unowned self] (oldValue: DJIKeyedValue?, newValue: DJIKeyedValue?) in
+                    if newValue != nil {
+                        let battery = newValue!.unsignedIntegerValue
+                        self.droneInformation.batteryPercentageRemaining = battery
+                        
+                        if battery <= 20 {
+                            NotificationCenter.default.post(name: NSNotification.Name("dji.low.battery"), object: nil)
+                        }
+                    }
+                }
+            }
+            
+            // Drone altitude in meters
+            if let altitudeKey = DJIFlightControllerKey(param: DJIFlightControllerParamAltitudeInMeters) {
+                DJISDKManager.keyManager()?.getValueFor(altitudeKey, withCompletion: { [unowned self] (value: DJIKeyedValue?, error: Error?) in
+                    if error == nil, value != nil {
+                        self.droneInformation.altitudeInMeters = value!.unsignedIntegerValue
+                    }
+                })
+                
+                DJISDKManager.keyManager()?.startListeningForChanges(on: altitudeKey, withListener: self) { [unowned self] (oldValue: DJIKeyedValue?, newValue: DJIKeyedValue?) in
+                    if newValue != nil {
+                        self.droneInformation.altitudeInMeters = newValue!.unsignedIntegerValue
+                    }
+                }
+            }
+            
+            // Drone velocity
+            if let velocityKey = DJIFlightControllerKey(param: DJIFlightControllerParamVelocity) {
+                DJISDKManager.keyManager()?.startListeningForChanges(on: velocityKey, withListener: self) { [unowned self] (oldValue: DJIKeyedValue?, newValue: DJIKeyedValue?) in
+                    if let newValue = newValue, let value = newValue.value as? DJISDKVector3D {
+                        self.droneInformation.speedVertical = abs(value.z)
+                        self.droneInformation.speedHorizontal = max(abs(value.x), abs(value.y))
+                    }
                 }
             }
         }
@@ -262,41 +274,59 @@ class DroneMissionViewModel: ObservableObject {
     
     func startMission() {
         DJISDKManager.missionControl()?.startTimeline()
+        self.state = .started
     }
     
     func pauseMission() {
         DJISDKManager.missionControl()?.pauseTimeline()
+        self.state = .paused
     }
     
     func resumeMission() {
         DJISDKManager.missionControl()?.resumeTimeline()
+        self.state = .started
     }
     
     func stopMission() {
         DJISDKManager.missionControl()?.stopTimeline()
         DJISDKManager.missionControl()?.unscheduleEverything()
-        var elements = [DJIMissionControlTimelineElement]()
-        
-        elements.append(DJIGoHomeAction())
-        
-        let error = DJISDKManager.missionControl()?.scheduleElements(elements)
-        if error != nil {
-            print("Error detected with the mission TEST \(error?.localizedDescription)")
+        if var mission = currentMission {
+            mission.started = true
+            mission.nextWaypoint = self.droneInformation.nextWaypointIndex
+            mission.updateOrAdd { result in
+                switch result {
+                case .success():
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        let error = DJISDKManager.missionControl()?.scheduleElement(DJIGoHomeAction())
+                        if let error = error {
+                            self.alerts.append(.init(message: "Error: \(error.localizedDescription)"))
+                        }
+                        DJISDKManager.missionControl()?.startTimeline()
+                    }
+                case .failure(let error):
+                    self.alerts.append(.init(message: "Error \(error.localizedDescription)"))
+                }
+            }
         }
-        self.startMission()
     }
     
+    func stopListeners() {
+        DJISDKManager.keyManager()?.stopAllListening(ofListeners: self)
+    }
+    
+    // MARK: Retrieve images from SD card, download data and upload images to Firebase
     func getImages(amount: Int) {
+        self.alerts.append(.init(message: "Retrieving images from drone..."))
         guard  let camera: DJICamera = droneManager.fetchCamera() else { return }
         let manager = camera.mediaManager!
             
         camera.setMode(.mediaDownload, withCompletion: { error in
-            if error != nil {
-                NSLog("ERROR: setting camera mode: \(String(describing: error?.localizedDescription))")
+            if let error = error {
+                self.alerts.append(.init(message: "Error settings camera mode: \(error.localizedDescription)"))
             } else {
                 manager.refreshFileList(of: DJICameraStorageLocation.sdCard, withCompletion:  { (error) in
-                    if error != nil {
-                        NSLog("ERROR: refreshing file list: \(String(describing: error?.localizedDescription))")
+                    if let error = error {
+                        self.alerts.append(.init(message: "Error refreshing file list: \(error.localizedDescription)"))
                     } else {
                         guard let files = manager.sdCardFileListSnapshot() else { return }
                         
@@ -304,6 +334,7 @@ class DroneMissionViewModel: ObservableObject {
                         
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                             self.downloadImagesFromSDCard(images, amount: amount) { images in
+                                self.alerts.append(.init(message: "Uploading images..."))
                                 self.uploadImagesToFirebase(images)
                                 camera.setMode(.shootPhoto)
                             }
@@ -317,6 +348,9 @@ class DroneMissionViewModel: ObservableObject {
     private func uploadImagesToFirebase(_ images: [DroneImage]) {
         if let currentMission = currentMission, let documentID = currentMission.id {
             DispatchQueue.main.async {
+                var successfulImages = 0
+                var counter: Int = 0
+                
                 for image in images {
                     if let data = image.data {
                         let filePath = "\(documentID)/\(image.name)"
@@ -326,8 +360,14 @@ class DroneMissionViewModel: ObservableObject {
                         
                         Storage.storage().reference().child(filePath).putData(data as Data, metadata: metaData) { metaData, error in
                             if let error = error {
-                                print(error.localizedDescription)
-                                return
+                                self.alerts.append(.init(message: "Error uploading image: \(error.localizedDescription)"))
+                            } else {
+                                successfulImages += 1
+                            }
+                            
+                            counter += 1
+                            if images.count == counter {
+                                self.alerts.append(.init(message: "\(successfulImages) images uploaded successfully"))
                             }
                         }
                     }
@@ -342,7 +382,6 @@ class DroneMissionViewModel: ObservableObject {
         let files = Array(files.suffix(amount))
         
         func downloadImageData(_ file: DJIMediaFile) {
-            var imageData: Data?
             file.fetchPreview { error in
                 if let error = error {
                     print(error.localizedDescription)
@@ -363,7 +402,8 @@ class DroneMissionViewModel: ObservableObject {
             }
             
             // Full image
-            /*file.fetchData(withOffset: 0, update: DispatchQueue.main, update: {(_ data: Data?, _ isComplete: Bool, _ error: Error?) -> Void in
+            /*var imageData: Data?
+            file.fetchData(withOffset: 0, update: DispatchQueue.main, update: {(_ data: Data?, _ isComplete: Bool, _ error: Error?) -> Void in
                 if error != nil {
                     NSLog("ERROR: downloading media data: \(String(describing: error?.localizedDescription))")
                 } else {
@@ -400,4 +440,13 @@ struct DroneInformation {
     var batteryPercentageRemaining: UInt = 0
     var photosTaken: Int = 0
     var photosToTake: Int = 0
+    var speedVertical: Double = 0
+    var speedHorizontal: Double = 0
+    var nextWaypointIndex: Int = 0
+    var goHomeState: UInt?
+}
+
+struct AlertMessage {
+    var id = UUID()
+    var message: String
 }
