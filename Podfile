@@ -9,7 +9,6 @@ target 'Aerial Systems' do
   pod 'DJI-SDK-iOS', '~> 4.15.2'
   pod 'DJIWidget', '~> 1.6.5'
   pod 'DJIFlySafeDatabaseResource', '~> 01.00.01.18'
-  pod 'OpenCV', '4.3.0'
   pod 'Firebase/Auth'
   pod 'Firebase/Core'
   pod ‘Firebase/Firestore'
