@@ -1,6 +1,6 @@
 # Aerial Systems
 This repository contains my Bachelor Semester Project 5 at the University of Luxembourg which is an iPad App for Drone Missions.
-The app was built using the SwiftUI framework.
+The app was built using the SwiftUI framework. I continued working on the app as a student job during several months.
 
 * [Requirements](#requirements)
 * [Installation](#installation)
