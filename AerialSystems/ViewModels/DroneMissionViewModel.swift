@@ -17,6 +17,7 @@ class DroneMissionViewModel: ObservableObject {
     @Published var currentMission: Mission?
     @Published var alerts = [AlertMessage]()
     @Published var state: MissionState = .not_started
+    @Published var lowBatteryPopup: Bool = false
     
     private var homeAnnotation = CustomAnnotation(identifier: "home")
     private var aircraftAnnotation = CustomAnnotation(identifier: "aircraft")
@@ -234,8 +235,9 @@ class DroneMissionViewModel: ObservableObject {
                         let battery = newValue!.unsignedIntegerValue
                         self.droneInformation.batteryPercentageRemaining = battery
                         
-                        if battery <= 20 {
+                        if battery <= 30 && !lowBatteryPopup {
                             NotificationCenter.default.post(name: NSNotification.Name("dji.low.battery"), object: nil)
+                            lowBatteryPopup = true
                         }
                     }
                 }
