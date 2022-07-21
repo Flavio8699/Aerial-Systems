@@ -7,6 +7,8 @@ The app was built using the SwiftUI framework.
 * [Connect with DJI App](#connect-with-dji-app)
 * [Build and simulate](#build-and-simulate)
 * [Connect a drone to the iOS simulator](#connect-a-drone-to-the-ios-simulator)
+* [Known limitations (depends on the drone used for testing)](#known-limitations-depends-on-the-drone-used-for-testing)
+* [Todo](#todo)
 * [Contact](#contact)
 
 <!--![frontpage](Screenshots/1.jpg)-->
@@ -46,6 +48,17 @@ fileprivate let bridgeAppIP = "IP ADDRESS"
 ```
 6. Build and run the app  with <kbd>Command</kbd> + <kbd>R</kbd>.
 
+## Known limitations (depends on the drone used for testing)
+Drone used for testing: **Matrice 210 with Zenmuse Z30 camera**
+* Mission doesn't work with too many waypoints
+* Drone doesn't start if first waypoint is too far away
+* Drone doesn't start if the maximum height of the waypoints is above a threshold (40m with the drone used for testing)
+
+## Todo
+* Apply activities and indices when selecting an image in the mission history tab
+* Indices explanations (i-icon in the monitoring tab)
+* Correctly add different drones with their respective cameras and calculate the mission waypoints based on the selected camera (currently hardcoded camera information)
+* ...
 
 ## Contact
 * [Flavio Matias](mailto:flavio8699@gmail.com) (Student)
